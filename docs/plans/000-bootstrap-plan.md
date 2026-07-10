@@ -8,21 +8,24 @@ starting subsystem implementation ahead of the architecture specs.
 ## Sequence
 
 1. Land the system overview spec and tool governance setup.
-2. Write `docs/specs/001-bootstrap-toolchain.md` with the Rust workspace shape,
-   allowed cheap checks, and current build-status policy.
-3. Add the root Cargo workspace and placeholder crates only after the toolchain
-   spec exists.
-4. Write the kernel, IPC, simulator, and UI composition specs in that order.
-5. Add the first smoke tests only after the owning spec defines acceptance
+2. Close the follow-up spec set named by `docs/specs/000-system-overview.md`:
+   toolchain, kernel primitives, capability IPC, Pixel 9 simulator, and UI
+   composition.
+3. Add the root Cargo workspace and placeholder crates only after
+   `docs/specs/001-bootstrap-toolchain.md` defines the workspace shape, allowed
+   cheap checks, documented build command, and current build-status policy.
+4. Add the first smoke tests only after the owning spec defines acceptance
    evidence.
-6. Add a scheduled or CI-driven `haft check --json` gate once the CI surface
+5. Add a scheduled or CI-driven `haft check --json` gate once the CI surface
    exists, so expiring `valid_until` dates are reported before they go stale.
 
 ## Current Build Status
 
-There is no runnable code and no Cargo workspace yet. Do not run `cargo build` or
-`cargo test` until `001-bootstrap-toolchain.md` defines the workspace and build
-status policy.
+There is no runnable code and no Cargo workspace yet. The follow-up specs now
+define the intended workspace and subsystem contracts. Do not run `cargo build`
+or `cargo test` until the Cargo workspace exists and
+`001-bootstrap-toolchain.md` names the documented build/status commands for that
+workspace.
 
 ## Verification For This Plan
 

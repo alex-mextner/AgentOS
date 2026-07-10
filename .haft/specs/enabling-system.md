@@ -21,7 +21,9 @@ terms:
 target_refs:
   - AGENTS.md
   - docs/specs/000-system-overview.md
+  - docs/specs/001-bootstrap-toolchain.md
   - docs/plans/000-bootstrap-plan.md
+  - docs/plans/001-mvp-to-maximum-plan.md
 evidence_required:
   - kind: tool-check
     description: Local helper CLIs are checked before implementation work.

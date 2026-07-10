@@ -20,9 +20,14 @@ terms:
   - capability handle
 target_refs:
   - docs/specs/000-system-overview.md
+  - docs/specs/001-bootstrap-toolchain.md
+  - docs/specs/010-kernel-primitives.md
+  - docs/specs/020-capability-ipc.md
+  - docs/specs/030-pixel9-simulator.md
+  - docs/specs/040-ui-composition.md
 evidence_required:
   - kind: document
-    description: docs/specs/000-system-overview.md remains the authoritative overview.
+    description: docs/specs/000-system-overview.md and follow-up subsystem specs remain authoritative.
   - kind: runtime
     description: Future implementation provides simulator boot and IPC denial evidence.
 ```
@@ -52,6 +57,10 @@ terms:
   - capability handle
 target_refs:
   - docs/specs/000-system-overview.md
+  - docs/specs/010-kernel-primitives.md
+  - docs/specs/020-capability-ipc.md
+  - docs/specs/030-pixel9-simulator.md
+  - docs/specs/040-ui-composition.md
 evidence_required:
   - kind: document
     description: Follow-up subsystem specs preserve the role/capability/method/work split.
@@ -84,6 +93,11 @@ terms:
 target_refs:
   - docs/specs/000-system-overview.md#architecture-boundaries
   - docs/specs/000-system-overview.md#non-goals
+  - docs/specs/001-bootstrap-toolchain.md#repository-layout-contract
+  - docs/specs/010-kernel-primitives.md#boundary-rules
+  - docs/specs/020-capability-ipc.md#security-invariants
+  - docs/specs/030-pixel9-simulator.md#evidence-contract
+  - docs/specs/040-ui-composition.md#cross-boundary-contract
   - AGENTS.md#how-agents-work-in-this-repo
   - docs/specs/000-system-overview.md#acceptance-evidence
 evidence_required:
