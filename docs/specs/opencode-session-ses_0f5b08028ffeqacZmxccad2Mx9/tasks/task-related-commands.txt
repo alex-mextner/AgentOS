@@ -1,0 +1,18 @@
+# Archive wrapper: recovered from opencode session ses_0f5b08028ffeqacZmxccad2Mx9. The whole file is historical evidence only and is not authoritative for any current repository contract. Recovered source content follows.
+
+task list 2>&1 | head -20; echo "---HELP---"; task new --help 2>&1 | head -40
+task new --yes \
+echo "== #2 =="; task new --yes \
+echo "== #3 =="; task new --yes \
+echo "== #4 =="; task new --yes \
+echo "== #5 =="; task new --yes \
+echo "== #6 =="; task new --yes \
+echo "== #7 =="; task new --yes \
+gh issue comment 1 --repo hyperide/HyperGit --body "Status update — scaffold landed in commit \`8b5582b\` (feat(mobile): scaffold SwiftUI iOS app + HyperGitCore).
+gh issue comment 1 --repo hyperide/HyperGit --body "Resolved — the iOS app target now **builds green in CI** (PR #8, \`mobile\` workflow, macos-latest, 51s).
+gh issue close 1 --repo hyperide/HyperGit --reason completed 2>&1 | tail -1
+gh pr merge 9 --repo hyperide/HyperGit --squash --delete-branch 2>&1 | tail -2; echo "---sync---"; git checkout main 2>&1 | tail -1; git pull --ff-only origin main 2>&1 | tail -2; echo "---close #2---"; gh issue close 2 --repo hyperide/HyperGit --reason completed --comment "Done in PR #9 (merged). GitHubClient is production-ready: Link-header pagination across all list endpoints, \`issue()\` detail, status→HTTPError mapping, and a base64-decode fix. 16/16 tests green; iOS build green in CI." 2>&1 | tail -1
+gh pr view 9 --repo hyperide/HyperGit --json state,mergedAt --jq '{state, mergedAt}'; echo "---#2---"; gh issue view 2 --repo hyperide/HyperGit --json state,closedByPullRequestsReferences --jq '{state}'; echo "---log---"; git log --oneline -3
+gh repo edit hyperide/HyperGit --description "Open-source GitHub replacement (git server, CI/CD, hosting) + local-first SwiftUI mobile app." --add-topic git,github,ios,swiftui,swift,self-hosted,local-first,ci-cd,agent 2>&1 | tail -2; echo "===RELEASE==="; gh release create v0.1.0 --repo hyperide/HyperGit --target main --title "v0.1.0 — mobile scaffold + GitHub client" --notes-file <opencode-temp>/v0.1.0-notes.md --latest 2>&1 | tail -3
+D=<opencode-temp>; for i in 1 2 3 4 5 6 7; do gh issue edit $i --repo hyperide/HyperGit --body-file "$D/issue$i.md" >/dev/null 2>&1 && echo "#$i -> EN ok"; done
+gh release edit v0.1.0 --repo hyperide/HyperGit --notes-file <opencode-temp>/v0.1.0-notes.md 2>&1 | tail -2

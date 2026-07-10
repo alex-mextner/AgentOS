@@ -34,8 +34,13 @@ Before implementation expands, the project must preserve:
 
 Exit evidence:
 
-- `docs/specs/` contains the source trace and all subsystem specs.
-- Archive and review checks prove documentation packages contain specs only.
+- `docs/specs/` contains the source trace, non-authoritative source-session
+  appendix, and all subsystem specs.
+- Archive and review checks prove documentation packages are scoped to
+  `docs/specs/`, and archival appendices are marked non-authoritative.
+- `scripts/list-authoritative-specs.sh` excludes archival appendices from current
+  spec ingestion, `scripts/check-doc-archives.sh` passes, and
+  `scripts/test-doc-archives.sh` covers the guard behavior.
 
 ## Phase 1: Pixel 9 Form-Factor Simulator MVP
 

@@ -19,7 +19,12 @@ HyperOS specs can distinguish recovered source material from derived planning.
 
 The raw export is not part of the documentation archive because it includes
 tool output and local configuration data. The archive carries only the extracted
-assignment text and recovered document content below.
+assignment text, recovered document content, and recovered task bodies below or
+in the source-session appendix.
+
+Full recovered documentation and task bodies from the same opencode session are
+included under
+`docs/specs/opencode-session-ses_0f5b08028ffeqacZmxccad2Mx9/`.
 
 ## Original User Brief
 

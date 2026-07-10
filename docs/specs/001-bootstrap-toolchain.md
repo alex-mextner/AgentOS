@@ -76,7 +76,17 @@ The workspace must preserve the product boundaries from
   real device class added after MVP needs an owning spec section before code.
 - Simulator code drives device evidence but is not a dumping ground for product
   logic.
-- Plans stay in `docs/plans/`; authoritative behavior stays in `docs/specs/`.
+- Plans stay in `docs/plans/`; authoritative behavior stays in
+  `docs/specs/*.md`, excluding `docs/specs/opencode-session-*` archival
+  appendices. This flat top-level spec structure is intentional until a later
+  spec changes the ingestion contract.
+- Any `docs/specs/opencode-session-*` archival appendix file must carry a
+  visible non-authoritative notice before recovered content; Markdown files must
+  render that notice visibly, not only in HTML comments.
+- Spec consumers must use `scripts/list-authoritative-specs.sh` for current
+  authoritative spec ingestion; `scripts/check-doc-archives.sh` verifies archive
+  notices and rejects top-level archive files that would blur the contract. The
+  guard is covered by `scripts/test-doc-archives.sh`.
 
 ## Acceptance Evidence
 
@@ -87,6 +97,8 @@ This spec is satisfied for MVP when:
 - The documented build command is `cargo build --workspace`.
 - The cheap status/check command is
   `cargo metadata --format-version 1 --no-deps`.
+- The cheap documentation archive checks are `scripts/list-authoritative-specs.sh`
+  `scripts/check-doc-archives.sh`, and `scripts/test-doc-archives.sh`.
 - The repository states which commands are safe to run under normal machine
   load.
 - At least one targeted check can run without invoking a full simulator boot.
