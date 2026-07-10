@@ -1,6 +1,8 @@
 # HyperOS
 
-A Fuchsia-architecture-inspired mobile OS product prototype, written in Rust, targeting a Pixel 9 form-factor simulator.
+A Fuchsia-architecture-inspired mobile OS product prototype, written in Rust,
+with a Pixel 9 form-factor simulator as the MVP acceptance target and a staged
+roadmap toward real device operation.
 
 ## Status
 
@@ -21,6 +23,9 @@ Early bootstrap. Stack and scope being finalized via specs in docs/specs/.
 - Prefer LSP/code-intelligence tooling (`serena`, `sverklo`) for navigation and refactors over raw grep.
 - One logical change per commit; use conventional commit messages (e.g. `feat:`, `fix:`, `chore:`).
 - Never commit Cyrillic into `AGENTS.md`, `CLAUDE.md`, or any other agent-facing doc. English only.
+- Exception: `docs/specs/005-opencode-source-assignment.md` may contain verbatim
+  recovered source excerpts in their original language for traceability; the
+  surrounding normative text must remain English.
 - Do not run `cargo build` or `cargo test` without checking the current build status first — the dev machine may be under load.
 
 ## Build & test

@@ -40,9 +40,10 @@ MVP non-goals:
 ## Maximum Prototype Definition
 
 The maximum plan keeps the same architecture but expands the prototype into a
-richer mobile OS research platform. The maximum prototype is not a promise of
-production readiness; it is the broadest coherent plan still aligned with the
-Fuchsia-inspired capability architecture.
+richer mobile OS research platform and then toward real device operation. The
+maximum prototype is not a promise of production readiness; it is the broadest
+coherent plan still aligned with the Fuchsia-inspired capability architecture.
+`docs/specs/050-real-device-operation.md` owns the device-operation roadmap.
 
 Maximum deliverables:
 
@@ -57,10 +58,21 @@ Maximum deliverables:
   simulated sensors/network stubs.
 - Multi-surface UI composition, focus management, declarative app lifecycle,
   accessibility hooks, safe-area/density handling, theming, and a small app SDK.
+- Hardware abstraction boundaries for board support, replaceable drivers, power,
+  recovery, and device evidence.
+- Developer-device bring-up that boots to a HyperOS shell with display, touch,
+  storage persistence, connectivity, and recoverable diagnostics.
+- Agent-first OS behavior: system-level projects, tasks, documents, people,
+  local data, agents, widgets, integrations, auto installation, global history,
+  and shared clipboard behavior.
+- Daily-driver candidate criteria for OTA updates, security hardening, camera,
+  battery, thermal, audio, wireless, sensor, accessibility, localization, and
+  certification constraints.
 
 ## Roadmap
 
-1. Close the spec set: keep `000` plus `001`, `010`, `020`, `030`, and `040`
+1. Close the spec set: keep `005-opencode-source-assignment.md`,
+   `000-system-overview.md`, `001`, `010`, `020`, `030`, `040`, and `050`
    current before implementation.
 2. Add the Rust workspace only after `001-bootstrap-toolchain.md` is accepted as
    the build policy.
@@ -71,7 +83,8 @@ Maximum deliverables:
 6. Implement the first shell/app and compositor path from
    `040-ui-composition.md`.
 7. Promote simulator smoke evidence into CI once cheap local checks are stable.
-8. Expand toward maximum-plan items only after the MVP evidence is reproducible.
+8. Expand toward hardware abstraction and real-device operation through
+   `050-real-device-operation.md` only after the MVP evidence is reproducible.
 
 ## Decision Gates
 

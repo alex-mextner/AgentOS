@@ -29,6 +29,10 @@ The MVP simulator may be host-only and deterministic. It does not need Android
 emulation, GPU acceleration, cellular behavior, camera, sensors, or hardware boot
 support.
 
+Real hardware work is intentionally out of this spec. `050-real-device-operation.md`
+owns the later path from simulator evidence to hardware abstraction and device
+bring-up.
+
 ## Full Maximum Plan
 
 The maximum simulator plan adds:
