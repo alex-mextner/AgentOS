@@ -1,0 +1,89 @@
+# Своя мобильная ОС
+Fuchsia like
+
+- Project/Task/Document/People/Local/Agent/private first 
+	- agentic: every action and data peace is accessible 
+- Widgets/Data sources/Integrations
+- Global User input cache registry. Don’t lost any bite 
+- Memex 
+- Auto installation 
+- Local/remote data/logic auto management 
+- Global history (like browser history but for whole os)
+- hardware: Best camera, battery, water proof 
+- Universal sharing. Works w/ AirPlay, AirDrop and popular Android solutions 
+- Shared clipboard with macOS/ubuntu 
+- open source 
+- urgent / other notifications separation. Others go to tray w/o vibro/sound
+- Pencil + handwritten text and drawings recognition + user script learning (generating user script font) for editing handwritten texts. Voice recognition w/ storing original voice memos too. 
+- file system
+	- Tag based 
+	- Folder is a document (notion like)
+	- Everything can be copied as structured text.  E.g. any list, cards, almost any ui
+	- Outlines, mappings, 
+- Software Architecture 
+	- Auto api/data migration protocol 
+- SideMemo: автолинковка связанных документов при упоминании в тексте  
+- global Transclusion 
+- 100% automatic backup, all data, secrets, state 
+- Texts are copyable everywhere by default 
+- 100% mapping Config<->CLI/TUI<->Api<->Settings<->GUI
+- clipboard 
+	- Multi clipboard 
+	- Source tracking 
+	- Structured data sharing 
+	- Multiple data formats sharing 
+- UX patterns sharing. Not only design system 
+- ds/ux linter/enforser
+- all menus are editable 
+- Widget classes(contracts)
+- automatic long process management. Intellectual battery-saving multitasking. Mix of Android and iOS ways that are both suxx. 
+- **stock widgets** 
+  - drawing: vector+bitmap+canva-like
+  - notes, rich text editor (word, notion, g.docs like)
+	  - FluidSpace
+  - spreadsheets 
+  - code editor
+  - audio/video/podcast player
+  - social network 
+  - messenger+email+sms+video-calls
+  - calendar+todo+reminders
+  - calculator+calc-notebook (Jupiter like)+converters; history
+  - photo+video viewer 
+  - camera (+qr, text, phone, email,,, ocr; +Blackmagic like)
+  - Measure+level
+  - bank client + crypto exchange and wallet + (Apple like)wallet + pocket for all kinds of cards and legal documents 
+  - time+alarms+timer+countdown
+  - browser 
+  - terminal 
+  - smart home 
+  - passwords 
+  - vpn, proxy 
+  - tasks (linear like)
+  - weather 
+  - stocks 
+  - files
+  - contacts 
+  - compass 
+  - translator 
+  - maps+transport+taxi+(apple like)find-my
+  - food delivery 
+  - phone
+  - settings: WiFi, cellular, storage, 
+  - Remote (tv, Remote Desktop )
+  - Keyboard
+  - book reader+pdf reader 
+  - Widgets, data-providers, integrations store 
+  - marketplace+resell-classifier (avito/ebay like)
+  - Health hub. W/ full r/w data access local api
+  - Vibeflow+(apple like)shortcuts
+  - Intent box
+  - Flexlight: ai actions/questions/settings/agents; smart local/web search; quick inline widgets (calc, converter, calendar, terminal, ssh, chat, new document, new note,,,); Voice mode; urls
+  - Generic crud
+  - Games
+	  - Chess
+	  - Snake
+	  - Doom
+	  - Heroes of might and magic 3
+	  - Fallout shelter 
+	  - Mario
+	  - 

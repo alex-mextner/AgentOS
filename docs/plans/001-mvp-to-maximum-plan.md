@@ -71,7 +71,7 @@ Maximum deliverables:
 
 ## Roadmap
 
-1. Close the spec set: keep `005-opencode-source-assignment.md`,
+1. Close the spec set: keep `005-source-session-assignment.md`,
    `000-system-overview.md`, `001`, `010`, `020`, `030`, `040`, and `050`
    current before implementation.
 2. Add the Rust workspace only after `001-bootstrap-toolchain.md` is accepted as

@@ -30,6 +30,11 @@ The simulator is the first acceptance target, not the final product boundary.
 hardware abstraction, developer-device boot, agent-first OS behavior, and a
 daily-driver device candidate.
 
+The recovered source digest names FEMU as the source-faithful Track A runtime.
+This overview deliberately keeps a lighter Pixel 9 form-factor host simulator as
+the bootstrap acceptance target for early, low-load evidence. FEMU remains a
+later Track A milestone rather than being erased from the plan.
+
 The prototype is written in Rust unless a later spec explicitly permits another
 language in a bounded path. Code under `crates/` and `sim/` must stay Rust-first.
 
@@ -73,8 +78,8 @@ that boundary.
 
 The next specs should be written before code that depends on them:
 
-1. `005-opencode-source-assignment.md`: recovered original opencode assignment,
-   correction, and HyperOS source-document excerpt.
+1. `005-source-session-assignment.md`: recovered original HyperOS assignment,
+   source documents, and source-session appendix.
 2. `001-bootstrap-toolchain.md`: Rust workspace layout, build status policy, and
    cheap checks allowed before full builds.
 3. `010-kernel-primitives.md`: tasks, memory objects, scheduler assumptions, and
@@ -94,7 +99,7 @@ The next specs should be written before code that depends on them:
 A future implementation satisfies this overview only when it has:
 
 - A documented build command and a cheap status command.
-- A source trace tying the HyperOS vision to the recovered opencode session.
+- A source trace tying the HyperOS vision to the recovered source session.
 - A simulator boot smoke test.
 - At least one IPC/capability transfer test that proves denied access stays
   denied.

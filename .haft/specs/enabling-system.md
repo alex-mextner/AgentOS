@@ -21,7 +21,7 @@ terms:
 target_refs:
   - AGENTS.md
   - docs/specs/000-system-overview.md
-  - docs/specs/005-opencode-source-assignment.md
+  - docs/specs/005-source-session-assignment.md
   - docs/specs/001-bootstrap-toolchain.md
   - docs/specs/050-real-device-operation.md
   - docs/plans/000-bootstrap-plan.md

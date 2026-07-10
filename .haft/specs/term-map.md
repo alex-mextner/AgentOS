@@ -5,9 +5,9 @@ entries:
   - term: HyperOS
     domain: product
     definition: A Rust mobile OS prototype with Fuchsia-inspired architecture, using a Pixel 9 form-factor simulator as the MVP acceptance target and a staged roadmap toward real device operation.
-  - term: opencode source trace
+  - term: source-session trace
     domain: source
-    definition: The extracted original assignment and recovered HyperOS source excerpts from opencode session ses_0f5b08028ffeqacZmxccad2Mx9.
+    definition: The extracted original assignment, source-document paths, and recovered HyperOS source excerpts from Claude session 937d083b-4513-4dc4-84f3-578242ea1a46.
   - term: Pixel 9 form-factor simulator
     domain: simulator
     definition: The host-side simulated device frame, display, input, timing, and evidence surface for the prototype.

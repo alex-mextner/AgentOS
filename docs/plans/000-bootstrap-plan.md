@@ -9,7 +9,7 @@ starting subsystem implementation ahead of the architecture specs.
 
 1. Land the system overview spec and tool governance setup.
 2. Close the follow-up spec set named by `docs/specs/000-system-overview.md`:
-   opencode source trace, toolchain, kernel primitives, capability IPC, Pixel 9
+   source-session trace, toolchain, kernel primitives, capability IPC, Pixel 9
    simulator, UI composition, and real-device operation roadmap.
 3. Add the root Cargo workspace and placeholder crates only after
    `docs/specs/001-bootstrap-toolchain.md` defines the workspace shape, allowed

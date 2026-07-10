@@ -13,7 +13,7 @@ Early bootstrap. Stack and scope being finalized via specs in docs/specs/.
 - `crates/` — Rust crates (kernel, drivers, services, user-space components).
 - `sim/` — Simulator harness and device model for Pixel 9 form-factor.
 - `docs/specs/` — Authoritative specification documents. Read these before touching code.
-  `docs/specs/opencode-session-*/` directories are archival source appendices,
+  `docs/specs/source-session-*/` directories are archival source appendices,
   not authoritative spec inputs.
 - `docs/plans/` — Implementation plans derived from specs.
 - `assets/` — Static assets (icons, fonts, graphics, test fixtures).
@@ -21,14 +21,14 @@ Early bootstrap. Stack and scope being finalized via specs in docs/specs/.
 ## How agents work in this repo
 
 - Work is spec-driven: read `docs/specs/` before writing or modifying any code,
-  excluding archival `docs/specs/opencode-session-*` appendices from current
-  spec ingestion.
+  excluding archival `docs/specs/source-session-*` appendices from current spec
+  ingestion.
 - Rust is the primary language; no other languages in `crates/` or `sim/` without a spec blessing it.
 - Prefer LSP/code-intelligence tooling (`serena`, `sverklo`) for navigation and refactors over raw grep.
 - One logical change per commit; use conventional commit messages (e.g. `feat:`, `fix:`, `chore:`).
 - Never commit Cyrillic into `AGENTS.md`, `CLAUDE.md`, or any other agent-facing doc. English only.
-- Exception: `docs/specs/005-opencode-source-assignment.md` and
-  `docs/specs/opencode-session-*/` may contain verbatim recovered source
+- Exception: `docs/specs/005-source-session-assignment.md` and
+  `docs/specs/source-session-*/` may contain verbatim recovered source
   excerpts in their original language for traceability; the surrounding
   normative text must remain English.
 - Do not run `cargo build` or `cargo test` without checking the current build status first — the dev machine may be under load.
@@ -41,7 +41,6 @@ Cheap documentation checks:
 - `scripts/list-authoritative-specs.sh`
 - `scripts/check-doc-archives.sh`
 - `scripts/test-doc-archives.sh`
-
 
 ## Sverklo — Code Intelligence
 

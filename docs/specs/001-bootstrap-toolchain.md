@@ -76,13 +76,17 @@ The workspace must preserve the product boundaries from
   real device class added after MVP needs an owning spec section before code.
 - Simulator code drives device evidence but is not a dumping ground for product
   logic.
-- Plans stay in `docs/plans/`; authoritative behavior stays in
-  `docs/specs/*.md`, excluding `docs/specs/opencode-session-*` archival
+- Plans stay in `docs/plans/`; authoritative behavior stays in top-level
+  `docs/specs/*.md`, excluding `docs/specs/source-session-*` archival
   appendices. This flat top-level spec structure is intentional until a later
   spec changes the ingestion contract.
-- Any `docs/specs/opencode-session-*` archival appendix file must carry a
-  visible non-authoritative notice before recovered content; Markdown files must
-  render that notice visibly, not only in HTML comments.
+- Any `docs/specs/source-session-*` archival appendix file must carry a visible
+  non-authoritative notice before recovered body content; Markdown files may
+  have a wrapper title first, but must render the notice visibly, not only in
+  HTML comments. Raw source copies under `docs/specs/source-session-*/originals/`
+  are exempt because they preserve the original files unchanged. Non-original
+  appendix files must be Markdown so the visible notice can be rendered and
+  checked consistently.
 - Spec consumers must use `scripts/list-authoritative-specs.sh` for current
   authoritative spec ingestion; `scripts/check-doc-archives.sh` verifies archive
   notices and rejects top-level archive files that would blur the contract. The

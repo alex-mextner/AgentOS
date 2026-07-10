@@ -8,13 +8,14 @@ MVP promise.
 
 ## Source Relationship
 
-`005-opencode-source-assignment.md` records the recovered product vision:
+`005-source-session-assignment.md` records the recovered product vision:
 agent-first OS, widgets/data sources/integrations, auto installation,
 local/remote data and logic management, global OS history, strong hardware
 priorities, ecosystem sharing, and open-source development.
 
-The opencode source does not contain a Pixel 9, Fuchsia, or board-support plan.
-Those are current HyperOS planning decisions captured by this spec set.
+The source-session appendix also preserves the recovered product-architecture
+digest that splits the work into product/FEMU first and real Pixel 9 bring-up
+later. This spec owns the latter path beyond the simulator MVP.
 
 ## Purpose
 
@@ -27,7 +28,7 @@ device conditions with measured evidence.
 
 Before implementation expands, the project must preserve:
 
-- Source trace from the opencode session.
+- Source trace from the recovered Claude session.
 - Rust-first workspace policy and cheap verification commands.
 - Kernel, IPC, simulator, UI, and device-roadmap specs as authoritative inputs.
 - Clear separation between MVP evidence and maximum-plan claims.
@@ -36,11 +37,10 @@ Exit evidence:
 
 - `docs/specs/` contains the source trace, non-authoritative source-session
   appendix, and all subsystem specs.
-- Archive and review checks prove documentation packages are scoped to
-  `docs/specs/`, and archival appendices are marked non-authoritative.
-- `scripts/list-authoritative-specs.sh` excludes archival appendices from current
-  spec ingestion, `scripts/check-doc-archives.sh` passes, and
-  `scripts/test-doc-archives.sh` covers the guard behavior.
+- Documentation packages are scoped to `docs/specs/`, and archival appendices
+  are marked non-authoritative.
+- `scripts/list-authoritative-specs.sh`, `scripts/check-doc-archives.sh`, and
+  `scripts/test-doc-archives.sh` pass for the source-session appendix contract.
 
 ## Phase 1: Pixel 9 Form-Factor Simulator MVP
 

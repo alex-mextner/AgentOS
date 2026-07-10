@@ -18,11 +18,11 @@ terms:
   - HyperOS
   - Pixel 9 form-factor simulator
   - real device operation
-  - opencode source trace
+  - source-session trace
   - capability handle
 target_refs:
   - docs/specs/000-system-overview.md
-  - docs/specs/005-opencode-source-assignment.md
+  - docs/specs/005-source-session-assignment.md
   - docs/specs/001-bootstrap-toolchain.md
   - docs/specs/010-kernel-primitives.md
   - docs/specs/020-capability-ipc.md
@@ -103,7 +103,7 @@ terms:
 target_refs:
   - docs/specs/000-system-overview.md#architecture-boundaries
   - docs/specs/000-system-overview.md#non-goals
-  - docs/specs/005-opencode-source-assignment.md#interpretation-for-this-repository
+  - docs/specs/005-source-session-assignment.md#interpretation-for-this-repository
   - docs/specs/001-bootstrap-toolchain.md#repository-layout-contract
   - docs/specs/010-kernel-primitives.md#boundary-rules
   - docs/specs/020-capability-ipc.md#security-invariants

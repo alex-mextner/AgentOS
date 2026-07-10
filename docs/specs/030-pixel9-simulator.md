@@ -11,6 +11,12 @@ The Pixel 9 form-factor simulator provides the observable runtime target for the
 HyperOS MVP. It owns boot orchestration, display dimensions, input routing,
 timing assumptions, and evidence capture.
 
+The recovered source digest identifies FEMU as the source-faithful Fuchsia Track
+A target and rejects a custom UI simulator as the final prototype target. This
+spec is narrower: it defines the repository's bootstrap host simulator so early
+Rust/product-layer work can produce repeatable evidence before FEMU setup and
+full Fuchsia build constraints are resolved.
+
 ## MVP Scope
 
 The MVP simulator includes:
