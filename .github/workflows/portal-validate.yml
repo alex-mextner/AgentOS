@@ -1,0 +1,67 @@
+name: Validate portal and knowledge base
+
+on:
+  pull_request:
+    paths:
+      - 'portal/**'
+      - 'knowledge/**'
+      - 'docs/**'
+      - '.github/workflows/portal-validate.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'portal/**'
+      - 'knowledge/**'
+      - 'docs/**'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate required files and document identifiers
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          import sys
+
+          required = [
+              Path('portal/index.html'),
+              Path('vercel.json'),
+              Path('knowledge/BRIEFING.md'),
+              Path('knowledge/docs/INDEX.md'),
+          ]
+          errors = [f'Missing required file: {p}' for p in required if not p.exists()]
+
+          ids = {}
+          for path in Path('knowledge').rglob('*.md'):
+              text = path.read_text(encoding='utf-8')
+              match = re.search(r'(?m)^id:\s*([A-Z0-9-]+)\s*$', text[:1500])
+              if not match:
+                  errors.append(f'Missing front-matter id: {path}')
+                  continue
+              doc_id = match.group(1)
+              if doc_id in ids:
+                  errors.append(f'Duplicate id {doc_id}: {ids[doc_id]} and {path}')
+              ids[doc_id] = path
+
+          portal = Path('portal/index.html').read_text(encoding='utf-8')
+          for section in ('Wiki', 'Tasks', 'Gantt', 'API'):
+              if section not in portal:
+                  errors.append(f'Portal section missing: {section}')
+
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print(f'Validated {len(ids)} identified Markdown documents.')
+
+      - name: Check public JSON and HTML syntax markers
+        run: |
+          python -m json.tool vercel.json >/dev/null
+          grep -q '<!doctype html>' portal/index.html
+          grep -q 'api.github.com/repos' portal/index.html
