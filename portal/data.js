@@ -1,0 +1,10 @@
+const candidateRepos=['alex-mextner/AgentOS','alex-mextner/HyperOS'];
+const state={repo:candidateRepos[0],issues:[],tasks:[],errors:[]};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const issueId=title=>(String(title).match(/\[(AOS-[A-Z0-9-]+)\]/)||[])[1]||'';
+const gh=path=>`https://github.com/${state.repo}${path||''}`;
+async function resolveRepo(){for(const repo of candidateRepos){const r=await fetch(`https://api.github.com/repos/${repo}`);if(r.ok){state.repo=repo;break}}document.querySelector('#repo').href=gh('')}
+async function loadIssues(){const out=[];for(let page=1;page<=10;page++){const r=await fetch(`https://api.github.com/repos/${state.repo}/issues?state=all&per_page=100&page=${page}`);if(!r.ok)throw Error(`GitHub Issues API ${r.status}`);const rows=(await r.json()).filter(x=>!x.pull_request);out.push(...rows);if(rows.length<100)break}return out}
+async function loadTasks(){const base=`https://raw.githubusercontent.com/${state.repo}/main/data/tasks/`;const r=await fetch(base+'index.json',{cache:'no-store'});if(!r.ok)throw Error(`Task index ${r.status}`);const index=await r.json();const shards=await Promise.all(index.files.map(async entry=>{const x=await fetch(base+entry.file,{cache:'no-store'});if(!x.ok)throw Error(`${entry.file} ${x.status}`);const rows=await x.json();if(!Array.isArray(rows)||rows.length!==entry.count)throw Error(`${entry.file} count mismatch`);return rows}));const tasks=shards.flat();if(tasks.length!==index.count)throw Error(`Expected ${index.count} tasks, found ${tasks.length}`);return tasks}
+async function load(){await resolveRepo();const [issues,tasks]=await Promise.allSettled([loadIssues(),loadTasks()]);if(issues.status==='fulfilled')state.issues=issues.value;else state.errors.push(issues.reason.message);if(tasks.status==='fulfilled')state.tasks=tasks.value;else state.errors.push(tasks.reason.message)}
+function issueMap(){return new Map(state.issues.map(x=>[issueId(x.title),x]).filter(([id])=>id))}
