@@ -1,6 +1,4 @@
-# Agent OS — Public Engineering Programme
-
-> **Working title:** Agent OS. Stable technical identifiers use the `AOS-*` namespace while naming and trademark review remain open.
+# Agent OS
 
 Agent OS is an original Rust-first mobile operating-system programme centred on an owned microkernel, capability-secured IPC, portable device-service contracts, and agent-oriented system layers.
 
@@ -8,20 +6,22 @@ Agent OS is an original Rust-first mobile operating-system programme centred on 
 
 The native architecture does not depend on Android, Linux, POSIX, Binder, or Android HAL contracts. Android and Linux are permitted only inside the isolated Pixel 9 evidence and bring-up track as stock-device oracles, trace sources, recovery mechanisms, and explicitly temporary bridges with replacement criteria.
 
-## Public engineering portal
-
-This repository contains the source for a public Git-backed engineering environment:
+## Public engineering environment
 
 - `knowledge/` — canonical Markdown Wiki and research records;
 - GitHub Issues — executable work and public discussion;
 - GitHub Projects — portfolio fields, schedule, roadmap, and board views;
 - `portal/` — responsive Wiki, task, Gantt, and API frontend deployed on Vercel;
-- `.github/workflows/` — validation, issue bootstrap, and derived-data automation;
-- `docs/MOBILE-EDITING.md` — iPhone and iA Writer editing workflow.
+- `.github/workflows/` — validation, task bootstrap, and derived-data automation;
+- `docs/MOBILE-EDITING.md` — iPhone and Markdown editing workflow.
+
+## Hardware strategy
+
+Current milestones must be deliverable on QEMU and available research hardware. The architecture is also prepared for a later contract-manufactured device, but no milestone assumes an ODM, JDM, or OEM agreement already exists.
 
 ## Current status
 
-Foundation publication is in progress. The first release establishes the architecture boundaries, hardware tracks, public documentation model, task hierarchy, validation rules, and portal. It does **not** claim that the microkernel or native Pixel 9 support is already implemented.
+Foundation publication is in progress. The first release establishes architecture boundaries, hardware tracks, public documentation, task hierarchy, validation rules, and the portal. It does **not** claim that the microkernel or native Pixel 9 support is already implemented.
 
 ## Start here
 

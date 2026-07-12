@@ -1,1 +1,0 @@
-The foundation portal uses no separate task database.

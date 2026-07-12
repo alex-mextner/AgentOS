@@ -1,9 +1,1 @@
-{
-  "name": "Agent OS Engineering Portal",
-  "short_name": "AOS Portal",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#0b0d12",
-  "theme_color": "#0b0d12",
-  "description": "Public Wiki, task tracker, Gantt, and API for the Agent OS engineering programme."
-}
+{"name":"Agent OS Engineering Portal","short_name":"Agent OS","start_url":"/","display":"standalone","background_color":"#0b0d12","theme_color":"#0b0d12"}

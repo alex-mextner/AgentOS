@@ -1,1 +1,0 @@
-No further scaffold markers should be added after this commit.

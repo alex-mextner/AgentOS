@@ -1,1 +1,0 @@
-GitHub Issues and Markdown are canonical. Vercel renders derived public views.

@@ -28,9 +28,11 @@ Pixel 9 establishes the camera, display, power, responsiveness, connectivity, an
 
 Camera work is treated as a cross-device programme: RAW acquisition, sensor timing, ISP contracts, 3A, calibration, burst processing, temporal fusion, colour science, video, stabilization, power, and objective/subjective image-quality testing.
 
-### Future custom device
+### Later contract-manufactured device
 
-Board packages, device-service IDL, secure boot, OTA, diagnostics, regulatory evidence, firmware licensing, and supply-chain records are designed so a future ODM/JDM device can replace research targets without rewriting product layers.
+The board-package boundary, device-service IDL, secure boot, OTA, diagnostics, regulatory evidence, firmware licensing, and supply-chain records must permit a later ODM/JDM/OEM device to replace research targets without rewriting the product and system layers.
+
+This is preparation, not an assumption that a vendor contract, budget, production volume, or delivery date already exists. Current roadmap gates must be satisfied using available hardware. A contract-manufactured device becomes an active programme only after explicit commercial, documentation-access, security, certification, and supply-continuity gates are approved.
 
 ## Selection scorecard
 

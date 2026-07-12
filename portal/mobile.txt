@@ -1,1 +1,0 @@
-Responsive web app; add to iPhone Home Screen after deployment.

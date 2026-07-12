@@ -21,12 +21,25 @@ The operating system is divided into architecture packages, board packages, devi
 
 ## Portability rule
 
-No portable layer may expose Linux file descriptors, ioctl values, Binder objects, Android HAL types, vendor structs, or board addresses. Platform adapters translate into native versioned IDL types.
+No portable layer may expose Linux file descriptors, ioctl values, Binder objects, Android HAL types, vendor structs, or board addresses. Platform providers implement native versioned contracts.
+
+## Contract and adapter performance
+
+Portability is a semantic boundary, not a requirement to serialize or copy every operation.
+
+- IDL tooling generates statically typed bindings; control-plane conversion must be compile-time visible and bounded.
+- Semantically identical native values may be passed through without field-by-field rebuilding.
+- Bulk camera, display, audio, network, and storage payloads use shared memory, DMA-capable buffer handles, descriptor rings, queues, and synchronization fences.
+- A documented semantic gap describes a capability or behavioural difference during design and bring-up; it is not a mandatory runtime translation step.
+- Backend-specific fast paths are allowed below the stable contract when they preserve observable semantics and capability checks.
+- A hot-path provider is unacceptable if it adds an avoidable full-payload copy, unbounded allocation, hidden format conversion, or unmeasured scheduling hop.
+
+Each device-service specification must define latency, throughput, copy-count, allocation, and CPU-budget tests. The initial baseline is measured against the most direct safe implementation on that target; subsequent providers must report their delta.
 
 ## Pixel 9 boundary
 
-Pixel 9 work may use stock Android/Linux only as an evidence oracle, trace source, recovery environment, or temporary sidecar. Every retained dependency requires a replacement issue, owner, legal basis, and stop date.
+Pixel 9 work may use stock Android/Linux only as an evidence oracle, trace source, recovery environment, or temporary sidecar. Every retained dependency requires a replacement issue, owner, legal basis, and stop condition.
 
 ## Acceptance
 
-A component is portable when it runs unchanged against QEMU and at least one physical board adapter, with conformance tests proving identical observable contract behaviour.
+A component is portable when it runs unchanged against QEMU and at least one physical board provider, with conformance tests proving identical observable contract behaviour and performance tests showing no accidental data-path copies.

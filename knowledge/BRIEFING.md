@@ -23,7 +23,13 @@ The programme runs parallel tracks:
 3. open phone-form-factor research;
 4. camera and computational-photography laboratory;
 5. Pixel 9 as the quality ceiling and feasibility target;
-6. future ODM/JDM device readiness.
+6. readiness for a later contract-manufactured device.
+
+The sixth track is an architectural constraint, not a dependency or procurement assumption. All current milestones must remain achievable without an ODM, JDM, or OEM agreement.
+
+## Adapter performance rule
+
+Portable contracts define semantics, ownership, synchronization, and capability boundaries. They do not require copying bulk payloads into generic Agent OS structures. Control-plane bindings are generated and statically typed; camera, display, audio, network, and storage data planes use shared buffers, DMA-capable memory, rings, descriptors, and fences. Any hot-path adapter must prove that it adds no avoidable payload copy and stays within an explicit latency and CPU budget.
 
 ## Public operating model
 
