@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Architecture discussion
+    url: https://github.com/alex-mextner/HyperOS/discussions
+    about: Discuss broad ideas before turning them into bounded tasks or RFCs.
