@@ -1,3 +1,9 @@
+---
+id: AOS-SOURCES-POLICY
+title: Source and Provenance Policy
+status: foundation
+---
+
 # Source and Provenance Policy
 
 User-provided archives and publications are retained outside the public repository until copyright, confidentiality, privacy, firmware, and redistribution status are reviewed.
