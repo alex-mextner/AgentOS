@@ -1,0 +1,77 @@
+name: Bootstrap public task hierarchy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  phases:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create labels
+        run: |
+          declare -A labels=(
+            ["type:epic"]="7057ff"
+            ["type:task"]="1d76db"
+            ["status:planned"]="d4c5f9"
+            ["evidence-required"]="fbca04"
+            ["track:core"]="0e8a16"
+            ["track:hardware"]="b60205"
+            ["track:community"]="5319e7"
+          )
+          for name in "${!labels[@]}"; do
+            gh label create "$name" --repo "$REPO" --color "${labels[$name]}" --force
+          done
+
+      - name: Create phase epics idempotently
+        shell: bash
+        run: |
+          set -euo pipefail
+          phases=(
+            "AOS-PHASE-0|Source intake and architectural decisions|track:core"
+            "AOS-PHASE-1|Research and feasibility experiments|track:core"
+            "AOS-PHASE-2|Portable contracts|track:core"
+            "AOS-PHASE-3|Normative specifications|track:core"
+            "AOS-PHASE-4|Rust engineering baseline|track:core"
+            "AOS-PHASE-5|QEMU scaffold|track:core"
+            "AOS-PHASE-6|Microkernel vertical slice|track:core"
+            "AOS-PHASE-7|Physical hardware and Pixel 9 evidence|track:hardware"
+            "AOS-PHASE-8|Publication and community launch|track:community"
+          )
+
+          for row in "${phases[@]}"; do
+            IFS='|' read -r id title track <<< "$row"
+            existing=$(gh issue list --repo "$REPO" --state all --search "\"$id\" in:title" --json number --jq '.[0].number // empty')
+            if [[ -n "$existing" ]]; then
+              echo "$id already exists as #$existing"
+              continue
+            fi
+            body=$(cat <<EOF
+          ## Objective
+
+          $title.
+
+          ## Exit evidence
+
+          - [ ] Acceptance artifacts are linked.
+          - [ ] Blocking claims are verified or explicitly rejected.
+          - [ ] Related specifications and experiments are cross-linked.
+          - [ ] Downstream tasks are re-baselined from observed evidence.
+
+          ## References
+
+          - [Roadmap authority](../../blob/main/knowledge/docs/planning/PLAN-002-roadmap-and-gantt.md)
+          - Stable ID: \`$id\`
+          EOF
+          )
+            gh issue create --repo "$REPO" --title "[$id] $title" --body "$body" \
+              --label "type:epic,status:planned,evidence-required,$track"
+          done
