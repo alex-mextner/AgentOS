@@ -80,28 +80,40 @@ jobs:
               sys.exit(1)
           print(f'Validated {len(ids)} identified Markdown documents and portal structure.')
 
-      - name: Validate compressed 327-task catalog
+      - name: Check gzip container integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          ls -lh data/tasks.csv.gz
+          gzip -t data/tasks.csv.gz
+
+      - name: Check task record count
         shell: python
         run: |
           import csv
           import gzip
           import sys
-
-          errors = []
           with gzip.open('data/tasks.csv.gz', 'rt', encoding='utf-8-sig', newline='') as fh:
               tasks = list(csv.DictReader(fh))
+          print(f'Found {len(tasks)} task records.')
           if len(tasks) != 327:
-              errors.append(f'Expected 327 task records, found {len(tasks)}.')
+              sys.exit(f'Expected 327 task records, found {len(tasks)}.')
+
+      - name: Check task identifiers
+        shell: python
+        run: |
+          import csv
+          import gzip
+          import sys
+          with gzip.open('data/tasks.csv.gz', 'rt', encoding='utf-8-sig', newline='') as fh:
+              tasks = list(csv.DictReader(fh))
           task_ids = [row.get('task_id', '') for row in tasks]
           if len(task_ids) != len(set(task_ids)):
-              errors.append('Task catalog contains duplicate task_id values.')
+              sys.exit('Task catalog contains duplicate task_id values.')
           invalid = [task_id for task_id in task_ids if not task_id.startswith('AOS-')]
           if invalid:
-              errors.append(f'Task catalog contains invalid task_id values: {invalid[:5]}')
-          if errors:
-              print('\n'.join(errors))
-              sys.exit(1)
-          print(f'Validated {len(tasks)} unique task records.')
+              sys.exit(f'Task catalog contains invalid task_id values: {invalid[:5]}')
+          print(f'Validated {len(task_ids)} unique AOS task identifiers.')
 
       - name: Check publication hygiene and syntax markers
         shell: bash
