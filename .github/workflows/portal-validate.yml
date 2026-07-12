@@ -6,6 +6,7 @@ on:
       - 'portal/**'
       - 'knowledge/**'
       - 'docs/**'
+      - 'data/**'
       - '.github/workflows/portal-validate.yml'
   push:
     branches: [main]
@@ -13,31 +14,31 @@ on:
       - 'portal/**'
       - 'knowledge/**'
       - 'docs/**'
+      - 'data/**'
 
 permissions:
   contents: read
 
 jobs:
-  validate:
+  structure:
+    name: Portal and document structure
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Validate required files and document identifiers
-        shell: python
+      - shell: python
         run: |
           from pathlib import Path
           import re
           import sys
 
           required = [
-              Path('portal/index.html'),
-              Path('vercel.json'),
-              Path('knowledge/BRIEFING.md'),
-              Path('knowledge/docs/INDEX.md'),
+              Path('portal/index.html'), Path('portal/style.css'),
+              Path('portal/data.js'), Path('portal/app.js'),
+              Path('portal/manifest.webmanifest'), Path('vercel.json'),
+              Path('knowledge/BRIEFING.md'), Path('knowledge/docs/INDEX.md'),
+              Path('data/tasks/index.json'), Path('data/TASK-CATALOG.md'),
           ]
           errors = [f'Missing required file: {p}' for p in required if not p.exists()]
-
           ids = {}
           for path in Path('knowledge').rglob('*.md'):
               text = path.read_text(encoding='utf-8')
@@ -50,18 +51,131 @@ jobs:
                   errors.append(f'Duplicate id {doc_id}: {ids[doc_id]} and {path}')
               ids[doc_id] = path
 
-          portal = Path('portal/index.html').read_text(encoding='utf-8')
+          portal = '\n'.join(Path(p).read_text(encoding='utf-8') for p in (
+              'portal/index.html', 'portal/data.js', 'portal/app.js'))
           for section in ('Wiki', 'Tasks', 'Gantt', 'API'):
               if section not in portal:
                   errors.append(f'Portal section missing: {section}')
+          if 'Public engineering workspace for Agent OS.' not in portal:
+              errors.append('Direct portal headline is missing.')
+          if 'An engineering operating system for building an operating system.' in portal:
+              errors.append('Ambiguous old portal headline is still present.')
+          if 'data/tasks/' not in portal or 'index.json' not in portal:
+              errors.append('Portal does not load the JSON task catalog.')
+          if 'tasks.csv.gz' in portal or 'DecompressionStream' in portal:
+              errors.append('Obsolete compressed catalog loader is present.')
 
+          forbidden = {'final-marker.txt','ready.txt','no-more-files.txt','pr-ready.txt',
+              'pr-state.txt','STOP','.scaffold-complete','task-count.txt',
+              'document-count.txt','phase-count.txt','complete.txt'}
+          for path in Path('portal').iterdir():
+              if path.name in forbidden:
+                  errors.append(f'Temporary marker file is tracked: {path}')
           if errors:
               print('\n'.join(errors))
               sys.exit(1)
-          print(f'Validated {len(ids)} identified Markdown documents.')
+          print(f'Validated {len(ids)} identified Markdown documents and portal structure.')
 
-      - name: Check public JSON and HTML syntax markers
+  shard:
+    name: Shard ${{ matrix.file }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { file: phase-0.json, count: 37 }
+          - { file: phase-1.json, count: 27 }
+          - { file: phase-2.json, count: 32 }
+          - { file: phase-3.json, count: 2 }
+          - { file: phase-4.json, count: 4 }
+          - { file: phase-5.json, count: 10 }
+          - { file: phase-6-01.json, count: 36 }
+          - { file: phase-6-02.json, count: 34 }
+          - { file: phase-6-03.json, count: 18 }
+          - { file: phase-7-01.json, count: 35 }
+          - { file: phase-7-02.json, count: 34 }
+          - { file: phase-7-03-01.json, count: 8 }
+          - { file: phase-7-03-02.json, count: 8 }
+          - { file: phase-7-03-03.json, count: 8 }
+          - { file: phase-7-03-04.json, count: 8 }
+          - { file: phase-7-03-05.json, count: 2 }
+          - { file: phase-7-04.json, count: 3 }
+          - { file: phase-8.json, count: 21 }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate ${{ matrix.file }}
+        shell: python
+        env:
+          SHARD_FILE: ${{ matrix.file }}
+          EXPECTED_COUNT: ${{ matrix.count }}
         run: |
+          from pathlib import Path
+          import json
+          import os
+          import sys
+          path = Path('data/tasks') / os.environ['SHARD_FILE']
+          expected = int(os.environ['EXPECTED_COUNT'])
+          if not path.exists():
+              sys.exit(f'Missing task shard: {path}')
+          rows = json.loads(path.read_text(encoding='utf-8'))
+          if not isinstance(rows, list):
+              sys.exit(f'Task shard is not a list: {path}')
+          if len(rows) != expected:
+              sys.exit(f'{path}: expected {expected} records, found {len(rows)}')
+          invalid = [row.get('id', '') for row in rows if not row.get('id', '').startswith('AOS-')]
+          if invalid:
+              sys.exit(f'{path}: invalid IDs {invalid[:5]}')
+          print(f'{path}: {len(rows)} valid records')
+
+  catalog:
+    name: Complete 327-task catalog
+    needs: shard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - shell: python
+        run: |
+          from pathlib import Path
+          import json
+          import sys
+          index = json.loads(Path('data/tasks/index.json').read_text(encoding='utf-8'))
+          tasks = []
+          errors = []
+          for entry in index.get('files', []):
+              path = Path('data/tasks') / entry['file']
+              rows = json.loads(path.read_text(encoding='utf-8'))
+              if len(rows) != entry['count']:
+                  errors.append(f'{path}: manifest count mismatch')
+              tasks.extend(rows)
+          if len(tasks) != index.get('count') or len(tasks) != 327:
+              errors.append(f'Expected 327 tasks; manifest={index.get("count")}, loaded={len(tasks)}')
+          ids = [row.get('id', '') for row in tasks]
+          duplicates = sorted({x for x in ids if ids.count(x) > 1})
+          if duplicates:
+              errors.append(f'Duplicate IDs: {duplicates[:10]}')
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print(f'Validated {len(tasks)} unique task records across {len(index["files"])} shards.')
+
+  hygiene:
+    name: Publication hygiene
+    needs: [structure, catalog]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - shell: bash
+        run: |
+          set -euo pipefail
           python -m json.tool vercel.json >/dev/null
+          python -m json.tool portal/manifest.webmanifest >/dev/null
+          python -m json.tool data/tasks/index.json >/dev/null
+          node --check portal/data.js
+          node --check portal/app.js
           grep -q '<!doctype html>' portal/index.html
-          grep -q 'api.github.com/repos' portal/index.html
+          grep -q 'api.github.com/repos' portal/data.js
+          if git ls-files '*.zip' '*.pdf' '*.gz' | grep -q .; then
+            echo 'ZIP, PDF, or gzip artifacts must not be committed.' >&2
+            git ls-files '*.zip' '*.pdf' '*.gz' >&2
+            exit 1
+          fi
