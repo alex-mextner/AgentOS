@@ -1,0 +1,1 @@
+Canonical writes occur through GitHub pull requests and Issues.
