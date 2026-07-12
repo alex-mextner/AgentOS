@@ -2,6 +2,8 @@
 
 Agent OS is an original Rust-first mobile operating-system programme centred on an owned microkernel, capability-secured IPC, portable device-service contracts, and agent-oriented system layers.
 
+**Public engineering portal:** https://agent-os-portal-eight.vercel.app
+
 ## Architecture boundary
 
 The native architecture does not depend on Android, Linux, POSIX, Binder, or Android HAL contracts. Android and Linux are permitted only inside the isolated Pixel 9 evidence and bring-up track as stock-device oracles, trace sources, recovery mechanisms, and explicitly temporary bridges with replacement criteria.
@@ -17,14 +19,19 @@ The native architecture does not depend on Android, Linux, POSIX, Binder, or And
 
 ## Hardware strategy
 
-Current milestones must be deliverable on QEMU and available research hardware. The architecture is also prepared for a later contract-manufactured device, but no milestone assumes an ODM, JDM, or OEM agreement already exists.
+Current milestones must be deliverable on QEMU and available research hardware. The architecture is prepared to support a later contract-manufactured device without rewriting portable system or product layers. This is a compatibility requirement, not an assumption that an ODM, JDM, or OEM agreement, budget, volume, or delivery date already exists.
+
+## Performance boundary
+
+Portable device-service contracts do not imply generic runtime translation or payload copying. Control-plane bindings are statically typed. Performance-sensitive camera, display, audio, network, and storage paths use shared memory, DMA-capable buffers, descriptor rings, queues, and synchronization fences. Hot-path adapters must meet explicit copy-count, latency, CPU, and allocation budgets.
 
 ## Current status
 
-Foundation publication is in progress. The first release establishes architecture boundaries, hardware tracks, public documentation, task hierarchy, validation rules, and the portal. It does **not** claim that the microkernel or native Pixel 9 support is already implemented.
+Foundation publication is live. The first release establishes architecture boundaries, hardware tracks, public documentation, phase tasks, validation rules, and the portal. It does **not** claim that the microkernel or native Pixel 9 support is already implemented.
 
 ## Start here
 
+- [Public portal](https://agent-os-portal-eight.vercel.app)
 - [Executive briefing](knowledge/BRIEFING.md)
 - [Documentation index](knowledge/docs/INDEX.md)
 - [Portable architecture](knowledge/docs/architecture/ARCH-001-portable-system-architecture.md)
