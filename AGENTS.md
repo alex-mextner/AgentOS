@@ -1,28 +1,41 @@
-# HyperOS
+# Agent OS
 
-A Fuchsia-architecture-inspired mobile OS product prototype, written in Rust, targeting a Pixel 9 form-factor simulator.
+Agent OS is an original Rust-first mobile operating-system programme built around an owned microkernel, capability-secured IPC, portable device-service contracts, and agent-oriented system layers.
 
 ## Status
 
-Early bootstrap. Stack and scope being finalized via specs in docs/specs/.
+Foundation engineering, public documentation, task infrastructure, and early kernel planning are in progress. Do not present unimplemented kernel, driver, camera, modem, or Pixel 9 support as complete.
 
 ## Repository layout
 
-- `crates/` — Rust crates (kernel, drivers, services, user-space components).
-- `sim/` — Simulator harness and device model for Pixel 9 form-factor.
-- `docs/specs/` — Authoritative specification documents. Read these before touching code.
-- `docs/plans/` — Implementation plans derived from specs.
-- `assets/` — Static assets (icons, fonts, graphics, test fixtures).
+- `crates/` — Rust crates for kernel, architecture packages, drivers, services, and user-space components.
+- `sim/` — QEMU and deterministic simulation harnesses.
+- `knowledge/` — canonical public specifications, research, claims, experiments, glossary, and planning records.
+- `portal/` — Vercel-hosted public Wiki, task, Gantt, and API projection.
+- `docs/` — contributor and operational documentation.
+- `assets/` — static assets, test fixtures, and redistributable evidence.
 
-## How agents work in this repo
+## Architectural boundaries
 
-- Work is spec-driven: read `docs/specs/` before writing or modifying any code.
-- Rust is the primary language; no other languages in `crates/` or `sim/` without a spec blessing it.
-- Prefer LSP/code-intelligence tooling (`serena`, `sverklo`) for navigation and refactors over raw grep.
-- One logical change per commit; use conventional commit messages (e.g. `feat:`, `fix:`, `chore:`).
-- Never commit Cyrillic into `AGENTS.md`, `CLAUDE.md`, or any other agent-facing doc. English only.
-- Do not run `cargo build` or `cargo test` without checking the current build status first — the dev machine may be under load.
+- The project owns its microkernel and native system contracts.
+- Portable layers must not expose Linux, Android, Binder, POSIX, or vendor ABI types.
+- Android/Linux use is restricted to the isolated Pixel 9 evidence and bring-up track.
+- Device-service adapters must not add avoidable hot-path copies or hidden format conversion.
+- Bulk data paths should use shared memory, DMA-capable buffers, descriptor rings, queues, and fences.
+- A later ODM/JDM/OEM device is supported by the architecture, but current milestones must not depend on a future vendor contract.
 
-## Build & test
+## How agents work in this repository
 
-TBD — toolchain being selected. Be careful with heavy compilation; the dev machine is under load.
+- Read the relevant `knowledge/` specifications before modifying architecture or implementation.
+- Rust is the primary systems language.
+- Prefer LSP and code-intelligence tooling for navigation and refactors.
+- Use one logical change per commit and conventional commit messages.
+- Keep normative and agent-facing documentation in English.
+- Record unknowns as claims or experiments rather than turning them into implementation assumptions.
+- Link changes to stable `AOS-*` document or task identifiers.
+- Do not commit proprietary firmware, copyrighted source archives, private traces, personal data, or material with unclear redistribution rights.
+- Check current CI and machine load before starting expensive builds or test suites.
+
+## Build and test
+
+The complete toolchain is not yet frozen. Every new executable component must document its build command, test command, supported targets, expected resource cost, and produced evidence.
