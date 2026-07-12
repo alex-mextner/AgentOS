@@ -1,0 +1,1 @@
+No analytics or database is required for the foundation preview. Public task data is read from GitHub.
