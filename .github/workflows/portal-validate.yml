@@ -34,11 +34,14 @@ jobs:
 
           required = [
               Path('portal/index.html'),
+              Path('portal/style.css'),
+              Path('portal/data.js'),
+              Path('portal/app.js'),
               Path('portal/manifest.webmanifest'),
               Path('vercel.json'),
               Path('knowledge/BRIEFING.md'),
               Path('knowledge/docs/INDEX.md'),
-              Path('data/tasks.csv.gz'),
+              Path('data/tasks/index.json'),
               Path('data/TASK-CATALOG.md'),
           ]
           errors = [f'Missing required file: {p}' for p in required if not p.exists()]
@@ -55,7 +58,7 @@ jobs:
                   errors.append(f'Duplicate id {doc_id}: {ids[doc_id]} and {path}')
               ids[doc_id] = path
 
-          portal = Path('portal/index.html').read_text(encoding='utf-8')
+          portal = '\n'.join(Path(p).read_text(encoding='utf-8') for p in ('portal/index.html','portal/data.js','portal/app.js'))
           for section in ('Wiki', 'Tasks', 'Gantt', 'API'):
               if section not in portal:
                   errors.append(f'Portal section missing: {section}')
@@ -63,8 +66,10 @@ jobs:
               errors.append('Portal headline is missing or changed unexpectedly.')
           if 'An engineering operating system for building an operating system.' in portal:
               errors.append('Ambiguous old portal headline is still present.')
-          if 'tasks.csv.gz' not in portal or 'DecompressionStream' not in portal:
-              errors.append('Portal does not load the public task catalog.')
+          if 'data/tasks/' not in portal or 'index.json' not in portal:
+              errors.append('Portal does not load the JSON task catalog.')
+          if 'tasks.csv.gz' in portal or 'DecompressionStream' in portal:
+              errors.append('Obsolete compressed task-catalog loader is still present.')
 
           forbidden_markers = {
               'final-marker.txt', 'ready.txt', 'no-more-files.txt', 'pr-ready.txt',
@@ -80,40 +85,44 @@ jobs:
               sys.exit(1)
           print(f'Validated {len(ids)} identified Markdown documents and portal structure.')
 
-      - name: Check gzip container integrity
-        shell: bash
-        run: |
-          set -euo pipefail
-          ls -lh data/tasks.csv.gz
-          gzip -t data/tasks.csv.gz
-
-      - name: Check task record count
+      - name: Validate open 327-task JSON catalog
         shell: python
         run: |
-          import csv
-          import gzip
+          from pathlib import Path
+          import json
           import sys
-          with gzip.open('data/tasks.csv.gz', 'rt', encoding='utf-8-sig', newline='') as fh:
-              tasks = list(csv.DictReader(fh))
-          print(f'Found {len(tasks)} task records.')
+
+          index = json.loads(Path('data/tasks/index.json').read_text(encoding='utf-8'))
+          errors = []
+          tasks = []
+          for entry in index.get('files', []):
+              path = Path('data/tasks') / entry['file']
+              if not path.exists():
+                  errors.append(f"Missing task shard: {path}")
+                  continue
+              rows = json.loads(path.read_text(encoding='utf-8'))
+              if not isinstance(rows, list):
+                  errors.append(f"Task shard is not a list: {path}")
+                  continue
+              if len(rows) != entry['count']:
+                  errors.append(f"Task shard count mismatch for {path}: expected {entry['count']}, found {len(rows)}")
+              tasks.extend(rows)
+
+          if len(tasks) != index.get('count'):
+              errors.append(f"Expected {index.get('count')} task records, found {len(tasks)}")
           if len(tasks) != 327:
-              sys.exit(f'Expected 327 task records, found {len(tasks)}.')
-
-      - name: Check task identifiers
-        shell: python
-        run: |
-          import csv
-          import gzip
-          import sys
-          with gzip.open('data/tasks.csv.gz', 'rt', encoding='utf-8-sig', newline='') as fh:
-              tasks = list(csv.DictReader(fh))
-          task_ids = [row.get('task_id', '') for row in tasks]
+              errors.append(f'Expected 327 task records, found {len(tasks)}')
+          task_ids = [row.get('id', '') for row in tasks]
           if len(task_ids) != len(set(task_ids)):
-              sys.exit('Task catalog contains duplicate task_id values.')
+              errors.append('Task catalog contains duplicate IDs.')
           invalid = [task_id for task_id in task_ids if not task_id.startswith('AOS-')]
           if invalid:
-              sys.exit(f'Task catalog contains invalid task_id values: {invalid[:5]}')
-          print(f'Validated {len(task_ids)} unique AOS task identifiers.')
+              errors.append(f'Task catalog contains invalid IDs: {invalid[:5]}')
+
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print(f'Validated {len(tasks)} unique task records across {len(index["files"])} JSON shards.')
 
       - name: Check publication hygiene and syntax markers
         shell: bash
@@ -121,10 +130,13 @@ jobs:
           set -euo pipefail
           python -m json.tool vercel.json >/dev/null
           python -m json.tool portal/manifest.webmanifest >/dev/null
+          python -m json.tool data/tasks/index.json >/dev/null
+          node --check portal/data.js
+          node --check portal/app.js
           grep -q '<!doctype html>' portal/index.html
-          grep -q 'api.github.com/repos' portal/index.html
-          if git ls-files '*.zip' '*.pdf' | grep -q .; then
-            echo 'ZIP or PDF artifacts must not be committed.' >&2
-            git ls-files '*.zip' '*.pdf' >&2
+          grep -q 'api.github.com/repos' portal/data.js
+          if git ls-files '*.zip' '*.pdf' '*.gz' | grep -q .; then
+            echo 'ZIP, PDF, or gzip artifacts must not be committed.' >&2
+            git ls-files '*.zip' '*.pdf' '*.gz' >&2
             exit 1
           fi
