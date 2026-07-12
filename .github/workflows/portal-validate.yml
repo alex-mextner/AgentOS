@@ -6,6 +6,7 @@ on:
       - 'portal/**'
       - 'knowledge/**'
       - 'docs/**'
+      - 'data/**'
       - '.github/workflows/portal-validate.yml'
   push:
     branches: [main]
@@ -13,6 +14,7 @@ on:
       - 'portal/**'
       - 'knowledge/**'
       - 'docs/**'
+      - 'data/**'
 
 permissions:
   contents: read
@@ -23,18 +25,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate required files and document identifiers
+      - name: Validate required files, identifiers, and task catalog
         shell: python
         run: |
           from pathlib import Path
+          import csv
+          import gzip
           import re
           import sys
 
           required = [
               Path('portal/index.html'),
+              Path('portal/manifest.webmanifest'),
               Path('vercel.json'),
               Path('knowledge/BRIEFING.md'),
               Path('knowledge/docs/INDEX.md'),
+              Path('data/tasks.csv.gz'),
+              Path('data/TASK-CATALOG.md'),
           ]
           errors = [f'Missing required file: {p}' for p in required if not p.exists()]
 
@@ -54,14 +61,48 @@ jobs:
           for section in ('Wiki', 'Tasks', 'Gantt', 'API'):
               if section not in portal:
                   errors.append(f'Portal section missing: {section}')
+          if 'Public engineering workspace for Agent OS.' not in portal:
+              errors.append('Portal headline is missing or changed unexpectedly.')
+          if 'An engineering operating system for building an operating system.' in portal:
+              errors.append('Ambiguous old portal headline is still present.')
+          if 'tasks.csv.gz' not in portal or 'DecompressionStream' not in portal:
+              errors.append('Portal does not load the public task catalog.')
+
+          if Path('data/tasks.csv.gz').exists():
+              with gzip.open('data/tasks.csv.gz', 'rt', encoding='utf-8-sig', newline='') as fh:
+                  tasks = list(csv.DictReader(fh))
+              if len(tasks) != 327:
+                  errors.append(f'Expected 327 task records, found {len(tasks)}.')
+              task_ids = [row.get('task_id', '') for row in tasks]
+              if len(task_ids) != len(set(task_ids)):
+                  errors.append('Task catalog contains duplicate task_id values.')
+              if any(not task_id.startswith('AOS-') for task_id in task_ids):
+                  errors.append('Task catalog contains an invalid task_id.')
+
+          forbidden_markers = {
+              'final-marker.txt', 'ready.txt', 'no-more-files.txt', 'pr-ready.txt',
+              'pr-state.txt', 'STOP', '.scaffold-complete', 'task-count.txt',
+              'document-count.txt', 'phase-count.txt', 'complete.txt',
+          }
+          for path in Path('portal').iterdir():
+              if path.name in forbidden_markers:
+                  errors.append(f'Temporary marker file is tracked: {path}')
 
           if errors:
               print('\n'.join(errors))
               sys.exit(1)
-          print(f'Validated {len(ids)} identified Markdown documents.')
+          print(f'Validated {len(ids)} identified Markdown documents and {len(tasks)} tasks.')
 
-      - name: Check public JSON and HTML syntax markers
+      - name: Check publication hygiene and syntax markers
+        shell: bash
         run: |
+          set -euo pipefail
           python -m json.tool vercel.json >/dev/null
+          python -m json.tool portal/manifest.webmanifest >/dev/null
           grep -q '<!doctype html>' portal/index.html
           grep -q 'api.github.com/repos' portal/index.html
+          if git ls-files '*.zip' '*.pdf' | grep -q .; then
+            echo 'ZIP or PDF artifacts must not be committed.' >&2
+            git ls-files '*.zip' '*.pdf' >&2
+            exit 1
+          fi
