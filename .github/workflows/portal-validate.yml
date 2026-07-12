@@ -25,12 +25,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate required files, identifiers, and task catalog
+      - name: Validate portal and document structure
         shell: python
         run: |
           from pathlib import Path
-          import csv
-          import gzip
           import re
           import sys
 
@@ -68,17 +66,6 @@ jobs:
           if 'tasks.csv.gz' not in portal or 'DecompressionStream' not in portal:
               errors.append('Portal does not load the public task catalog.')
 
-          if Path('data/tasks.csv.gz').exists():
-              with gzip.open('data/tasks.csv.gz', 'rt', encoding='utf-8-sig', newline='') as fh:
-                  tasks = list(csv.DictReader(fh))
-              if len(tasks) != 327:
-                  errors.append(f'Expected 327 task records, found {len(tasks)}.')
-              task_ids = [row.get('task_id', '') for row in tasks]
-              if len(task_ids) != len(set(task_ids)):
-                  errors.append('Task catalog contains duplicate task_id values.')
-              if any(not task_id.startswith('AOS-') for task_id in task_ids):
-                  errors.append('Task catalog contains an invalid task_id.')
-
           forbidden_markers = {
               'final-marker.txt', 'ready.txt', 'no-more-files.txt', 'pr-ready.txt',
               'pr-state.txt', 'STOP', '.scaffold-complete', 'task-count.txt',
@@ -91,7 +78,30 @@ jobs:
           if errors:
               print('\n'.join(errors))
               sys.exit(1)
-          print(f'Validated {len(ids)} identified Markdown documents and {len(tasks)} tasks.')
+          print(f'Validated {len(ids)} identified Markdown documents and portal structure.')
+
+      - name: Validate compressed 327-task catalog
+        shell: python
+        run: |
+          import csv
+          import gzip
+          import sys
+
+          errors = []
+          with gzip.open('data/tasks.csv.gz', 'rt', encoding='utf-8-sig', newline='') as fh:
+              tasks = list(csv.DictReader(fh))
+          if len(tasks) != 327:
+              errors.append(f'Expected 327 task records, found {len(tasks)}.')
+          task_ids = [row.get('task_id', '') for row in tasks]
+          if len(task_ids) != len(set(task_ids)):
+              errors.append('Task catalog contains duplicate task_id values.')
+          invalid = [task_id for task_id in task_ids if not task_id.startswith('AOS-')]
+          if invalid:
+              errors.append(f'Task catalog contains invalid task_id values: {invalid[:5]}')
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print(f'Validated {len(tasks)} unique task records.')
 
       - name: Check publication hygiene and syntax markers
         shell: bash
