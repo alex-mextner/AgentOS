@@ -1,0 +1,55 @@
+name: Implementation task
+description: Propose or track an implementation task with explicit evidence.
+title: "[AOS-TASK-ID] "
+labels:
+  - "type:task"
+  - "status:planned"
+  - "evidence-required"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use a stable AOS task ID. Link the normative specification and avoid placing unverified assumptions in implementation scope.
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: State the observable outcome, not merely the activity.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and boundaries
+      description: Include non-goals and prohibited dependencies.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      value: |
+        - [ ]
+        - [ ]
+        - [ ]
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Required evidence
+      description: Tests, traces, measurements, reviewed artifacts, or explicit negative findings.
+    validations:
+      required: true
+  - type: input
+    id: specs
+    attributes:
+      label: Related specifications
+      placeholder: AOS-ARCH-002#capability-objects
+    validations:
+      required: true
+  - type: input
+    id: dependencies
+    attributes:
+      label: Dependencies or blockers
+      placeholder: AOS-TASK-..., #123

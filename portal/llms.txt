@@ -1,0 +1,13 @@
+# Agent OS Engineering Portal
+
+Canonical repository: https://github.com/alex-mextner/HyperOS
+
+Primary records:
+- /knowledge/BRIEFING.md
+- /knowledge/docs/INDEX.md
+- /knowledge/docs/architecture/ARCH-001-portable-system-architecture.md
+- /knowledge/docs/architecture/ARCH-002-microkernel.md
+- /knowledge/docs/hardware/HW-001-target-portfolio.md
+- /knowledge/docs/planning/PLAN-002-roadmap-and-gantt.md
+
+Android and Linux are restricted to isolated Pixel 9 evidence and bring-up work. The native architecture is an original Rust-first microkernel and owned system stack.

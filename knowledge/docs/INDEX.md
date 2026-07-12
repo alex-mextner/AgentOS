@@ -1,0 +1,33 @@
+---
+id: AOS-INDEX
+title: Documentation Index
+status: foundation
+---
+
+# Documentation Index
+
+## Foundation
+
+- [Executive briefing](../BRIEFING.md)
+- [Portable system architecture](architecture/ARCH-001-portable-system-architecture.md)
+- [Microkernel specification](architecture/ARCH-002-microkernel.md)
+- [Hardware target portfolio](hardware/HW-001-target-portfolio.md)
+- [Roadmap and Gantt](planning/PLAN-002-roadmap-and-gantt.md)
+- [Glossary](glossary/GLOSSARY.md)
+
+## Planned volumes
+
+1. Foundation and governance
+2. Kernel and native system architecture
+3. Hardware and device bring-up
+4. Research and prior art
+5. Legal and compliance
+6. Project management and delivery
+7. Procurement and laboratory operations
+8. Contacts, partnerships, and community
+9. Knowledge base and glossary
+10. Validation and assurance
+
+## Linking convention
+
+Canonical links use stable IDs and anchors in source text, for example `[[AOS-ARCH-002#capability-objects]]`. Publication tooling resolves those references to repository or portal URLs. Every normative document must declare an ID, status, owner, sources, and related task IDs.

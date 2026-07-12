@@ -1,0 +1,4 @@
+Contact: https://github.com/alex-mextner/HyperOS/security
+Preferred-Languages: en, ru
+Canonical: https://github.com/alex-mextner/HyperOS/blob/main/SECURITY.md
+Policy: https://github.com/alex-mextner/HyperOS/security/policy

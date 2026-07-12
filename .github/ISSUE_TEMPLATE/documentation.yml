@@ -1,0 +1,45 @@
+name: Documentation or research change
+description: Request a specification, research, glossary, legal, or evidence update.
+title: "[AOS-DOC-ID] "
+labels:
+  - "status:planned"
+  - "evidence-required"
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Record type
+      options:
+        - Normative specification
+        - Research and prior art
+        - Claim verification
+        - Experiment record
+        - Legal or licensing review
+        - Glossary or terminology
+        - Portal or publication tooling
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or knowledge gap
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Primary sources and provenance
+      description: Prefer official documentation, research papers, standards, and original artifacts.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      value: |
+        - [ ] Stable document ID and anchors are present.
+        - [ ] Claims distinguish evidence, inference, and open questions.
+        - [ ] Related tasks and documents are linked.
+        - [ ] Publication validation passes.
+    validations:
+      required: true

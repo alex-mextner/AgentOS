@@ -1,0 +1,3 @@
+Agent OS public engineering programme
+Maintainer: alex-mextner
+Source: https://github.com/alex-mextner/HyperOS
