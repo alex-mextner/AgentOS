@@ -36,7 +36,7 @@ Honest status of the full sol handoff (§1–13) plus the content plan. Not "alm
 2. **§7 Portal completeness** — PARTIAL: added /claims /experiments /sources /risks /glossary /decisions (from registers). STILL TODO: /procurement /contacts; per-doc TOC, backlinks, prev/next, provenance panel, cross-doc full-text search, Mermaid/image render polish, verify Edit-on-GitHub URLs.
 3. **§8 Research-grade comparisons** — deep iOS/Android/AgentOS matrix (system object model, action APIs, agent authority, history, sandboxing, updates, privacy, offline…); detailed pages for Fuchsia/Zircon, seL4, Genode, Redox, postmarketOS, GrapheneOS, MINIX3, QNX, Haiku, Plan 9/Inferno, KeyKOS/EROS/CapROS, Tock, Hubris, Theseus, Barrelfish, HarmonyOS, App Intents/AppFunctions, Anytype, Automerge, Loro. Each claim sourced.
 4. **§9 Hardware/device catalogue** — per-target matrix (role, quality ceiling, docs access, boot control, GPU, camera, modem, power, security, debug, firmware, legal route, cost, availability, replacement, go/no-go); local images+provenance for Pixel 9, Fairphone, PinePhone Pro, VIM3, i.MX 8M, RK3588, RISC-V, custom carrier, camera modules.
-5. **English summaries** of the 3 Russian atlases (research task).
+5. **Full English translation** of the 3 Russian atlases (in progress on a separate branch; land it — repo policy is English-only, no exceptions).
 6. **§13 Final cleanup** — dedupe old copies, close superseded issues, README refresh, changelog, migration map.
 
 ## Notes
