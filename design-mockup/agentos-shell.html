@@ -742,7 +742,9 @@
       b.classList.toggle("act", b.dataset.view === view));
     if (view === "entity") requestAnimationFrame(drawLeaders);
   }
-  document.querySelectorAll("[data-view]").forEach(el =>
+  /* only the actual controls switch views — NOT the .view containers,
+     which carry data-view purely as an identifier */
+  document.querySelectorAll(".seg[data-view], .tabbar button[data-view]").forEach(el =>
     el.addEventListener("click", () => show(el.dataset.view)));
   document.querySelectorAll("[data-goto]").forEach(el =>
     el.addEventListener("click", () => show(el.dataset.goto)));
