@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - 'portal/**'
-      - 'knowledge/**'
+      - 'engineering-bible/docs/**'
       - 'docs/**'
       - 'data/**'
       - '.github/workflows/portal-validate.yml'
@@ -12,7 +12,7 @@ on:
     branches: [main]
     paths:
       - 'portal/**'
-      - 'knowledge/**'
+      - 'engineering-bible/docs/**'
       - 'docs/**'
       - 'data/**'
 
@@ -35,18 +35,39 @@ jobs:
               Path('portal/index.html'), Path('portal/style.css'),
               Path('portal/data.js'), Path('portal/app.js'),
               Path('portal/manifest.webmanifest'), Path('vercel.json'),
-              Path('knowledge/BRIEFING.md'), Path('knowledge/docs/INDEX.md'),
+              Path('engineering-bible/docs/AOS-BRIEF.md'), Path('engineering-bible/docs/AOS-INDEX.md'),
+              Path('engineering-bible/docs/vision/AOS-VSN-001.md'),
+              Path('engineering-bible/docs/architecture/AOS-ARCH-001.md'),
+              Path('engineering-bible/docs/architecture/AOS-ARCH-002.md'),
+              Path('engineering-bible/docs/hardware/AOS-HW-001.md'),
+              Path('engineering-bible/docs/planning/AOS-PLAN-002.md'),
               Path('data/tasks/index.json'), Path('data/TASK-CATALOG.md'),
           ]
           errors = [f'Missing required file: {p}' for p in required if not p.exists()]
-          ids = {}
-          for path in Path('knowledge').rglob('*.md'):
+          id_re = re.compile(r'(?m)^id:\s*(?:"([A-Z0-9-]+)"|([A-Z0-9-]+))\s*$')
+
+          def doc_id_of(path):
               text = path.read_text(encoding='utf-8')
-              match = re.search(r'(?m)^id:\s*([A-Z0-9-]+)\s*$', text[:1500])
-              if not match:
+              match = id_re.search(text[:1500])
+              return match.group(1) or match.group(2) if match else None
+
+          # A handful of research notes are explicitly non-normative (e.g.
+          # Russian-language survey docs) and carry no YAML front matter by
+          # design; they are exempt from the id check by exact path.
+          id_exempt = {
+              Path('engineering-bible/docs/research/agent-os-wider-lens.md'),
+              Path('engineering-bible/docs/research/agentos-spec-digest-product-architecture.md'),
+              Path('engineering-bible/docs/research/ios-vs-android-vs-agent-os.md'),
+              Path('engineering-bible/docs/research/prior-art-atlas.md'),
+          }
+          ids = {}
+          for path in Path('engineering-bible/docs').rglob('*.md'):
+              if path in id_exempt:
+                  continue
+              doc_id = doc_id_of(path)
+              if doc_id is None:
                   errors.append(f'Missing front-matter id: {path}')
                   continue
-              doc_id = match.group(1)
               if doc_id in ids:
                   errors.append(f'Duplicate id {doc_id}: {ids[doc_id]} and {path}')
               ids[doc_id] = path
