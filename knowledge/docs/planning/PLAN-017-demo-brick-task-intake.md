@@ -2,7 +2,7 @@
 id: "AOS-PLAN-017"
 title: "Demo Brick Task Intake (AOS-DEMO family)"
 status: "Task intake record"
-version: "1.0.0"
+version: "1.1.0"
 baseline_date: "2026-07-13"
 owners: "Program Lead"
 audience: "Engineering, program leadership"
@@ -29,6 +29,14 @@ summary: "Formal intake of the AOS-DEMO task family into the catalog: IDs, prior
 | AOS-DEMO-009 | Camera path economics validation: quotes for C2 (NXP/VeriSilicon tuning access, mini-lab) and C3 (IDH engagement); update RES-011 | P2 | — | Two quotes per line; RES-011 classes replaced by figures |
 | AOS-DEMO-010 | SurfaceVolume v1.5: flex electrode + trackpad controller through the printed cover | P2 | 002 | <5% false-positive in pocket/grip tests per HW-018 gate |
 | AOS-DEMO-011 | Instant-mode vertical slice: cold boot to typewriter <3 s; ascent without reboot (ARCH-021) | P1 | 002, 007 | Measured boot budget; crash-injection leaves L2 alive |
+| AOS-DEMO-012 | Island firmware contract + desktop simulator (no hardware needed) | P1 | — | Typed contract; simulator passes the contract suite on a dev machine |
+| AOS-DEMO-013 | Parametric enclosure CAD generator skeleton (CadQuery/OpenSCAD) | P2 | — | Generates shell with speaker volumes, antenna windows, gasket groove, insert bosses from parameters |
+| AOS-DEMO-014 | Haptics toolchain: AHAP→PCM converter + versioned waveform asset format | P2 | — | Round-trips a sample AHAP into a playable waveform with provenance |
+| AOS-DEMO-015 | Bench equipment order: PPK2, INA3221, USB-C meter, camera mini-lab | P1 | — | Assets received and logged; PPK2 baseline measurement recorded |
+
+## Issue Tracker Mapping
+
+GitHub issues #25–#40 map 1:1 to AOS-DEMO-000…015 (label `demo-brick`). Machine-readable BOM for AOS-DEMO-001: `data/demo-brick-bom-v1.csv`. Project-v2 board provisioning is tracked separately by issue #21 (AOS-INFRA-002); once it exists, these issues join it.
 
 ## Bench Equipment Intake (small purchases, evidence-critical)
 

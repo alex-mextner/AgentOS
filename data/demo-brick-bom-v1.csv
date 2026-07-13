@@ -1,0 +1,33 @@
+row,item,store,link,unit_price_class,qty,status
+1,Raspberry Pi CM5 16GB/64GB/WiFi,onpad.ru | welectron.com,https://onpad.ru/catalog/cubie/raspberrypi/raspberrypimodule/3881.html,22990 RUB / ~EUR95,2,observed
+2,Carrier bench: Waveshare CM5-ETH-RS485-4G-BASE,waveshare.com,https://www.waveshare.com/product/raspberry-pi/boards-kits/cm5.htm,USD55.99,1,observed
+3,Carrier pocket: Waveshare CM5-PoE-BASE-A,waveshare.com,https://www.waveshare.com/cm5-poe-base-a.htm,USD15.99+,2,observed
+4,NVMe M.2 2230 1TB (SN740/MP600 Mini/BG5 class),local retail,-,USD70-110,2,class
+5,Main camera: StarlightEye IMX585,tindie.com/will123321,https://www.tindie.com/products/will123321/starlighteye/,USD130-180,2,verify-stock
+6,M12 lens F1.6-2.0 low-distortion,aliexpress,-,USD25-60,2,class
+7,Second camera: RPi Camera Module 3,onpad.ru | amperka.ru,https://onpad.ru/catalog/cubie/raspberrypi/cameras/3456.html,6190 RUB / USD25,2,observed
+8,Modem: SIM7600G-H-M2,aliexpress | waveshare,-,USD55-70,2,class
+9,Modem alt: Quectel EG25-G + M.2 USB adapter,aliexpress,-,USD35-60,1,class
+10,Antennas 2xLTE+GNSS+pigtails,aliexpress,-,USD8-15,2,class
+11,eUICC card sysmoEUICC1-C2G,shop.sysmocom.de,https://shop.sysmocom.de/SIM/Cards/,EUR35.70,2,observed
+12,eUICC MFF2 sysmoEUICC1-CMG 10-pack,shop.sysmocom.de,https://shop.sysmocom.de/sysmoEUICC1-eUICC-for-consumer-eSIM-RSP-in-MFF2-10-pack/sysmoEUICC1-CMG-10p,pack,1,observed
+13,Display Waveshare 6.25in DSI 720x1560 touch,waveshare.com,-,USD55-65,2,class
+14,Mic array: ReSpeaker XVF3800,seeedstudio.com | thepihut.com,https://www.seeedstudio.com/ReSpeaker-XVF3800-USB-Mic-Array-p-6488.html,USD49.99,2,observed
+15,I2S amps MAX98357A x3,aliexpress,-,USD4-6,6,class
+16,Micro speakers x2,aliexpress,-,USD3-8,4,class
+17,Haptics: iPhone Taptic Engine spare,aliexpress,-,USD5-20,3,class
+18,Fingerprint R503/R503-Pro,aliexpress,-,USD18-28,2,class
+19,Secure element: Zymbit Zymkey 4i,zymbit.com,-,USD45-50,2,class
+20,Island MCU: nRF5340 DK/module,mouser | aliexpress,-,USD10-50,2,class
+21,Island MCU alt: ESP32-C6 module,aliexpress,-,USD3-6,3,class
+22,Load switches TPS22918/TPS22990 assortment,mouser | aliexpress,-,USD10-20,1,class
+23,Power: BQ25792 board + MAX17048 + battery (pouch 5-8Ah or 2x21700+BMS),aliexpress,-,USD35-60,2,class
+24,Second WiFi radio MT7612U/MT7921AU USB,aliexpress,-,USD12-25,2,class
+25,Sensors: IMU LSM6DSV16X + VCNL4040 + BMP390 + PN7150,aliexpress | adafruit,-,USD25-50,2,class
+26,IR: 940nm LEDs + drivers + TSOP38238,aliexpress,-,USD3-6,1,class
+27,SurfaceVolume: Azoteq IQS550/IQS7211 module + flex NRE,azoteq distr + jlc flex,-,USD45-90,1,class
+28,Aux: inserts/screws/FFC/thermal/kapton/O-ring/conformal/sealant,aliexpress + local,-,USD60-110,1,class
+29,Enclosure prints PETG/ABS + alu midframe,local print service,-,USD35-75,1,class
+30,Bench: Nordic PPK2 power profiler,mouser | nordic distr,-,USD99,1,observed-list
+31,Bench: INA3221 boards + USB-C PD meter,aliexpress,-,USD20-35,1,class
+32,Bench: camera mini-lab (ColorChecker-class chart + stable light + fixture),local/aliexpress,-,USD150-400,1,class

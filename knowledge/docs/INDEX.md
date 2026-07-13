@@ -27,6 +27,7 @@ status: foundation
 - [Power architecture and ultra-low-power standby](hardware/HW-019-power-architecture-standby.md)
 - [Demo brick task intake (AOS-DEMO)](planning/PLAN-017-demo-brick-task-intake.md)
 - [Compute subscription and elastic offload](product/PROD-013-compute-subscription-and-offload.md)
+- [Kickoff sequence, first 30 days](planning/PLAN-018-kickoff-sequence.md)
 
 ## Planned volumes
 
