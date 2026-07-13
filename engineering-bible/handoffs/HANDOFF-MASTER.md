@@ -95,10 +95,12 @@ prev/next, backlinks, "related specs/tasks/claims" panel, provenance panel; cros
 search over bodies (not just index); Mermaid/PNG/SVG render polish; verify every "Edit on GitHub"
 URL resolves under `engineering-bible/`.
 
-### 2.4 English summaries of the 3 Russian atlases
+### 2.4 Translate the 3 remaining Russian atlases
 `docs/research/ios-vs-android-vs-agent-os.md`, `prior-art-atlas.md`, `agent-os-wider-lens.md` are
-valuable but fully Russian (now labelled non-normative). Write English summaries (or full
-translations) so the normative English corpus is self-contained. Keep the Russian originals.
+valuable but still fully Russian. Full English translations are already in progress on a separate
+branch; land that branch (or redo the translation here if it doesn't land) so these are the last
+files in the repo carrying non-English text. Repository policy is English-only with no standing
+exception — do not keep an original-language version as the shipped file once translated.
 
 ### 2.5 §13 Final cleanup
 Dedupe any legacy copies under `knowledge/` (already deprecated — decide delete vs keep as archive),
@@ -109,8 +111,9 @@ source-of-truth table in `MANIFEST.md` matches reality.
 
 - Doc IDs are stable `AOS-*`; keep them. New docs get frontmatter (id/title/status/version/
   baseline_date/owners/audience/summary), a ToC, and a Related Documents section.
-- English for all normative specs. Russian only for quoted sources or clearly-labelled non-normative
-  research.
+- English only, repo-wide, with no exceptions. Quoted or recovered source material in another
+  language is translated to English in place, with a note flagging it as a translated
+  recovered-source excerpt for traceability — never kept in the original language.
 - After each change block: regenerate `engineering-bible/CHECKSUMS.sha256`, check 0 broken internal
   links, check 0 real cyrillic (Unicode U+0400–04FF, not em-dashes) in normative specs, and confirm
   the fork-Fuchsia framing wasn't reintroduced as owned-kernel.

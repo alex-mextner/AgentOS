@@ -32,7 +32,9 @@ summary: "Digest of the 60-page specification for the chosen approach: forking F
 
 ## Status and Provenance
 
-Source: a founder-supplied 60-page engineering specification, "Спецификация кастомной мобильной ОС на базе форка Fuchsia/Zircon · Pixel 9" (Russian) — the detailed specification of the chosen fork-Fuchsia approach. SHA-256 and redistribution status recorded in `sources/provenance/PROVENANCE.md`. The binary is not redistributed (integrate-not-store); seven key illustrations are retained locally as prior art. This document is the English digest of its transferable, platform-independent content.
+Source: a founder-supplied 60-page engineering specification, "Custom Mobile OS Specification Based
+on a Fuchsia/Zircon Fork · Pixel 9" (original title was in Russian; translated here) — the detailed
+specification of the chosen fork-Fuchsia approach. SHA-256 and redistribution status recorded in `sources/provenance/PROVENANCE.md`. The binary is not redistributed (integrate-not-store); seven key illustrations are retained locally as prior art. This document is the English digest of its transferable, platform-independent content.
 
 <a id="transfer"></a>
 

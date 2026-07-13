@@ -1,10 +1,10 @@
 path,bytes,sha256,has_frontmatter,id
-engineering-bible/AgentOS.md,23319,17c36d678e7f807b9ae7542ad5129fda0b1304e97f2272f9f54b8f9549419d1f,False,
+engineering-bible/AgentOS.md,17301,67b275cb2b1edf1251f7a468a2de6b14e407cd57e2937a7795082273649150c7,False,
 engineering-bible/Home.md,2306,b791acec93a0c15ebcbb52daef9728b328c9c865cd3f785cc80206d7e0abe977,True,AOS-README
 engineering-bible/_Sidebar.md,653,d93abae00418f5907a5200719a25ee53d67a02763f43c7cc3d078c77ce9ccd50,False,
 engineering-bible/diagrams/000-system-overview.md,4625,64a964d98f3da13d77c6e082a96688d3263659e37e8ea84d21bb1918cf7a5559,False,
 engineering-bible/diagrams/001-bootstrap-toolchain.md,5207,7ed0c03d1dcaf142fccb22b0b4365b47bc7f590b43db3a092898643cbdc257c1,False,
-engineering-bible/diagrams/005-source-session-assignment.md,5565,919a2a01a74477d821ea636a3b92a56c8df414e62441ef88597ed9cfc5416e03,False,
+engineering-bible/diagrams/005-source-session-assignment.md,5364,7b87ce0c9a9b2297ec45235966c28e6ee6561da5d69d92c4be661c0d486125ea,False,
 engineering-bible/diagrams/010-kernel-primitives.md,3543,313e3d70192b39bbb4b764e10631aac062126816f1adab6afc0f59775cc71b25,False,
 engineering-bible/diagrams/020-capability-ipc.md,3210,380a96702360fe873486cf5060328f1a4d72c2ccba2022e4153af1c26ceeced2,False,
 engineering-bible/diagrams/030-pixel9-simulator.md,4056,a9edfa4017facf510a7c94a225c58591e295569b70445780d84920ca9a449ac7,False,
@@ -118,7 +118,7 @@ engineering-bible/docs/research/AOS-RES-008.md,6023,dd23202fc6b46fbd45691ce8d26d
 engineering-bible/docs/research/AOS-RES-009.md,6118,aead2cce927a814c1bd715e082ff5d24197bb415f60ecc447f8fa534095d7b45,True,AOS-RES-009
 engineering-bible/docs/research/AOS-RES-010.md,6003,9922180cb41404d7ae80071d95b980e7960219acd557881a36a3c7d3c9eab813,True,AOS-RES-010
 engineering-bible/docs/research/agent-os-wider-lens.md,18938,788c54981b0a5f4ccfd3ad0889cc3026c8303718dc1105898a8b73ad24a9e76b,False,
-engineering-bible/docs/research/agentos-spec-digest-product-architecture.md,13409,c43aaebf852b342256bc33108172f653acf5b7bc4003c7fcd8772f76b078eec0,False,
+engineering-bible/docs/research/agentos-spec-digest-product-architecture.md,13051,e5f566ca6caf87b371797bb9a4b86518e709ce6fc6f1873d3f49ac99e9439ccd,False,
 engineering-bible/docs/research/ios-vs-android-vs-agent-os.md,43287,3e2441519d653a506eb573507778bae99c03fadb45dce97dda11024b1c629434,False,
 engineering-bible/docs/research/prior-art-atlas.md,19211,685c337091f5201fc6bb9d485718d64116b4188c907c3d5faf82e14e8aca5941,False,
 engineering-bible/docs/templates/AOS-TPL-ADR.md,5675,07ffa804a1181f1264d5442e3d7424879a567c93947a7caa0b978bf0866aef8d,True,AOS-TPL-ADR

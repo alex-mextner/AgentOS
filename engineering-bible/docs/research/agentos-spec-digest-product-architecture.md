@@ -10,7 +10,7 @@
 
 # AgentOS Spec Digest — Product Architecture
 Generated: 2026-06-29
-Source: custom-os-fuchsia-spec.pdf (60pp), ideas.pdf (3D-cli, irrelevant), cto-decisions-pending.pdf (HyperIDE, not AgentOS), Своя мобильная ОС.txt
+Source: custom-os-fuchsia-spec.pdf (60pp), ideas.pdf (3D-cli, irrelevant), cto-decisions-pending.pdf (HyperIDE, not AgentOS), Own Mobile OS.txt (original filename on disk used Cyrillic: "Svoya mobilnaya OS.txt")
 
 ---
 
@@ -20,17 +20,23 @@ Source: custom-os-fuchsia-spec.pdf (60pp), ideas.pdf (3D-cli, irrelevant), cto-d
 
 The spec defines two parallel tracks and is explicit that the first prototype is Track A — product-only in FEMU, zero hardware:
 
-> §1.1: "Продуктовый слой (оболочка, модель сущностей/агентов, история, синхронизация) полностью OS-независим и может разрабатываться и запускаться в эмуляторе FEMU уже сейчас, без единого аппаратного блокера."
+> §1.1 (translated from the Russian source): "The product layer (shell, entity/agent model,
+> history, sync) is fully OS-independent and can be developed and run in the FEMU emulator right
+> now, with zero hardware blockers."
 
-> §2.1: "Трек А (продукт) строится в эмуляторе и поставляет основную ценность видения без аппаратных блокеров. Трек Б (железо) — длинный, рискованный bring-up Pixel 9."
+> §2.1 (translated): "Track A (product) is built in the emulator and delivers the vision's core
+> value with no hardware blockers. Track B (hardware) is the long, risky Pixel 9 bring-up."
 
-> §1.6 (principles): "Сначала ценность без железа: всё, что можно сделать в эмуляторе, делается первым."
+> §1.6 (principles, translated): "Value without hardware first: everything that can be done in the
+> emulator is done first."
 
-Track B (real Pixel 9) is a separate multi-year effort, described as "сложнее Asahi". The two tracks converge only at the end when B6 milestone integrates product (A) on top of real substrate (B).
+Track B (real Pixel 9) is a separate multi-year effort, described in the source as "harder than
+Asahi". The two tracks converge only at the end when B6 milestone integrates product (A) on top of
+real substrate (B).
 
 The minimum viable configuration for the first prototype (§11.7):
 ```
-MVP-A (продукт в FEMU): весь L6 + Starnix-интероп в эмуляторе | отброшено: всё железо
+MVP-A (product in FEMU): all of L6 + Starnix interop in the emulator | dropped: all hardware
 ```
 
 ---
@@ -44,11 +50,14 @@ This is NOT:
 - FEMU pretending to be Pixel 9 hardware
 - Any custom window/UI simulator
 
-What it IS (§4.8):
-> "FEMU — эмулятор Fuchsia (на базе QEMU/AEMU) для разработки на x86. Ключ всей стратегии: продуктовый слой (Трек А) разрабатывается, отлаживается и демонстрируется в FEMU без какого-либо железа. Рабочий цикл: правка → fx build → запуск в FEMU → отладка Zircon через ffx/GDB."
+What it IS (§4.8, translated):
+> "FEMU is the Fuchsia emulator (based on QEMU/AEMU) for x86 development. The key to the whole
+> strategy: the product layer (Track A) is developed, debugged, and demonstrated in FEMU without
+> any hardware. Workflow: edit → fx build → run in FEMU → debug Zircon via ffx/GDB."
 
-The "Pixel 9 form factor" only matters for Track B (real hardware bring-up). In FEMU, the substrate (camera/modem/sensors) is replaced by mock-services that implement the same FIDL contracts as real drivers (§14.4):
-> "mock-камера отдаёт тестовые кадры/бурсты, mock-модем имитирует события телефонии, mock-сенсоры — синтетические данные."
+The "Pixel 9 form factor" only matters for Track B (real hardware bring-up). In FEMU, the substrate (camera/modem/sensors) is replaced by mock-services that implement the same FIDL contracts as real drivers (§14.4, translated):
+> "the mock camera returns test frames/bursts, the mock modem simulates telephony events, the mock
+> sensors return synthetic data."
 
 Pixel 9 (SoC Tensor G4) was chosen because (§1.4): unlockable bootloader, ARM Mali-G715 GPU with the most mature open driver ecosystem (Panfrost/Panthor/PanVK), reference status for custom OSes.
 
@@ -66,11 +75,11 @@ Track A milestones define the ordered MVP sequence (§11.2):
 | 4 | A4 | Global history + local-first data + CRDT sync |
 | 5 | A5 | Integrations/datasources/widgets + Apple interop via Starnix (AirDrop/AirPlay/shared clipboard) |
 
-From the product vision (§9) and Своя мобильная ОС.txt, distilled to what's in MVP-A scope:
+From the product vision (§9) and Own Mobile OS.txt (source filename used Cyrillic: "Svoya mobilnaya OS.txt"), distilled to what's in MVP-A scope:
 
 1. **Entity/agent model** — typed graph: person, project, task, document, event, message, device as nodes with typed edges. Core abstraction replacing files+apps.
 2. **Shell + compositor** — Scenic/Flatland-based, "stories"/surfaces organized around current entity/task, not icon grid.
-3. **Global history** — system-wide event log (§9.4: "как история браузера, но для всей ОС"). Navigation + agent substrate.
+3. **Global history** — system-wide event log (§9.4, translated: "like browser history, but for the whole OS"). Navigation + agent substrate.
 4. **Local-first data + CRDT sync** — data lives on device, sync via CRDT libraries taken as-is, cloud is transport/backup only.
 5. **Background agents** — extract entities from sources, dedup+link, maintain history, propose actions. Each agent gets strictly scoped capabilities.
 6. **Integrations + datasources** — pluggable via agent+capability model.
@@ -105,16 +114,16 @@ From the product vision (§9) and Своя мобильная ОС.txt, distille
 
 ### 3-Layer Architecture
 ```
-L6 Shell/UI          — С НУЛЯ (from scratch)
-L6 Entity/Agent      — С НУЛЯ
-L6 History/Sync      — С НУЛЯ
-L6 Integrations      — С НУЛЯ / ОБЕРНУТЬ
-L5 Starnix           — КАК ЕСТЬ
-L4 Camera stack      — РЕВЕРС/ОБЕРНУТЬ
-L3 Telephony         — ПОРТ/РЕВЕРС/ОБЕРНУТЬ
-L2 GPU/Magma         — КАК ЕСТЬ + ПОРТ driver
-L1 Bring-up Tensor   — РЕВЕРС (all of it)
-L0 Zircon/DFv2       — КАК ЕСТЬ (forked)
+L6 Shell/UI          — FROM SCRATCH
+L6 Entity/Agent      — FROM SCRATCH
+L6 History/Sync      — FROM SCRATCH
+L6 Integrations      — FROM SCRATCH / WRAP
+L5 Starnix           — AS-IS
+L4 Camera stack      — REVERSE/WRAP
+L3 Telephony         — PORT/REVERSE/WRAP
+L2 GPU/Magma         — AS-IS + PORT driver
+L1 Bring-up Tensor   — REVERSE (all of it)
+L0 Zircon/DFv2       — AS-IS (forked)
 ```
 
 ### Data Model
@@ -138,16 +147,16 @@ L0 Zircon/DFv2       — КАК ЕСТЬ (forked)
 
 ### Telephony (Track B, FEMU mock in Track A)
 - Exynos Modem 5400 — external proprietary modem, SIPC protocol (shared-memory), custom command set.
-- Stack: firmware blob (КАК ЕСТЬ) → boot sequence (РЕВЕРС) → SIPC link transport DFv2 (ПОРТ) → libsamsung-ipc (ПОРТ) → Exynos 5400 commands (РЕВЕРС via BaseMirror) → ModemManager/ofono wrapped via Starnix.
+- Stack: firmware blob (AS-IS) → boot sequence (REVERSE) → SIPC link transport DFv2 (PORT) → libsamsung-ipc (PORT) → Exynos 5400 commands (REVERSE via BaseMirror) → ModemManager/ofono wrapped via Starnix.
 - Voice call = separate high-risk milestone (audio DSP path), may fail entirely.
 - Data/SMS achievable; voice is a stretch.
 
 ### Camera (Track B)
-- ISP capture driver: РЕВЕРС.
-- libcamera wrapped via Starnix (ОБЕРНУТЬ).
-- HDR+/hdr-plus pipeline: КАК ЕСТЬ (OS-agnostic).
-- Sensor tuning (CCM, black level, AWB, noise profile): С НУЛЯ per sensor — this is the actual quality ceiling.
-- Ceiling: postmarketOS-level ("достойно, по-ретро"), NOT Pixel-on-Android.
+- ISP capture driver: REVERSE.
+- libcamera wrapped via Starnix (WRAP).
+- HDR+/hdr-plus pipeline: AS-IS (OS-agnostic).
+- Sensor tuning (CCM, black level, AWB, noise profile): FROM SCRATCH per sensor — this is the actual quality ceiling.
+- Ceiling: postmarketOS-level (translated: "decent, retro-grade"), NOT Pixel-on-Android.
 
 ---
 
@@ -171,7 +180,7 @@ These are the AgentOS-relevant open questions that function as pending decisions
 **BLOCK Track A start (prototype in FEMU): NONE.** The spec is explicit that Track A has zero hardware blockers.
 
 **BLOCK Track B start:**
-- OQ6 (ARM board vs Pixel 9 directly) — needs decision before B1 bring-up work begins. Spec recommends starting with a supported Fuchsia ARM board first (§19.6: "Начинай bring-up с раннего UART и, по возможности, с поддерживаемой платы, не со «слепого» флагмана").
+- OQ6 (ARM board vs Pixel 9 directly) — needs decision before B1 bring-up work begins. Spec recommends starting with a supported Fuchsia ARM board first (§19.6, translated: "Start bring-up from early UART and, where possible, on a supported board, not a 'blind' flagship").
 - OQ1 (bootloader path) — must be confirmed before B1.
 
 **Can defer to later Track B milestones:**
