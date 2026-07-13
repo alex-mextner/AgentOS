@@ -105,9 +105,9 @@ policy is English-only with no standing exception — original-language text is 
 shipped file once translated.
 
 ### 2.5 §13 Final cleanup
-Dedupe any legacy copies under `knowledge/` (already deprecated — decide delete vs keep as archive),
-close superseded issues, refresh top-level `README.md`, add a `CHANGELOG.md`, and confirm the
-source-of-truth table in `MANIFEST.md` matches reality.
+The legacy knowledge/ mirror (previously deprecated) has been removed from the repository; remaining
+cleanup is to close superseded issues, refresh top-level `README.md`, add a `CHANGELOG.md`, and
+confirm the source-of-truth table in `MANIFEST.md` matches reality.
 
 ## 3. Standing conventions for whoever continues
 

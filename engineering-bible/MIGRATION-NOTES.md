@@ -24,8 +24,8 @@ folder convention. This replaces the earlier partial import stub.
 - Project name normalized to **Agent OS / AgentOS**; all HyperOS references removed from docs (0 remain).
 - **integrate-not-store**: source PDFs are NOT committed as binaries; their SHA-256 and normalized
   digests are retained (provenance + AOS-SRC-N*). No ZIP/PDF blobs enter git.
-- `knowledge/` marked deprecated (see knowledge/DEPRECATED.md) as a compatibility view;
-  canonical write path is `engineering-bible/docs/**`.
+- The former `knowledge/` compatibility mirror was marked deprecated and has since been removed
+  from the repository; the canonical write path is `engineering-bible/docs/**`.
 
 ## Source of truth (sol handoff §4)
 | Object | Canonical source |
@@ -40,5 +40,6 @@ folder convention. This replaces the earlier partial import stub.
 - Extract registers (claims/experiments/sources/risks) to CSV for the tracker.
 - Portal: rebuild Wiki index from engineering-bible/docs/ and rewrite flat-wiki links to folder paths.
 - Merge the demo-brick decisions already on main (HW-017..019, ARCH-021, PROD-013/014, ADR-0007,
-  RES-011, LEGAL-012, PLAN-017/018) into the canonical tree — they currently live under knowledge/docs;
-  they are newer than the Foundation baseline and take precedence where they overlap.
+  RES-011, LEGAL-012, PLAN-017/018) into the canonical tree — these were migrated from the former
+  knowledge/docs tree (since removed); they are newer than the Foundation baseline and take
+  precedence where they overlap.

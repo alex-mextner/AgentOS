@@ -15,7 +15,7 @@ Honest status of the full sol handoff (§1–13) plus the content plan. Not "alm
 - §1 Full Foundation corpus imported to main (162 docs, diagrams, digests, atlases).
 - §2 PDF/source provenance recorded (SHA-256, integrate-not-store; no binaries).
 - §3 Stale positions fixed: name→AgentOS; **fork the entire Fuchsia tree** (corrected corruption); Linear dropped; Fuchsia/FEMU/Starnix framed as the chosen base + digest.
-- §4 Single source of truth set (engineering-bible/docs/**); knowledge/ deprecated.
+- §4 Single source of truth set (engineering-bible/docs/**); the former knowledge/ mirror has since been removed.
 - §5 Validation: 158 IDs, 0 dup, 0 broken links; honest cyrillic accounting (0 in normative specs).
 - §4/§5 Registers extracted to CSV: claims(34), experiments(51), sources(9), risks(323).
 - Content plan: PROD-013 (offload), PROD-014 (clients), PROD-015 (voice), ARCH-021 (layered boot), ARCH-022 (capabilities), LEGAL-013 (threat model), HW-017/018/019 (demo brick), RES-011/012.
