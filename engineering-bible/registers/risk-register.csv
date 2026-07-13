@@ -322,3 +322,8 @@ AOS-VOL-09,Machine-generated volume can obscure review status.,AOS-VOL-09.md
 AOS-VOL-10,Passing mocks can conceal backend divergence.,AOS-VOL-10.md
 AOS-VOL-10,Benchmarks without thermal/power/configuration metadata are not comparable.,AOS-VOL-10.md
 AOS-VOL-10,Verification scope can be overstated.,AOS-VOL-10.md
+AOS-HW-020,"Consumer SBCs and phones can be revised or discontinued silently; every single-unit target is barred from the critical path.",HW-020-device-catalogue.md
+AOS-HW-020,"Vendor-stated NPU TOPS, GPU clocks, and sensor frame rates are marketing-adjacent until measured on our own bench.",HW-020-device-catalogue.md
+AOS-HW-020,"Camera-sensor register access (IMX585/IMX283) may require an NDA that limits publication; confirm redistribution rights before committing to a portable claim.",HW-020-device-catalogue.md
+AOS-HW-020,"Exact EVK/module prices marked TBD/unverified must be re-quoted (two sources per row) at each target dossier or BOM-freeze step.",HW-020-device-catalogue.md
+AOS-HW-020,"Work stops or changes track when legal rights, recovery, debug access, safety, or the required evidence path is unavailable (stop rule).",HW-020-device-catalogue.md

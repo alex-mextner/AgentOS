@@ -61,7 +61,12 @@ The Fuchsia/Zircon fork is the chosen base; Android/Linux-oriented material is r
 
 ## Inventory
 
-- **Registered Markdown documents:** 142
+- **Registered Markdown documents:** 145
+- **Recent additions:** `AOS-RES-013` (OS comparison matrix), `AOS-RES-014` (system survey of
+  prior-art OSes and CRDT substrates), and `AOS-HW-020` (per-target device catalogue,
+  `docs/hardware/HW-020-device-catalogue.md`). The three research atlases
+  (`ios-vs-android-vs-agent-os.md`, `prior-art-atlas.md`, `agent-os-wider-lens.md`) are now
+  English (translated in place).
 - **Canonical tasks:** 327
 - **Registered sources:** 109
 - **Claim records:** 34
