@@ -15,6 +15,15 @@ status: foundation
 - [Roadmap and Gantt](planning/PLAN-002-roadmap-and-gantt.md)
 - [Glossary](glossary/GLOSSARY.md)
 
+## Hardware and demo brick
+
+- [Interim demo device (module brick)](hardware/HW-017-interim-demo-device.md)
+- [Demo brick V1 configuration baseline](hardware/HW-018-demo-brick-v1-configuration.md)
+- [Demo brick V1 bill of materials](hardware/HW-018A-demo-brick-bom.md)
+- [ADR-0007: Archive the Pixel 9 native route](decisions/ADR-0007-archive-pixel-9-route.md)
+- [Interim hardware market survey and sourcing](research/RES-011-interim-hardware-market-survey.md)
+- [Prototype travel and border considerations](legal/LEGAL-012-prototype-travel-and-borders.md)
+
 ## Planned volumes
 
 1. Foundation and governance
