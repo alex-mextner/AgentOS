@@ -1,17 +1,19 @@
 ---
 id: "AOS-PLAN-008"
-title: "Linear and GitHub Operating Model"
+title: "GitHub Operating Model"
 status: "Normative planning baseline"
 version: "1.0.0"
 baseline_date: "2026-07-13"
 owners: "Agent OS Architecture Council"
 audience: "Engineering, product, security, legal, and program leadership"
-summary: "GitHub as the source of truth, Linear as operational planning, and a reproducible import/reconciliation process."
+summary: "GitHub as the single public source of truth (Issues + Project v2) with a reproducible import/reconciliation process. Linear is not used."
 ---
 
-# Linear and GitHub Operating Model
+# GitHub Operating Model
 
-> GitHub as the source of truth, Linear as operational planning, and a reproducible import/reconciliation process.
+> Superseding note (2026-07-13): Linear has been dropped. GitHub Issues + Project v2 are the operational tracker; repository CSV is the baseline. References to Linear below are retained only as historical context and are not the current model.
+
+> GitHub as the single public source of truth (Issues + Project v2) with a reproducible import/reconciliation process. Linear is not used.
 
 ## Table of Contents
 

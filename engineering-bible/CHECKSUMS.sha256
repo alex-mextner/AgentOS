@@ -96,7 +96,7 @@ be14c95381ca7871cb6801f42f8a8607ae89f2c0c4b37e1a9ab9dba0fbfdfaa4  engineering-bi
 5968afde0a184bcac0a6d8fadad5ae68c86bf26c3179a6e8034f18cc28e4866f  engineering-bible/docs/planning/AOS-PLAN-005.md
 4d97728866c995802d6bfeae8f77f7dfed6b941d09a79445202028535293b692  engineering-bible/docs/planning/AOS-PLAN-006.md
 c6e124439cbf3dabe1dcac8aa2e5d579861c0dd1c7cdb2ba49a1444095fb2d42  engineering-bible/docs/planning/AOS-PLAN-007.md
-4f2feed385e2104de05fa8ff05226311b9ed35ef84bf1120eed8187f0b4950af  engineering-bible/docs/planning/AOS-PLAN-008.md
+3033b11a4140897679039eea8567594d43bbcfc8dd6ed0f4c10b30472e675b02  engineering-bible/docs/planning/AOS-PLAN-008.md
 332c30733e22de8584ebafb708611ff346423a56966867cc8719cd8fba817391  engineering-bible/docs/planning/AOS-PLAN-009.md
 b7984c1094696db003f7112f72e2416eb327549402b9d77d05e1a90aab7fe640  engineering-bible/docs/planning/AOS-PLAN-010.md
 f5c3f0fd5731a25a597af632cab754fcf0e6c0a326250463f0eaabc4fe405270  engineering-bible/docs/planning/AOS-PLAN-011.md
@@ -134,7 +134,7 @@ aead2cce927a814c1bd715e082ff5d24197bb415f60ecc447f8fa534095d7b45  engineering-bi
 9922180cb41404d7ae80071d95b980e7960219acd557881a36a3c7d3c9eab813  engineering-bible/docs/research/AOS-RES-010.md
 b20d552f76e5ad32d0bef958ab625e97f92f2f02e144ab19a60d5f74502a4a2a  engineering-bible/docs/research/RES-011-interim-hardware-market-survey.md
 788c54981b0a5f4ccfd3ad0889cc3026c8303718dc1105898a8b73ad24a9e76b  engineering-bible/docs/research/agent-os-wider-lens.md
-c43aaebf852b342256bc33108172f653acf5b7bc4003c7fcd8772f76b078eec0  engineering-bible/docs/research/agentos-spec-digest-product-architecture.md
+671858fd20ad5c71d93495210467895f9bff572899686fd2c8f74f2af210b199  engineering-bible/docs/research/agentos-spec-digest-product-architecture.md
 3e2441519d653a506eb573507778bae99c03fadb45dce97dda11024b1c629434  engineering-bible/docs/research/ios-vs-android-vs-agent-os.md
 685c337091f5201fc6bb9d485718d64116b4188c907c3d5faf82e14e8aca5941  engineering-bible/docs/research/prior-art-atlas.md
 07ffa804a1181f1264d5442e3d7424879a567c93947a7caa0b978bf0866aef8d  engineering-bible/docs/templates/AOS-TPL-ADR.md
@@ -156,7 +156,7 @@ fd172e2313dcc4292c93d46e4cbc3d8ffda19f922dfc234dc9d27d00bf40162f  engineering-bi
 a312a79fbcba101b72718aef86a24471c3f2875084d6b900b3f9423139c1aa2c  engineering-bible/docs/volumes/AOS-VOL-03.md
 a649ef9ba21d24da1f4b4767cf7da1d763389c90468176927c421b9fce07ce81  engineering-bible/docs/volumes/AOS-VOL-04.md
 dc7534c26ff98240002e4ac087e23d88f7e165a85ab79ca735eab3221f8ad0a2  engineering-bible/docs/volumes/AOS-VOL-05.md
-97e02496a9a35c577b2e69834f352f1b137e3c8a0f5d54a4254546bfa6719be2  engineering-bible/docs/volumes/AOS-VOL-06.md
+ca7ecbdd896e5b5c0cf664f7c32b049863001ad3b1f8bbe0fc132880eee8588c  engineering-bible/docs/volumes/AOS-VOL-06.md
 babec58a54bf3fed6a3042fbcbd2302ec84a3ac2744a15c0a1e4c0e23b7b6c24  engineering-bible/docs/volumes/AOS-VOL-07.md
 98180bbee6c04ea10b1b8e026b3e7e3035e4ff22874d5aa2a9238a6d293f4d4b  engineering-bible/docs/volumes/AOS-VOL-08.md
 afd96460c436c7cd2a776ddd1333d9fdcf29a80b48652d6ea312568eb5834004  engineering-bible/docs/volumes/AOS-VOL-09.md

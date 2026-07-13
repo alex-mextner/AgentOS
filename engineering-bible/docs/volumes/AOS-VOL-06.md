@@ -39,7 +39,7 @@ This document owns the semantics implied by **Volume 06: Programme and Project M
 
 1. Represent nine chronological execution phases separately from ten thematic documentation volumes.
 2. Schedule evidence gates and dependency edges, not only activity dates.
-3. Keep tracker state derived from repository CSV plus API reconciliation; no critical decision exists only in Linear or GitHub.
+3. Keep tracker state derived from repository CSV plus API reconciliation; no critical decision exists only in the tracker; the repository is authoritative.
 <a id="operating-model"></a>
 
 ## Operating Model
@@ -53,7 +53,7 @@ Implementation proceeds through a reference model or mock, deterministic QEMU ev
 
 - **R01.** Represent nine chronological execution phases separately from ten thematic documentation volumes.
 - **R02.** Schedule evidence gates and dependency edges, not only activity dates.
-- **R03.** Keep tracker state derived from repository CSV plus API reconciliation; no critical decision exists only in Linear or GitHub.
+- **R03.** Keep tracker state derived from repository CSV plus API reconciliation; no critical decision exists only in the tracker; the repository is authoritative.
 - **R04.** Specify normal, partial, denied, timeout, cancellation, restart, upgrade, and permanent-failure behavior.
 - **R05.** Expose structured diagnostics without leaking secrets or vendor-specific implementation details.
 - **R06.** Link material unknowns to a claim and, when testable, an experiment with an owner and gate.
