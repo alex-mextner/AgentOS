@@ -95,22 +95,27 @@ prev/next, backlinks, "related specs/tasks/claims" panel, provenance panel; cros
 search over bodies (not just index); Mermaid/PNG/SVG render polish; verify every "Edit on GitHub"
 URL resolves under `engineering-bible/`.
 
-### 2.4 English summaries of the 3 Russian atlases
-`docs/research/ios-vs-android-vs-agent-os.md`, `prior-art-atlas.md`, `agent-os-wider-lens.md` are
-valuable but fully Russian (now labelled non-normative). Write English summaries (or full
-translations) so the normative English corpus is self-contained. Keep the Russian originals.
+### 2.4 English translation of the 3 Russian atlases (DONE)
+`docs/research/ios-vs-android-vs-agent-os.md`, `prior-art-atlas.md`, `agent-os-wider-lens.md` have
+been translated to English in place (full translation, not a separate summary file) — all three
+files carry zero Cyrillic. They remain under `docs/research/` and are non-normative, same as
+before. Together with the derussification pass (which translated `engineering-bible/AgentOS.md`,
+the digest, and the RES-012 excerpts), the repository is now zero-Cyrillic repo-wide. Repository
+policy is English-only with no standing exception — original-language text is never kept as the
+shipped file once translated.
 
 ### 2.5 §13 Final cleanup
-Dedupe any legacy copies under `knowledge/` (already deprecated — decide delete vs keep as archive),
-close superseded issues, refresh top-level `README.md`, add a `CHANGELOG.md`, and confirm the
-source-of-truth table in `MANIFEST.md` matches reality.
+The legacy knowledge/ mirror (previously deprecated) has been removed from the repository; remaining
+cleanup is to close superseded issues, refresh top-level `README.md`, add a `CHANGELOG.md`, and
+confirm the source-of-truth table in `MANIFEST.md` matches reality.
 
 ## 3. Standing conventions for whoever continues
 
 - Doc IDs are stable `AOS-*`; keep them. New docs get frontmatter (id/title/status/version/
   baseline_date/owners/audience/summary), a ToC, and a Related Documents section.
-- English for all normative specs. Russian only for quoted sources or clearly-labelled non-normative
-  research.
+- English only, repo-wide, with no exceptions. Quoted or recovered source material in another
+  language is translated to English in place, with a note flagging it as a translated
+  recovered-source excerpt for traceability — never kept in the original language.
 - After each change block: regenerate `engineering-bible/CHECKSUMS.sha256`, check 0 broken internal
   links, check 0 real cyrillic (Unicode U+0400–04FF, not em-dashes) in normative specs, and confirm
   the fork-Fuchsia framing wasn't reintroduced as owned-kernel.

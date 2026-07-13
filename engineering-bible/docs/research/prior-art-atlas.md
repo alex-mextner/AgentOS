@@ -1,84 +1,84 @@
-> **Language: Russian · non-normative research.** Prior-art atlas: who tried similar ideas before. Retained in the original language for fidelity; not a normative English specification. An English summary is tracked as a follow-up task.
+> **English research doc (translated from the original Russian atlas).** Prior-art atlas: who tried similar ideas before. Non-normative — normative requirements are defined by the linked architecture, product, hardware, legal, and planning documents.
 
-# Prior Art Atlas: кто, когда и как уже пытался
+# Prior Art Atlas: who, when, and how it's already been tried
 
-> Ревизия: 10.07.2026. Каждая идея из «Своя мобильная ОС» и UX RESEARCHES сопоставлена с историческими попытками (что сработало, что убило) и современным агентским фронтом. Формат: концепция → прецеденты → урок для Agent OS.
+> Revision: 2026-07-10. Every idea from "Own Mobile OS" and UX RESEARCHES is matched against historical attempts (what worked, what killed it) and the current agentic front. Format: concept → precedents → lesson for Agent OS.
 
 ---
 
-## 1. Entity/item-first вместо приложений
+## 1. Entity/item-first instead of apps
 
-- **Apple Newton OS (1993) — data soup.** Единое объектное хранилище: все «приложения» читают и пишут общие объекты, данные не заперты в силосах. Плюс Assist: выделяешь «lunch with Bob Tuesday» — система создаёт встречу (прото-SideMemo/IntentBox тридцатилетней давности). Умер вместе с Newton, но data soup до сих пор цитируют как самую правильную модель данных мобильной ОС.
-- **Lotus Agenda (1988, Митч Капор).** Item-centric PIM: свободный текст автоматически категоризуется по смыслу — прото-автотегирование из TagFS-заметки. Культовый, коммерчески мёртвый.
-- **Chandler / OSAF (2002–2008, снова Капор).** Item-centric PIM, где заметка/письмо/задача взаимопревращаемы. Провалился так поучительно, что об этом написана книга — «Dreaming in Code» (Scott Rosenberg). Уроки: scope creep, синхронизация сложнее самой модели, перфекционизм архитектуры без ранних пользователей. Обязательное чтение перед A3.
-- **MIT Haystack (Karger, ~2003).** Унифицированное хранилище items + пользовательские представления поверх. Академический предок itemized OS.
-- **Microsoft WinFS (2003–2006).** Сущности (Contact, Document, Event) сквозь всю систему, реляционные запросы к ФС. Убит производительностью и сложностью — главный козырь скептиков entity-store. Контраргумент 2026: WinFS тащил SQL Server поверх NTFS на железе 2004 года; embedded-БД, полнотекстовые индексы и CRDT с тех пор стали дешёвыми. Но урок «семантический слой обязан быть дешёвым и инкрементальным» — вечный.
-- **KDE Nepomuk / Semantic Desktop (2006–2013).** RDF-граф всего на десктопе. Умер от тяжести: индексация жрала машину, пользователи выключали. Тот же урок с другой стороны.
-- **BeOS BFS (1997).** Атрибуты + индексы + живые запросы в файловой системе — TagFS, который реально работал и который любили. Существованием доказывает: запросная ФС — не фантазия.
-- **Palm webOS Synergy (2009).** Слияние контактов/календарей/переписки из всех сервисов в единые сущности — «мета-контакты» из FluidSpace-заметки были в проде у Palm в 2009. Механика миграции и дедупликации аккаунтов — готовый референс.
-- **Windows Phone People Hub (2010).** Человек как первокласс: вся переписка, соцсети, фото человека в одной карточке. Person-first в проде у Microsoft. Умер вместе с платформой (см. урок про app gap ниже).
+- **Apple Newton OS (1993) — data soup.** A single object store: all "apps" read and write shared objects, data isn't locked into silos. Plus Assist: highlight "lunch with Bob Tuesday" and the system creates a meeting (a proto-SideMemo/IntentBox thirty years early). Died with the Newton, but data soup is still cited as the most correct data model for a mobile OS.
+- **Lotus Agenda (1988, Mitch Kapor).** Item-centric PIM: free text is automatically categorized by meaning — a proto-auto-tagging precursor to the TagFS note. Cult classic, commercially dead.
+- **Chandler / OSAF (2002–2008, Kapor again).** Item-centric PIM where a note/email/task are mutually interchangeable. Failed so instructively that a book was written about it — "Dreaming in Code" (Scott Rosenberg). Lessons: scope creep, sync is harder than the model itself, architectural perfectionism without early users. Required reading before A3.
+- **MIT Haystack (Karger, ~2003).** A unified store of items plus user-defined views on top. Academic ancestor of the itemized OS.
+- **Microsoft WinFS (2003–2006).** Entities (Contact, Document, Event) across the whole system, relational queries against the filesystem. Killed by performance and complexity — the main trump card of entity-store skeptics. 2026 counterargument: WinFS dragged SQL Server on top of NTFS on 2004-era hardware; embedded DBs, full-text indexes, and CRDTs have since become cheap. But the lesson "the semantic layer has to be cheap and incremental" is eternal.
+- **KDE Nepomuk / Semantic Desktop (2006–2013).** An RDF graph of everything on the desktop. Died from weight: indexing ate the machine, users turned it off. The same lesson from a different angle.
+- **BeOS BFS (1997).** Attributes + indexes + live queries in the filesystem — a TagFS that actually worked and that people loved. Its existence proves: a queryable filesystem isn't a fantasy.
+- **Palm webOS Synergy (2009).** Merging contacts/calendars/conversations from every service into unified entities — the "meta-contacts" from the FluidSpace note were in production at Palm in 2009. The account migration and dedup mechanics are a ready-made reference.
+- **Windows Phone People Hub (2010).** The person as a first-class citizen: all correspondence, social feeds, photos of a person in one card. Person-first, in production at Microsoft. Died with the platform (see the app-gap lesson below).
 
-## 2. Карточки/виджеты вместо приложений
+## 2. Cards/widgets instead of apps
 
-- **Palm webOS (2009).** Карточки и стеки карточек как модель многозадачности; жестовая модель, которую индустрия растащила (свайпы iPhone X — прямые наследники). **Just Type** — универсальный ввод «печатай что хочешь, система разберётся» = FlexLight в проде 2010 года. Живёт в телевизорах LG. Урок: лучший UX не спасает без экосистемы приложений и конкурентного железа.
-- **BlackBerry 10 (2013).** Hub — единая лента всех коммуникаций (наша «нотификация → трей с классификацией» рядом), Peek/Flow жесты. Тот же диагноз смерти: app gap.
-- **Firefox OS (2013–2016).** Веб-приложения вместо нативных + **adaptive app search (Everything.me): пишешь «pizza» — система собирает эфемерные приложения под интент**. Это «auto installation» из нашего wishlist, реализованный в 2013. Умер: слабое железо, оператороцентричная дистрибуция, веб-платформа была не готова. Форк живёт как KaiOS на сотнях миллионов кнопочников.
-- **Ubuntu Touch Scopes (2013) + Unity HUD (2012).** Scopes — контентные линзы вместо приложений (музыка/новости/локальное агрегируются в один экран). HUD — поиск по меню приложения с клавиатуры: кусок FlexLight в проде у Canonical в 2012.
-- **Google Glass (2013).** Timeline из карточек как единственный интерфейс + голос. Прецедент «лента как shell» на ограниченном форм-факторе.
-- **Google Now (2012).** Проактивные контекстные карточки у миллиардов пользователей — Proactive UI в проде. Деградировал в рекламную ленту Discover. Урок: проактивность умирает, когда стимул платформы — engagement, а не польза; лечится только тем, что платформа не живёт с рекламы.
-- **OLPC Sugar (2007).** Journal вместо файловой системы: дневник активности как основной интерфейс, activity-centric. Живой (в школах до сих пор) прецедент timeline-as-shell.
-- **OpenDoc / CyberDog (Apple, 1996).** Compound documents: документ собирается из компонентов разных вендоров вместо монолитных приложений — «Модульность экосистемы» дословно. Убит в 1997. Ключевой урок — экономический: никто не хотел продавать «часть», все хотели продавать «целое». Наш вопрос «lost brand & identity» — это он же; без встроенной модели заработка компонентная экосистема не заводится (см. §5).
+- **Palm webOS (2009).** Cards and stacks of cards as the multitasking model; a gesture model the industry lifted wholesale (iPhone X swipes are its direct descendants). **Just Type** — universal input, "type whatever you want, the system figures it out" = FlexLight in production in 2010. Still alive in LG TVs. Lesson: the best UX doesn't save you without an app ecosystem and competitive hardware.
+- **BlackBerry 10 (2013).** Hub — a unified feed of all communications (adjacent to our "notification → tray with classification"), Peek/Flow gestures. Same cause of death: app gap.
+- **Firefox OS (2013–2016).** Web apps instead of native + **adaptive app search (Everything.me): type "pizza" and the system assembles ephemeral apps around the intent**. This is the "auto installation" from our wishlist, implemented in 2013. Died: weak hardware, carrier-centric distribution, the web platform wasn't ready. A fork lives on as KaiOS on hundreds of millions of feature phones.
+- **Ubuntu Touch Scopes (2013) + Unity HUD (2012).** Scopes — content lenses instead of apps (music/news/local content aggregated into one screen). HUD — keyboard-driven search across an app's menu: a piece of FlexLight in production at Canonical in 2012.
+- **Google Glass (2013).** A Timeline of cards as the sole interface + voice. A precedent for "feed as shell" on a constrained form factor.
+- **Google Now (2012).** Proactive contextual cards for billions of users — Proactive UI in production. Degraded into the Discover ad feed. Lesson: proactivity dies when the platform's incentive is engagement rather than usefulness; the only cure is a platform that doesn't live off ads.
+- **OLPC Sugar (2007).** Journal instead of a filesystem: an activity diary as the primary interface, activity-centric. A living precedent (still in schools today) for timeline-as-shell.
+- **OpenDoc / CyberDog (Apple, 1996).** Compound documents: a document assembled from components made by different vendors instead of monolithic apps — "ecosystem modularity," verbatim. Killed in 1997. The key lesson is economic: nobody wanted to sell "a part," everybody wanted to sell "the whole." Our "lost brand & identity" question is the same problem; without a built-in monetization model, a component ecosystem doesn't take off (see §5).
 
-## 3. Агенты и проактивность — глубокая история
+## 3. Agents and proactivity — deep history
 
-- **General Magic / Magic Cap + Telescript (1994).** Мобильные агенты, путешествующие по сети и совершающие действия от имени пользователя — агентская ОС за 30 лет до моды. Умерла: сети не было, консорциум закрытый, телефоны победили коммуникаторы. Документалка «General Magic» (2018) — терапевтическое чтение для всех, кто делает ОС раньше времени.
-- **Apple Knowledge Navigator (1987).** Концепт-видео разговорного агента в планшете — рамка, в которую индустрия целится до сих пор.
-- **Remembrance Agent (Bradley Rhodes, MIT, 1996).** «Applications that watch over user's shoulder and suggest information relevant to the current situation» — цитата, которая уже лежит в нашей IntentBox-заметке. Академическая родословная SideMemo.
-- **Open Sesame! (1993, Mac).** Утилита выявляла повторяющиеся паттерны действий и предлагала автоматизацию — «Выявление паттернов действий» (и наш отменённый патент) в софте 1993 года.
-- **Apple Data Detectors (1997, Bonnie Nardi et al.).** Распознавание сущностей (адреса, даты) в любом тексте системы → контекстные действия. Прямой предок SideMemo, дожил до нынешних detectors в iOS.
-- **Clippy / Office Assistant (1997).** Канонический антипример проактивности: прерывает, а не помогает; не учится; не выключается. Наша заметка «new clippy» — правильная рамка: проактивность обязана быть тихой (IntentBox-плашка, не персонаж).
-- **Fuchsia Maxwell (2017–2019).** Уже в наших заметках; агентный саджест в ОС, выпилен Google.
+- **General Magic / Magic Cap + Telescript (1994).** Mobile agents that travel across the network and take actions on the user's behalf — an agentic OS 30 years ahead of the trend. Died: no network yet, a closed consortium, phones won over communicators. The documentary "General Magic" (2018) — therapeutic viewing for anyone building an OS ahead of its time.
+- **Apple Knowledge Navigator (1987).** A concept video of a conversational agent in a tablet — a frame the industry is still aiming at.
+- **Remembrance Agent (Bradley Rhodes, MIT, 1996).** "Applications that watch over the user's shoulder and suggest information relevant to the current situation" — a quote already sitting in our IntentBox note. The academic lineage of SideMemo.
+- **Open Sesame! (1993, Mac).** A utility that detected recurring action patterns and suggested automation — "detecting action patterns" (and our abandoned patent) in 1993-era software.
+- **Apple Data Detectors (1997, Bonnie Nardi et al.).** Entity recognition (addresses, dates) in any system text → contextual actions. A direct ancestor of SideMemo, survives to this day as "detectors" in iOS.
+- **Clippy / Office Assistant (1997).** The canonical anti-pattern for proactivity: interrupts instead of helping; doesn't learn; can't be turned off. Our "new Clippy" note gets the framing right: proactivity has to be quiet (an IntentBox chip, not a character).
+- **Fuchsia Maxwell (2017–2019).** Already in our notes; agentic suggest in the OS, cut by Google.
 
-## 4. Глобальная история и универсальный поиск
+## 4. Global history and universal search
 
-- **GNOME Zeitgeist (2009).** Системный событийный журнал + Activity Journal — global history в опенсорсе 2009 года. Тихо умер: лог без поиска, агентов и интеграции в shell никому не нужен.
-- **Windows 10 Timeline (2018–2021).** История задач/документов с синком между машинами, прямо в Task View. Убит за низкое использование. Тот же урок с бюджетом Microsoft: **история — это substrate для агентов и поиска, а не самостоятельная фича**. У нас она substrate — правильно.
-- **Quicksilver (2003) → Alfred → Raycast.** Эволюция палитры уже в FlexLight-заметке; добавить Quicksilver как отправную точку жанра.
-- **Microsoft Recall / Screenpipe / Rewind** — см. «Расширение угла зрения» §5.
+- **GNOME Zeitgeist (2009).** A system event log + Activity Journal — global history in open source, in 2009. Quietly died: a log without search, agents, and shell integration is nobody's darling.
+- **Windows 10 Timeline (2018–2021).** A history of tasks/documents synced between machines, right in Task View. Killed for low usage. The same lesson, from Microsoft's budget: **history is a substrate for agents and search, not a standalone feature.** Ours treats it as a substrate — correctly.
+- **Quicksilver (2003) → Alfred → Raycast.** The palette's evolution is already in the FlexLight note; add Quicksilver as the genre's starting point.
+- **Microsoft Recall / Screenpipe / Rewind** — see "Widening the Lens" §5.
 
-## 5. Уроки провалов, сведённые в правила
+## 5. Lessons from failures, distilled into rules
 
-1. **App gap убивает парадигмы.** webOS, BB10, Windows Phone, Firefox OS — все умерли не от плохих идей, а от отсутствия приложений. Ответ Agent OS уже в архитектуре (Starnix + веб + микро-виджеты day one), но урок надо держать в спеке как first-class constraint, а не сноску.
-2. **Семантический слой обязан быть дешёвым.** WinFS, Nepomuk: если entity-извлечение заметно жрёт батарею/диск — пользователь его выключит, а вендор выпилит. Инкрементально, лениво, на NPU.
-3. **Экономика компонентов — нерешённая задача с 1996 года.** OpenDoc умер от неё, наш «lost brand» — она же. Свежие прецеденты, что она решаема: Telegram Mini Apps (микро-приложения с платежами на сотнях миллионов пользователей), OpenAI Apps SDK с маркетплейсом и rev-share. Встроенный биллинг с нулевой фрикцией — не фича, а условие существования модульной экосистемы.
-4. **Проактивность без выравнивания стимулов деградирует в рекламу** (Google Now → Discover). Open source + локальность — не идеология, а защита механики.
-5. **История без потребителей истории не нужна** (Zeitgeist, Timeline). У истории должны быть агенты, поиск и timeline-shell с первого дня.
-6. **Слишком рано — тоже смерть** (General Magic, Newton). Отличие 2026-го: сети, NPU, LLM и local-first стек существуют. Впервые все зависимости видения доступны одновременно.
+1. **App gap kills paradigms.** webOS, BB10, Windows Phone, Firefox OS — all died not from bad ideas but from a lack of apps. Agent OS's answer is already in the architecture (Starnix + web + micro-widgets day one), but the lesson needs to stay in the spec as a first-class constraint, not a footnote.
+2. **The semantic layer has to be cheap.** WinFS, Nepomuk: if entity extraction visibly eats battery/disk, the user will turn it off and the vendor will cut it. Incremental, lazy, on the NPU.
+3. **Component economics — an unsolved problem since 1996.** OpenDoc died from it; our "lost brand" is the same issue. Fresh precedents showing it's solvable: Telegram Mini Apps (micro-apps with payments, hundreds of millions of users), the OpenAI Apps SDK with a marketplace and rev-share. Built-in, zero-friction billing isn't a feature — it's a precondition for a modular ecosystem to exist at all.
+4. **Proactivity without incentive alignment degrades into advertising** (Google Now → Discover). Open source + locality aren't ideology, they're a defense of the mechanics.
+5. **History nobody consumes is useless** (Zeitgeist, Timeline). History needs agents, search, and a timeline-shell from day one.
+6. **Too early is also death** (General Magic, Newton). The difference in 2026: networks, NPUs, LLMs, and the local-first stack all exist. For the first time, every dependency of the vision is available at once.
 
-## 6. Современный агентский фронт (2025–2026)
+## 6. The current agentic front (2025–2026)
 
-**Сверху (слой над ОС):**
-- **OpenAI официально строит «ОС сверху»**: Apps SDK + AgentKit (DevDay окт. 2025) — приложения живут внутри ChatGPT, маркетплейс с ревью и rev-share; аналитики описывают стратегию прямо в OS-терминах: модели = kernel, чат = shell, Apps SDK = userland. Дальше — слияние ChatGPT + Codex + Atlas в один супер-апп (браузер Atlas при этом закрывается 09.08.2026, его агентные возможности втягиваются внутрь), ChatGPT Work (09.07.2026) — агент, который «сам доделывает работу» по инструментам компании. Примечательно: **Apple блокирует супер-аппы на iOS (guideline 4.7)** — OpenAI зажат этажом выше ОС, что подтверждает наш тезис о защищаемой позиции на уровне ОС. Устройство io (Джони Айв, поглощение 2025) пока не показано — видимая стратегия OpenAI сегодня software-first.
-- **Агентные браузеры** как прото-агентские-ОС: тот же паттерн «не можем заменить ОС — оборачиваем её».
-- **Anthropic MCP** — стал стандартом agent↔tool; см. «Расширение угла зрения» §1. UPD но сейчас пошел откат и переход на простые cli утилиты и skills
+**Above (a layer over the OS):**
+- **OpenAI is officially building "an OS on top"**: Apps SDK + AgentKit (DevDay, Oct 2025) — apps live inside ChatGPT, a marketplace with review and rev-share; analysts describe the strategy in literal OS terms: models = kernel, chat = shell, Apps SDK = userland. Next up: a merger of ChatGPT + Codex + Atlas into one super-app (meanwhile the Atlas browser is being shut down on 2026-08-09, its agentic capabilities pulled inward), ChatGPT Work (2026-07-09) — an agent that "finishes the work itself" using the company's tools. Notably: **Apple blocks super-apps on iOS (guideline 4.7)** — OpenAI is squeezed one floor above the OS, which confirms our thesis about the OS level being the defensible position. The io device (Jony Ive, acquired 2025) hasn't been shown yet — OpenAI's visible strategy today is software-first.
+- **Agentic browsers** as proto-agentic-OSes: the same pattern of "can't replace the OS — wrap it instead."
+- **Anthropic MCP** — became the agent↔tool standard; see "Widening the Lens" §1. UPDATE: but there's now a rollback underway, a shift toward plain CLI tools and skills.
 
-**Внутри платформ:** Android AppFunctions («приложения как on-device MCP-серверы», Gemini preview с мая 2026), Apple App Intents — разобрано в «Расширении угла зрения» §1. Плюс Apple Foundation Models: свои модели, дистиллированные из одолженных Gemini (важная поправка: «Siri ≠ Gemini»).
+**Inside the platforms:** Android AppFunctions ("apps as on-device MCP servers," Gemini preview since May 2026), Apple App Intents — covered in "Widening the Lens" §1. Plus Apple Foundation Models: Apple's own models, distilled from borrowed Gemini (important caveat: "Siri ≠ Gemini").
 
-**Агентское железо и вендорские ОС:**
-- **Rabbit R1 (2024)** — обещали LAM («агент делает всё»), отгрузили обёртку; урок: агентские обещания без substrate = скандал.
-- **Humane AI Pin (2024–2025)** — умер, распродан HP; урок: новый форм-фактор не заменяет полезность.
-- **Deutsche Telekom AI Phone (2025, Perplexity)** — оператор ставит ассистента вместо лаунчера: спрос на «агент вместо приложений» дошёл до операторов.
-- **Jolla Mind2** — локальный AI-хаб, приватность как продукт; наша тусовка.
-- Вендоры Android (Honor, Samsung/Galaxy AI, Xiaomi HyperAI) наперегонки вклеивают агентов в прошивки — все поверх app-centric багажа, все упираются в opt-in покрытие.
+**Agentic hardware and vendor OSes:**
+- **Rabbit R1 (2024)** — promised a LAM ("the agent does everything"), shipped a wrapper; lesson: agentic promises without a substrate = a scandal.
+- **Humane AI Pin (2024–2025)** — died, sold off to HP; lesson: a new form factor doesn't substitute for usefulness.
+- **Deutsche Telekom AI Phone (2025, Perplexity)** — a carrier putting an assistant in place of the launcher: demand for "agent instead of apps" has reached the carriers.
+- **Jolla Mind2** — a local AI hub, privacy as the product; our crowd.
+- Android vendors (Honor, Samsung/Galaxy AI, Xiaomi HyperAI) are racing to bolt agents onto their firmware — all on top of app-centric baggage, all hitting the ceiling of opt-in coverage.
 
-**Академия:** AIOS (Rutgers) — «LLM Agent Operating System»: планирование агентов, память, инструменты как сервисы ОС; Microsoft UFO/UFO² — «Desktop AgentOS» поверх Windows GUI. Полезны как словарь и бенчмарки, оба — слой поверх существующих ОС.
+**Academia:** AIOS (Rutgers) — "LLM Agent Operating System": agent planning, memory, tools as OS services; Microsoft UFO/UFO² — "Desktop AgentOS" on top of the Windows GUI. Useful as vocabulary and benchmarks; both are a layer on top of existing OSes.
 
-## 7. Доп. идеи, выпавшие из истории (кандидаты в wishlist)
+## 7. Additional ideas that fell out of history (wishlist candidates)
 
-1. **Just Type-режим FlexLight**: пустой ввод с клавиатуры/голоса в любом месте системы — уже интент, без вызова палитры (webOS доказал жизнеспособность).
-2. **Synergy-миграция**: онбординг нового пользователя = слияние всех его аккаунтов в entity-граф (контакты, переписка, календари) — первый «вау» продукта, webOS-механика + современные бриджи (Matrix/Beeper).
-3. **Эфемерные интент-поверхности** (Everything.me): интент → временная сборка виджетов → перманентность по факту использования. Уточняет наш «auto installation»: ставится не приложение, а поверхность.
-4. **Assist-жест Newton**: выделил любой текст где угодно → системное меню действий над распознанными сущностями (позвонить, создать задачу, замерить, перевести) — дёшево реализуется поверх entity store + SideMemo.
-5. **Journal-first онбординг** (Sugar): для новых пользователей timeline — единственный интерфейс, stories открываются постепенно (наша «Tool perspective / плавное изучение системы» получает конкретную форму).
-6. **Экономика day one**: биллинг/донаты/rev-share в ядре платформы (урок OpenDoc + прецедент Telegram Mini Apps), иначе микро-виджеты останутся хобби.
-7. **Анти-Clippy-контракт** для IntentBox: письменные правила проактивности в спеке (никогда не прерывает фокус, всегда объясняет «почему предложено», деградирует до полной тишины, обучаемо per-user).
+1. **FlexLight's Just Type mode**: empty keyboard/voice input anywhere in the system, already an intent, no need to invoke a palette (webOS proved viability).
+2. **Synergy-style migration**: onboarding a new user = merging all their accounts into an entity graph (contacts, correspondence, calendars) — the product's first "wow," webOS's mechanics + modern bridges (Matrix/Beeper).
+3. **Ephemeral intent surfaces** (Everything.me): intent → temporary widget assembly → permanence based on actual usage. Sharpens our "auto installation": you're not installing an app, you're installing a surface.
+4. **Newton's Assist gesture**: select any text anywhere → a system menu of actions over recognized entities (call, create a task, measure, translate) — cheap to build on top of the entity store + SideMemo.
+5. **Journal-first onboarding** (Sugar): for new users, the timeline is the sole interface, stories open up gradually (our "Tool perspective / gradual system learning" gets a concrete form).
+6. **Day-one economics**: billing/donations/rev-share built into the platform core (the OpenDoc lesson + the Telegram Mini Apps precedent), otherwise micro-widgets stay a hobby.
+7. **Anti-Clippy contract** for IntentBox: written proactivity rules in the spec (never interrupts focus, always explains "why this was suggested," degrades to full silence, learnable per-user).

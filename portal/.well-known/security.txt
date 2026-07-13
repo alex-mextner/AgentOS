@@ -1,4 +1,4 @@
-Contact: https://github.com/alex-mextner/HyperOS/security
+Contact: https://github.com/alex-mextner/AgentOS/security
 Preferred-Languages: en, ru
-Canonical: https://github.com/alex-mextner/HyperOS/blob/main/SECURITY.md
-Policy: https://github.com/alex-mextner/HyperOS/security/policy
+Canonical: https://agentos-bible.vercel.app/.well-known/security.txt
+Policy: https://github.com/alex-mextner/AgentOS/blob/main/SECURITY.md

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://hyperos.vercel.app/</loc></url>
-  <url><loc>https://hyperos.vercel.app/#wiki</loc></url>
-  <url><loc>https://hyperos.vercel.app/#tasks</loc></url>
-  <url><loc>https://hyperos.vercel.app/#gantt</loc></url>
-  <url><loc>https://hyperos.vercel.app/api/</loc></url>
+  <url><loc>https://agentos-bible.vercel.app/</loc></url>
+  <url><loc>https://agentos-bible.vercel.app/#wiki</loc></url>
+  <url><loc>https://agentos-bible.vercel.app/#tasks</loc></url>
+  <url><loc>https://agentos-bible.vercel.app/#gantt</loc></url>
+  <url><loc>https://agentos-bible.vercel.app/api/</loc></url>
 </urlset>

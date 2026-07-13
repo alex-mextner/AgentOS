@@ -1,95 +1,94 @@
-> **Language: Russian · non-normative research.** Wider-lens survey of adjacent efforts. Retained in the original language for fidelity; not a normative English specification. An English summary is tracked as a follow-up task.
+> **English research doc (translated from the original Russian atlas).** Wider-lens survey of adjacent efforts. Non-normative — normative requirements are defined by the linked architecture, product, hardware, legal, and planning documents.
 
-# Расширение угла зрения: кто уже копает наши тоннели
+# Widening the Lens: who's already digging our tunnels
 
-> Ревизия: 10.07.2026. Карта местности вокруг идей из «Своя мобильная ОС» и UX RESEARCHES. Метод: беру наши списки, обобщаю до тезиса, показываю кто уже делает похожее, что у них брать и что это меняет для Agent OS. Всё проверено поиском, ссылки прилагаются.
+> Revision: 2026-07-10. A map of the terrain around the ideas in "Own Mobile OS" and UX RESEARCHES. Method: take our lists, generalize to a thesis, show who's already doing something similar, what to take from them, and what it changes for Agent OS. Everything checked by search, links included.
 
 ---
 
-## 1. Главное, чего нет в наших заметках: платформы строят агентский слой. Сверху и opt-in
+## 1. The main thing missing from our notes: the platforms are building an agentic layer. From above, and opt-in.
 
-Тезис «ИИ-ассистенты навсегда поверхностны из-за багажа приложений» устарел наполовину — обе платформы прямо сейчас строят реестры функций приложений для агентов:
+The thesis "AI assistants will always be shallow because of app baggage" is now half-outdated — both platforms are right now building registries of app functions for agents:
 
-- **Android AppFunctions** — приложения ведут себя «как on-device MCP-серверы»: self-describing функции регистрируются в реестре внутри ОС, агенты (Gemini) их находят и вызывают. Private preview с Gemini с мая 2026 (Galaxy S26, Pixel 10), Android 17 расширит. Показательно: все предшественники (App Actions, Slices, Direct Actions, Assist API) умерли — жёсткие библиотеки интентов не пережили встречу с динамическим интеллектом. https://developer.android.com/ai/appfunctions
-- **Apple App Intents** — тот же контракт для Apple Intelligence/Siri/Spotlight/Shortcuts, на WWDC26 докинули RelevantEntities, SyncableEntity, union-типы. Разработчики уже пишут «App Intents — это structured-tool-use API всей эппловской AI-ткани». https://developer.apple.com/documentation/appintents
-- **MCP** (открытый стандарт с конца 2024) стал де-факто протоколом agent↔tool; AppFunctions индустрия описывает буквально как «мобильный MCP».
+- **Android AppFunctions** — apps behave "like on-device MCP servers": self-describing functions register in an in-OS registry, agents (Gemini) discover and call them. Private preview with Gemini since May 2026 (Galaxy S26, Pixel 10), Android 17 will expand it. Telling detail: every predecessor (App Actions, Slices, Direct Actions, Assist API) died — rigid intent libraries didn't survive contact with dynamic intelligence. https://developer.android.com/ai/appfunctions
+- **Apple App Intents** — the same contract for Apple Intelligence/Siri/Spotlight/Shortcuts; at WWDC26 they added RelevantEntities, SyncableEntity, union types. Developers already describe "App Intents as the structured-tool-use API for Apple's entire AI fabric." https://developer.apple.com/documentation/appintents
+- **MCP** (an open standard since late 2024) has become the de-facto agent↔tool protocol; the industry literally describes AppFunctions as "mobile MCP."
 
-**Что это меняет.** Ответ на «зачем новая ОС, если Gemini уже дергает функции приложений» должен быть в спеке, и он есть, но не сформулирован: у платформ покрытие **opt-in per-app** — агент видит только то, что разработчик соизволил аннотировать, и вечно догоняет. В Agent OS покрытие **100% by construction**: каждое действие и байт проходят через entity/capability-слой, аннотировать нечего. Это и есть питч.
+**What this changes.** The answer to "why build a new OS if Gemini can already poke app functions" needs to be in the spec, and it exists but isn't spelled out: platform coverage is **opt-in per-app** — the agent only sees what a developer bothered to annotate, and it's permanently playing catch-up. In Agent OS, coverage is **100% by construction**: every action and every byte passes through the entity/capability layer, there's nothing to annotate. That's the pitch.
 
-**Практическое следствие:** entity/action-реестр Agent OS должен уметь экспортироваться наружу как MCP-сервер — тогда весь внешний агентский мир работает с Agent OS в день запуска, бесплатно. FIDL внутри, MCP наружу.
+**Practical consequence:** Agent OS's entity/action registry should be exportable externally as an MCP server — then the entire external agentic world can work with Agent OS on day one, for free. FIDL internally, MCP externally.
 
-Смежное: агентская парадигма пока строится этажом выше ОС — агентские браузеры, приложения-внутри-ассистентов — именно потому, что ОС никто заменить не может. Наша ставка ровно в том, что защищаемая позиция — уровень ОС.
+Related: the agentic paradigm is currently being built a floor above the OS — agentic browsers, apps-inside-assistants — precisely because nobody can replace the OS. Our bet is exactly that the defensible position is at the OS level.
 
-## 2. Local-first: кирпичи уже отлиты, люди известны
+## 2. Local-first: the bricks are already cast, the people are already known
 
-- **Ink & Switch** — лаборатория, придумавшая сам термин local-first. Их стек: **Automerge** (CRDT, продакшн, Rust-ядро), **Patchwork** (malleable-инфраструктура поверх Automerge), **Keyhive** — local-first access control на capabilities с e2e-шифрованием (буквально наш слой доступа для синка), **Cambria** — lenses для эволюции схем (это готовое исследование нашего «Auto api/data migration protocol»). https://www.inkandswitch.com/
-- **Loro** — CRDT-библиотека на Rust, для нашего Rust-first стека кандидат наравне с Automerge.
-- **Anytype / any-sync** — ближайший живой продукт к связке FluidSpace + entity-модель: объекты с типами и relations, local-first, e2e, p2p-синк, открытый протокол any-sync, мобильные клиенты, публичный локальный API и уже готовый MCP-сервер. Изучить any-sync как референс (или компонент) для A4-синка прежде чем писать своё. https://anytype.io/ https://github.com/anyproto
+- **Ink & Switch** — the lab that coined the term "local-first" itself. Their stack: **Automerge** (CRDT, production-grade, Rust core), **Patchwork** (malleable infrastructure on top of Automerge), **Keyhive** — local-first access control on capabilities with e2e encryption (literally our access layer for sync), **Cambria** — lenses for schema evolution (a ready-made study of our "Auto API/data migration protocol"). https://www.inkandswitch.com/
+- **Loro** — a CRDT library in Rust, a candidate on par with Automerge for our Rust-first stack.
+- **Anytype / any-sync** — the closest living product to our FluidSpace + entity model combo: typed objects with relations, local-first, e2e, p2p sync, an open protocol (any-sync), mobile clients, a public local API, and an already-built MCP server. Study any-sync as a reference (or component) for A4 sync before writing our own. https://anytype.io/ https://github.com/anyproto
 
-Спека говорит «CRDT-библиотеки берём как есть» — теперь можно вписать конкретные имена и конкретный access-control слой.
+The spec says "take CRDT libraries as-is" — now we can plug in concrete names and a concrete access-control layer.
 
-## 3. Malleable software: наша «Модульность экосистемы» получила манифест
+## 3. Malleable software: our "ecosystem modularity" got a manifesto
 
-Ink & Switch, июнь 2025: **«Malleable Software: Restoring user agency in a world of locked-down apps»** (Litt, Horowitz, van Hardenberg). Совпадение с нашими заметками почти дословное: «apps are avocado slicers» (инструменты, не приложения), gentle slope от пользователя к создателю, коммунальное создание тулзов. Ключевой их вывод — прививка от лишнего оптимизма: **AI-кодогенерация сама по себе malleability не даёт** — нужна среда, где инструменты компонуются над общими данными. «Приводить AI-кодинг в сегодняшнюю экосистему — как приводить талантливого су-шефа на фудкорт». Ровно наш entity store и есть ответ на их открытый вопрос. https://www.inkandswitch.com/essay/malleable-software/
+Ink & Switch, June 2025: **"Malleable Software: Restoring user agency in a world of locked-down apps"** (Litt, Horowitz, van Hardenberg). The overlap with our notes is almost verbatim: "apps are avocado slicers" (tools, not apps), a gentle slope from user to creator, communal tool-making. Their key finding is a vaccine against excess optimism: **AI code generation alone doesn't produce malleability** — you need an environment where tools compose over shared data. "Bringing AI coding into today's ecosystem is like bringing a talented sous-chef to a food court." Our entity store is exactly the answer to their open question. https://www.inkandswitch.com/essay/malleable-software/
 
-- **Geoffrey Litt** — человек, чья научная карьера построена на наших «микро-приложениях». Каталог prior art — Malleable Systems Collective.
-- Vibe coding / software-on-demand (артефакты, генерация приложений из чата) — частичная реализация нашего «auto installation», но в облачных силосах без общих данных. Подтверждает спрос, не решает задачу.
+- **Geoffrey Litt** — a researcher whose entire career is built on our "micro-apps." Their prior-art catalog is the Malleable Systems Collective.
+- Vibe coding / software-on-demand (artifacts, generating apps from chat) — a partial implementation of our "auto installation," but in cloud silos without shared data. Confirms demand, doesn't solve the problem.
 
-## 4. Itemized OS: Обенауэр уже прожил в нашей ОС три года
+## 4. Itemized OS: Obenauer has already lived in our OS for three years
 
-**Alexander Obenauer, WonderOS/OLLOS** — независимый исследователь, который с 2021 строит и живёт в «itemized» среде: item вместо приложения, всё в одном локальном графе. Две идеи, которых у нас нет:
+**Alexander Obenauer, WonderOS/OLLOS** — an independent researcher who, since 2021, has built and lived in an "itemized" environment: item instead of app, everything in one local graph. Two ideas we don't have:
 
-1. **Timeline как shell.** У нас Global history — лог и навигация. У него таймлайн — главный организующий интерфейс: вещи самоорганизуются по времени, «когда время — организующий принцип, твои вещи организуют себя сами». Рассмотреть timeline как одну из дефолтных stories, а не только substrate. https://alexanderobenauer.com/ollos/
-2. **Spaced review на уровне ОС** — незакрытые задачи, письма без ответов, отложенные ссылки всплывают по spaced repetition. Дешёвая мощная фича поверх entity store.
+1. **Timeline as shell.** For us, Global History is a log and a navigation aid. For him, the timeline is the main organizing interface: things self-organize by time, "when time is the organizing principle, your things organize themselves." Consider timeline as one of the default stories, not just a substrate. https://alexanderobenauer.com/ollos/
+2. **OS-level spaced review** — unclosed tasks, unanswered emails, deferred links surface via spaced repetition. A cheap, powerful feature on top of the entity store.
 
-Он же соавтор Embark (Ink & Switch) — динамические документы, где сущности (места, даты) распознаются прямо в тексте плана поездки и обрастают formulas и картами. Это SideMemo + FluidSpace, реализованные и описанные с выводами. https://www.inkandswitch.com/embark/
+He's also a co-author of Embark (Ink & Switch) — dynamic documents where entities (places, dates) are recognized right in the text of a trip plan and grow formulas and maps. This is SideMemo + FluidSpace, built and written up with conclusions. https://www.inkandswitch.com/embark/
 
-## 5. Глобальная история уже продаётся — и уже получила по лицу
+## 5. Global history is already being sold — and has already been punched in the face
 
-- **Microsoft Recall** — наш «Global history» в проде: скриншоты + семантический поиск. Прошёл через самый громкий privacy-скандал 2024 года, перезапущен только после: шифрование, строгий opt-in, Windows Hello на вход, фильтры приватного. Урок: спрос подтверждён, а приватность — риск №1 всей фичи.
-- **Screenpipe** — open source, **на Rust**: screen+audio 24/7 локально, OCR/Whisper, accessibility-tree capture, «pipes» (агенты-автоматизации поверх истории), MCP-сервер, исключение окон и PII-redaction. Готовый референс реализации нашего input registry, вплоть до языка. https://github.com/mediar-ai/screenpipe
-- Limitless (бывший Rewind) — ушёл в облачный кулон; аудитория, любившая локальный Rewind, осталась брошенной — наша аудитория.
+- **Microsoft Recall** — our "Global History" in production: screenshots + semantic search. Went through the loudest privacy scandal of 2024, relaunched only after adding encryption, strict opt-in, Windows Hello to unlock, and private-content filters. Lesson: demand is confirmed, and privacy is risk #1 of the entire feature.
+- **Screenpipe** — open source, **in Rust**: 24/7 local screen+audio capture, OCR/Whisper, accessibility-tree capture, "pipes" (agentic automations on top of history), an MCP server, window exclusion, and PII redaction. A ready-made reference implementation of our input registry, right down to the language. https://github.com/mediar-ai/screenpipe
+- Limitless (formerly Rewind) — pivoted to a cloud pendant; the audience that loved local Rewind was left stranded — that's our audience.
 
-**Следствие для спеки:** threat model глобальной истории и input registry — не примечание, а раздел спеки A4: локально, шифрование, исключения, per-agent capabilities на чтение истории. У нас capability-модель уже есть — надо явно направить её на историю.
+**Consequence for the spec:** the threat model for global history and the input registry isn't a footnote, it's a section of spec A4: local, encrypted, exclusions, per-agent read capabilities on history. We already have a capability model — it needs to be explicitly pointed at history.
 
-## 6. Соседи по цеху: альт-ОС, ядра, наука
+## 6. Neighbors in the trade: alt-OSes, kernels, research
 
-- **postmarketOS 26.06** — 65 устройств официально, 600+ экспериментально, цель «10 лет жизни смартфона». Это и есть люди нашего камерного потолка «достойно, по-ретро», и общие с нами поставщики компонентов (libcamera, ModemManager/ofono — которые мы оборачиваем через Starnix). https://postmarketos.org/
-- Железо под Linux-мобилки существует как бизнес: FuriPhone FLX1, Liberux NEXX, Volla X23, Jolla. Ниша маленькая, но платящая.
-- **GrapheneOS × Motorola** (март 2026) — вендор впервые официально партнёрится с альтернативной ОС под будущие устройства. Прецедент пути «железо с ведома вендора» вместо слепого реверса.
-- **HarmonyOS NEXT** — экзистенс-пруф: не-Android мобильная ОС доведена до прода при достаточной силе воли и ресурсах; у Huawei тоже интент-фреймворк и distributed soft bus. Уровень усилий — справочный, не вдохновляющий.
-- Микроядра/капабилити-родня: Redox (Rust), Genode/seL4, Asterinas (Rust + Linux ABI). **Spritely Goblins/OCapN** — object capabilities для распределёнки: наша capability-модель, растянутая между устройствами и людьми (шаринг, чужие агенты).
-- **Orthogonal persistence** — научное имя нашего «бекап включая состояние памяти»: Phantom OS, линия KeyKOS/EROS. Инженерная реальность сегодня — **CRIU** (checkpoint/restore процессов в Linux, через Starnix потенциально доступен). Пункт из wishlist перестаёт быть фантазией и получает библиографию.
+- **postmarketOS 26.06** — 65 officially supported devices, 600+ experimental, goal "10-year smartphone lifespan." These are the people at our modest "decent, retro-style" ceiling, and we share component suppliers (libcamera, ModemManager/ofono — which we wrap via Starnix). https://postmarketos.org/
+- Hardware for Linux mobile exists as a business: FuriPhone FLX1, Liberux NEXX, Volla X23, Jolla. A small niche, but a paying one.
+- **GrapheneOS × Motorola** (March 2026) — a vendor officially partnering with an alternative OS for future devices, for the first time. A precedent for the "hardware with the vendor's knowledge" path instead of blind reverse-engineering.
+- **HarmonyOS NEXT** — an existence proof: a non-Android mobile OS shipped to production given enough willpower and resources; Huawei also has an intent framework and a distributed soft bus. The effort level is a reference point, not an inspiration.
+- Microkernel/capability relatives: Redox (Rust), Genode/seL4, Asterinas (Rust + Linux ABI). **Spritely Goblins/OCapN** — object capabilities for distributed systems: our capability model, stretched across devices and people (sharing, other people's agents).
+- **Orthogonal persistence** — the scientific name for our "backup including in-memory state": Phantom OS, the KeyKOS/EROS lineage. Today's engineering reality — **CRIU** (checkpoint/restore of processes on Linux, potentially reachable via Starnix). A wishlist item stops being fantasy and gets a bibliography.
 
-## 7. Track B: обстановка по железу изменилась в обе стороны
+## 7. Track B: the hardware situation has shifted in both directions
 
-Плохое: **Google выпилил device trees и driver binaries Pixel из AOSP** (с Android 16, июнь 2025), схлопнул историю коммитов ядра, разработка Android ушла в приватную ветку (март 2025); reference target теперь виртуальный Cuttlefish. LineageOS: сборка под Pixel — «painful, blind guess and reverse engineer». https://www.androidauthority.com/google-not-killing-aosp-3566882/
+Bad: **Google stripped Pixel device trees and driver binaries out of AOSP** (as of Android 16, June 2025), collapsed the kernel commit history, and Android development moved into a private branch (March 2025); the reference target is now the virtual Cuttlefish. LineageOS: building for Pixel is now "painful, blind guess and reverse engineer." https://www.androidauthority.com/google-not-killing-aosp-3566882/
 
-Для нас это значит: Pixel 9 потерял статус «референсного железа для кастомных ОС» — главный аргумент его выбора в спеке (§1.4). OQ6 («начинать с поддерживаемой платы, не со слепого флагмана») из рекомендации становится почти безальтернативным. Кандидаты на пересмотр: ARM-плата с Fuchsia-поддержкой (как спека и советует), Fairphone (официально поддержан pmOS/UT), вендор-партнёрство по мотиву GrapheneOS×Motorola.
+For us this means: Pixel 9 has lost its status as "reference hardware for custom OSes" — the main argument for its choice in the spec (§1.4). OQ6 ("start from a supported board, not a blind flagship") goes from a recommendation to nearly mandatory. Candidates for reconsideration: an ARM board with Fuchsia support (as the spec already recommends), Fairphone (officially supported by pmOS/UT), a vendor partnership along the lines of GrapheneOS×Motorola.
 
-Хорошее: Track A это не трогает вообще — что лишний раз подтверждает правильность развязки треков.
+Good: Track A is entirely unaffected by this — which further confirms the correctness of splitting the tracks.
 
-## 8. Ввод, мессенджеры, идентичность — точечно по нашим больным местам
+## 8. Input, messengers, identity — targeted hits on our pain points
 
-- **Клавиатуры/ввод:** on-device ASR стал массовым, диктовка вырастает в первичный ввод — наш пункт «voice + хранение оригиналов» в тренде. Открытая референс-реализация обучаемой клавиатуры — FUTO Keyboard. Наша боль «переключение раскладок / мультиязычный ввод» не решена ни в одной из исследованных систем — для русскоязычной аудитории это дифференциатор, а не мелочь.
-- **Мессенджер-агрегация:** пункт «с Антоном в element, с родителями в вайбере» уже решается прикладным слоем — Beeper на Matrix-бриджах (Automattic). Для нашего messenger-виджета Matrix-бриджи — готовый транспортный слой, писать с нуля не надо.
-- **User as API:** Solid (Berners-Lee, pods — данные у человека, вендоры просят доступ) — концептуальный предок; AT Protocol — переносимость идентичности. Регуляторный попутный ветер: DMA + EU Data Act (применяется с сентября 2025) законодательно требуют переносимость и интероп — «ПД хранятся у вас, а не у вендоров» перестало быть маргинальной идеей.
-- **Экономика модулей:** наш честный открытый вопрос «lost brand & identity» получил прецедент масштаба: Telegram Mini Apps — микро-приложения с платежами внутри мессенджера на сотни миллионов пользователей. Модель «платформа платит за покрытие сценариев» перестала быть теорией.
+- **Keyboards/input:** on-device ASR has gone mainstream, dictation is growing into a primary input method — our "voice + storing originals" point is on trend. An open reference implementation of a trainable keyboard is FUTO Keyboard. Our pain point "switching layouts / multilingual input" isn't solved by any of the systems surveyed — for a Russian-speaking audience that's a differentiator, not a triviality.
+- **Messenger aggregation:** the "Anton on Element, parents on Viber" point is already being solved at the application layer — Beeper on Matrix bridges (Automattic). For our messenger widget, Matrix bridges are a ready-made transport layer, no need to build from scratch.
+- **User as API:** Solid (Berners-Lee, pods — data lives with the person, vendors request access) — a conceptual ancestor; AT Protocol — identity portability. Regulatory tailwind: the DMA + EU Data Act (in effect since September 2025) legally require portability and interop — "PII lives with you, not with vendors" is no longer a fringe idea.
+- **Module economics:** our honest open question "lost brand & identity" now has a precedent at scale: Telegram Mini Apps — micro-apps with payments inside a messenger, hundreds of millions of users. The model "the platform pays for scenario coverage" is no longer theoretical.
 
-## 9. Чего в наших списках нет совсем (найденные дыры)
+## 9. What's completely missing from our lists (gaps found)
 
-1. **Threat model истории и агентов** — уроки Recall показали: фичу убивает не отсутствие спроса, а один твит безопасника. Проектировать приватность как фичу №1.
-2. **Accessibility = agent API.** Семантическое дерево UI — один и тот же канал для скринридеров и для агентов (агенты на обеих платформах уже живут поверх accessibility tree, Screenpipe тоже). У нас a11y задвинута в максимум-план — поднять: это не «доступность потом», это наш же агентский канал, спроектированный один раз.
-3. **Эволюция схем данных** — entity store переживёт годы миграций; Cambria-lenses готовое направление, без него «schema versioned» из спеки останется декларацией.
-4. **Timeline-as-shell и spaced review** (Обенауэр) — дешёвые сильные фичи поверх того, что уже запланировано.
-5. **Комьюнити как канал.** Ink & Switch, Litt, Obenauer, Malleable Systems, local-first-тусовка — готовая аудитория, которая двадцать лет ждёт ровно такую ОС и умеет её оценить. Публиковать спеки и демо туда, а не в вакуум.
+1. **Threat model for history and agents** — the Recall lessons showed: a feature isn't killed by lack of demand, but by one security researcher's tweet. Design privacy as feature #1.
+2. **Accessibility = agent API.** The semantic UI tree is the same channel for screen readers and for agents (agents on both platforms already live on top of the accessibility tree, so does Screenpipe). We've pushed a11y into the "maximum plan" — it needs to move up: this isn't "accessibility, later," it's our own agentic channel, designed once.
+3. **Data schema evolution** — the entity store will live through years of migrations; Cambria lenses are a ready-made direction, without which "schema versioned" in the spec stays a mere declaration.
+4. **Timeline-as-shell and spaced review** (Obenauer) — cheap, strong features on top of what's already planned.
+5. **Community as a channel.** Ink & Switch, Litt, Obenauer, Malleable Systems, the local-first crowd — a ready-made audience that's been waiting twenty years for exactly this OS and knows how to judge it. Publish specs and demos there, not into a vacuum.
 
-## 10. Синтез: правки в спеки/заметки
+## 10. Synthesis: edits to specs/notes
 
-1. В 000/005: сформулировать позиционирование против AppFunctions/App Intents — «coverage by construction vs opt-in annotation».
-2. В 020: MCP как внешний контур (экспорт entity/action-реестра), FIDL — внутренний.
-3. В A4/спеку истории: threat model (локально, e2e, исключения, per-agent caps), референсы Recall (как нельзя) и Screenpipe (как можно, и тоже Rust).
-4. В 040/A2: timeline как дефолтная story; spaced review как системный механизм.
-5. В 050/Track B: пересмотр целевого железа после заката Pixel-AOSP; плата → Fairphone-класс → вендор-партнёрство.
-6. В A4: не писать CRDT-обвязку вслепую — пощупать Automerge/Loro/any-sync + Keyhive (access control) + Cambria (миграции).
-
+1. In 000/005: articulate the positioning against AppFunctions/App Intents — "coverage by construction vs. opt-in annotation."
+2. In 020: MCP as the external boundary (exporting the entity/action registry), FIDL as the internal one.
+3. In the A4/history spec: threat model (local, e2e, exclusions, per-agent caps), references to Recall (how not to) and Screenpipe (how to, also in Rust).
+4. In 040/A2: timeline as a default story; spaced review as a system mechanism.
+5. In 050/Track B: reconsider target hardware after the Pixel-AOSP sunset; board → Fairphone-class → vendor partnership.
+6. In A4: don't write CRDT plumbing blind — evaluate Automerge/Loro/any-sync + Keyhive (access control) + Cambria (migrations) first.

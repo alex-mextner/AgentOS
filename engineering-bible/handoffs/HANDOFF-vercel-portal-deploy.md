@@ -15,7 +15,8 @@ and pushed to `main`; deployment and visual QA need Vercel CLI/token and a rende
 - **Four-audience front door**: `#home` now routes to Build OS / Developers / Investors / Users
   lanes (`portal/audiences.js`), each with tailored copy and entry points, sharing a layered-map
   visual system derived from the engineering spec. Router in `portal/api.js`; nav updated in `index.html`.
-- `portal/core.js` now builds the doc tree from `engineering-bible/docs/` (was `knowledge/wiki/`).
+- `portal/core.js` now builds the doc tree from `engineering-bible/docs/` (previously sourced from
+  the now-removed knowledge/wiki tree).
 - `portal/data/wiki-index.json` — generated index of the full canonical corpus (151 docs, 18 categories).
 - `portal/app.js` — Wiki now renders the **entire** Engineering Bible from that index (grouped by
   category, with search), replacing the old 7 hardcoded pages. Stale Pixel-9 architecture-rule text

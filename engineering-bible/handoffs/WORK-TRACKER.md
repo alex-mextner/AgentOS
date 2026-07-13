@@ -15,7 +15,7 @@ Honest status of the full sol handoff (§1–13) plus the content plan. Not "alm
 - §1 Full Foundation corpus imported to main (162 docs, diagrams, digests, atlases).
 - §2 PDF/source provenance recorded (SHA-256, integrate-not-store; no binaries).
 - §3 Stale positions fixed: name→AgentOS; **fork the entire Fuchsia tree** (corrected corruption); Linear dropped; Fuchsia/FEMU/Starnix framed as the chosen base + digest.
-- §4 Single source of truth set (engineering-bible/docs/**); knowledge/ deprecated.
+- §4 Single source of truth set (engineering-bible/docs/**); the former knowledge/ mirror has since been removed.
 - §5 Validation: 158 IDs, 0 dup, 0 broken links; honest cyrillic accounting (0 in normative specs).
 - §4/§5 Registers extracted to CSV: claims(34), experiments(51), sources(9), risks(323).
 - Content plan: PROD-013 (offload), PROD-014 (clients), PROD-015 (voice), ARCH-021 (layered boot), ARCH-022 (capabilities), LEGAL-013 (threat model), HW-017/018/019 (demo brick), RES-011/012.
@@ -36,7 +36,7 @@ Honest status of the full sol handoff (§1–13) plus the content plan. Not "alm
 2. **§7 Portal completeness** — PARTIAL: added /claims /experiments /sources /risks /glossary /decisions (from registers). STILL TODO: /procurement /contacts; per-doc TOC, backlinks, prev/next, provenance panel, cross-doc full-text search, Mermaid/image render polish, verify Edit-on-GitHub URLs.
 3. **§8 Research-grade comparisons** — deep iOS/Android/AgentOS matrix (system object model, action APIs, agent authority, history, sandboxing, updates, privacy, offline…); detailed pages for Fuchsia/Zircon, seL4, Genode, Redox, postmarketOS, GrapheneOS, MINIX3, QNX, Haiku, Plan 9/Inferno, KeyKOS/EROS/CapROS, Tock, Hubris, Theseus, Barrelfish, HarmonyOS, App Intents/AppFunctions, Anytype, Automerge, Loro. Each claim sourced.
 4. **§9 Hardware/device catalogue** — per-target matrix (role, quality ceiling, docs access, boot control, GPU, camera, modem, power, security, debug, firmware, legal route, cost, availability, replacement, go/no-go); local images+provenance for Pixel 9, Fairphone, PinePhone Pro, VIM3, i.MX 8M, RK3588, RISC-V, custom carrier, camera modules.
-5. **English summaries** of the 3 Russian atlases (research task).
+5. ~~Full English translation of the 3 Russian atlases~~ — DONE (translated in place, not a separate summary; repo is now zero-Cyrillic repo-wide; see HANDOFF-MASTER §2.4).
 6. **§13 Final cleanup** — dedupe old copies, close superseded issues, README refresh, changelog, migration map.
 
 ## Notes

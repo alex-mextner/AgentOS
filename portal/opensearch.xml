@@ -2,5 +2,5 @@
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>AOS Portal</ShortName>
   <Description>Search the Agent OS engineering repository</Description>
-  <Url type="text/html" template="https://github.com/alex-mextner/HyperOS/search?q={searchTerms}"/>
+  <Url type="text/html" template="https://github.com/alex-mextner/AgentOS/search?q={searchTerms}"/>
 </OpenSearchDescription>

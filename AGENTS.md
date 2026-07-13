@@ -10,7 +10,7 @@ Foundation engineering, public documentation, task infrastructure, and early ker
 
 - `crates/` — Rust crates for kernel, architecture packages, drivers, services, and user-space components.
 - `sim/` — QEMU and deterministic simulation harnesses.
-- `knowledge/` — canonical public specifications, research, claims, experiments, glossary, and planning records.
+- `engineering-bible/` — canonical public specifications, research, claims, experiments, glossary, and planning records.
 - `portal/` — Vercel-hosted public Wiki, task, Gantt, and API projection.
 - `docs/` — contributor and operational documentation.
 - `assets/` — static assets, test fixtures, and redistributable evidence.
@@ -26,7 +26,7 @@ Foundation engineering, public documentation, task infrastructure, and early ker
 
 ## How agents work in this repository
 
-- Read the relevant `knowledge/` specifications before modifying architecture or implementation.
+- Read the relevant `engineering-bible/` specifications before modifying architecture or implementation.
 - Rust is the primary systems language.
 - Prefer LSP and code-intelligence tooling for navigation and refactors.
 - Use one logical change per commit and conventional commit messages.

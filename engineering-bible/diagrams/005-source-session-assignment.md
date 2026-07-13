@@ -1,5 +1,8 @@
 # AgentOS Source Session Assignment Trace
 
+> Translated recovered-source excerpt. The original user brief below was written in Russian; it is
+> translated here in place for traceability while keeping repository docs English-only.
+
 ## Status
 
 Primary-source trace for the AgentOS assignment recovered from the Claude
@@ -28,23 +31,25 @@ source documents, task plan, and provenance notes.
 git remote add origin git@github.com:alex-mextner/AgentOS.git
 git branch -M main
 
-Раскидай задачи и пили роями из сотен субагентов
-Исползьуй все мощь review cli и отчитывайся через tg cli
-С компиляцией пока осторожно, компьютер под давлением других процессов
-Мониторь пока
+Break the work down and grind through it with swarms of hundreds of subagents
+Use the full power of the review cli and report back via the tg cli
+Go easy on compilation for now, the machine is under load from other processes
+Monitor it for now
 
-По стеку в идеале хотелось бы rust. Найди и установи и примени скиллы для работы с о растом и егл экосистемой. Используй так же lsp тулинг для рефакторингов, анализа ошибок и навигации и поиска
-Делай автономно
-/goal рабочий прототип в симуляторе настоящего pixel 9 с форком фуксии и основными продуктовыми идеями
-Используй dynamic workflow
+For the stack, ideally I'd like Rust. Find, install, and apply skills for working with Rust and its
+ecosystem. Also use LSP tooling for refactors, error analysis, navigation, and search
+Work autonomously
+/goal a working prototype in a real-Pixel-9 simulator with a Fuchsia fork and the core product ideas
+Use dynamic workflow
 
-Так же есть review qa и research cli, но они экспериментальные. Пробуй и расскажи как они. Все проблемы с ними репорт и в issues этих проектов (мои тоже)
+There's also a review-qa and a research CLI, but they're experimental. Try them and report back on
+how they are. Report all problems with them to those projects' issue trackers too (mine as well)
 
-Работай через спеки
-Иаозозуй sverklo, serena, haft и весь остальной доступный тулинг
-Заполни agents md, Claude md сделай сислинкой на него
-~/.moshi/uploads/Fuchsia OS Rukovodstvo RU.pdf
-~/.moshi/uploads/Своя мобильная ОС.txt
+Work through specs
+Use sverklo, serena, haft, and every other available tool
+Fill in agents.md, make CLAUDE.md a symlink to it
+~/.moshi/uploads/Fuchsia OS Guide RU.pdf
+~/.moshi/uploads/Own Mobile OS.txt
 ~/.moshi/uploads/custom-os-fuchsia-spec.pdf
 ```
 
@@ -53,8 +58,10 @@ git branch -M main
 The source session explicitly referenced these AgentOS inputs:
 
 - `/Users/ultra/.moshi/uploads/custom-os-fuchsia-spec.pdf`
-- `/Users/ultra/.moshi/uploads/Fuchsia OS Rukovodstvo RU.pdf`
-- `/Users/ultra/.moshi/uploads/Своя мобильная ОС.txt`
+- `/Users/ultra/.moshi/uploads/Fuchsia OS Guide RU.pdf` (original filename on disk used Cyrillic:
+  "Fuchsia OS Rukovodstvo RU.pdf")
+- `/Users/ultra/.moshi/uploads/Own Mobile OS.txt` (original filename on disk used Cyrillic: "Svoya
+  mobilnaya OS.txt")
 
 The appendix includes copied, documentation-only versions under
 `originals/`, plus extracted Markdown summaries where the session contained
@@ -62,7 +69,7 @@ recoverable text.
 
 ## Recovered Product Vision
 
-`Своя мобильная ОС.txt` defines the product direction:
+`Own Mobile OS.txt` (source file "Svoya mobilnaya OS.txt") defines the product direction:
 
 - Project, task, document, people, local data, and agents are first-class system
   concepts.

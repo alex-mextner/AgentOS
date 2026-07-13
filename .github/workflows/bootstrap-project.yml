@@ -72,7 +72,7 @@ jobs:
 
           ## References
 
-          - [Roadmap authority](../../blob/main/knowledge/docs/planning/PLAN-002-roadmap-and-gantt.md)
+          - [Roadmap authority](../../blob/main/engineering-bible/docs/planning/AOS-PLAN-002.md)
           - Stable ID: \`$id\`
           EOF
           )
