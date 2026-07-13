@@ -43,7 +43,7 @@ Camera claims must name the target, optics, sensor, firmware, controls, capture 
 
 | claim_id | claim | state | finding | normative_ref | experiment | gate |
 | --- | --- | --- | --- | --- | --- | --- |
-| CLM-001 | Own microkernel is the product foundation | Normative decision | Confirmed by program decision; implementation evidence pending | AOS-ADR-0001#decision | N/A | G1/G2 |
+| CLM-001 | Fork of Fuchsia/Zircon is the kernel foundation | Normative decision | Confirmed by program decision; implementation evidence pending | AOS-ADR-0001#decision | N/A | G1/G2 |
 | CLM-002 | Portable service/product layers can span unrelated SoCs | Hypothesis | Requires two native ports and conformance evidence | AOS-ARCH-001#portability-test | EXP-014;EXP-021 | G3/G4 |
 | CLM-003 | POSIX is unnecessary as a native platform contract | Bounded design claim | Core workloads must be demonstrated through native APIs; compatibility remains optional | AOS-ARCH-001#native-contract | EXP-011 | G4 |
 | CLM-004 | Android/Linux can remain isolated to Pixel 9 | Hypothesis | Dependency lint and two non-Pixel backends must prove absence above adapters | AOS-ARCH-011#pixel-legacy-boundary | EXP-031 | G7 |

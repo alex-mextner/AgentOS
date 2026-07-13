@@ -35,7 +35,7 @@ Agents produce explicit plans, request scoped capabilities, support preview, sha
 
 ## Native portable system
 
-The implementation target is an owned Rust-first microkernel, capability-secured IPC, native portable system services and versioned device-service contracts. Android and Linux are restricted to isolated Pixel 9 evidence, recovery and temporary bring-up work rather than used as the product substrate.
+The implementation target is an Fuchsia/Zircon fork with a Rust-first product layer, capability-secured IPC, native portable system services and versioned device-service contracts. Android and Linux are restricted to isolated Pixel 9 evidence, recovery and temporary bring-up work rather than used as the product substrate.
 
 ## Evidence-driven development
 

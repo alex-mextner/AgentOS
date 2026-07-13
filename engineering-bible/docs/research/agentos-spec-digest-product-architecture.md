@@ -1,5 +1,5 @@
 
-> **Superseded prior-art (2026-07-13).** This digest analyzes an evaluated Fuchsia/FEMU/Starnix alternative. Those are NOT the current implementation choices: AgentOS is a Rust-first owned microkernel; Fuchsia/FEMU/Starnix appear only as studied prior art. Retained for provenance of the design reasoning.
+> **Design reference (2026-07-13).** This digest analyzes the chosen Fuchsia/Zircon-fork approach. Zircon/DFv2/FIDL/Magma/Starnix are taken from Fuchsia; the product layer is written on top. The Pixel-9 hardware target is archived (ADR-0007) in favor of the demo brick, but the Fuchsia-fork software approach is current.
 
 # AgentOS Spec Digest Product Architecture
 

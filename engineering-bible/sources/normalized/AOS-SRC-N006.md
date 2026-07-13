@@ -29,7 +29,7 @@ summary: "English disposition of docs/custom-os-fuchsia-like.pdf."
 
 The 60-page source specification explores a Fuchsia-based mobile OS on Pixel-class hardware, covering Zircon, Starnix, FIDL, Flatland, Pixel 9 bring-up, camera, modem, verified boot, backup, and agent integration. It is valuable as a subsystem inventory and risk list.
 
-The project no longer adopts its central platform assumption. The current system owns its microkernel and native contracts. Fuchsia remains prior art for capabilities, components, IPC, graphics composition, and driver organization. Claims that Linux userspace components, Pixel camera algorithms, IMS, GPU drivers, Titan M2, or complete backup can be reused “as is” are converted into claims and experiments with legal and technical gates.
+The project's central platform decision is unchanged: fork Fuchsia/Zircon. The system takes Zircon, DFv2, FIDL, Magma, and Starnix from Fuchsia and adds native Rust-first contracts and product layers on top. Fuchsia is the base, not merely prior art. Claims that Linux userspace components, Pixel camera algorithms, IMS, GPU drivers, Titan M2, or complete backup can be reused “as is” are converted into claims and experiments with legal and technical gates.
 
 <a id="current-disposition"></a>
 

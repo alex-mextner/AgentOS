@@ -6,12 +6,12 @@ version: "2.0.0-foundation"
 baseline_date: "2026-07-13"
 owners: "Agent OS Architecture Council"
 audience: "Engineering, product, security, legal, program, partner, and community readers"
-summary: "Decision-oriented summary of the product thesis, owned microkernel, portable layers, hardware routes, legal controls, first actions, purchases, budget, and evidence gates."
+summary: "Decision-oriented summary of the product thesis, Fuchsia/Zircon-fork kernel, portable layers, hardware routes, legal controls, first actions, purchases, budget, and evidence gates."
 ---
 
 # Executive Briefing
 
-> Decision-oriented summary of the product thesis, owned microkernel, portable layers, hardware routes, legal controls, first actions, purchases, budget, and evidence gates.
+> Decision-oriented summary of the product thesis, Fuchsia/Zircon-fork kernel, portable layers, hardware routes, legal controls, first actions, purchases, budget, and evidence gates.
 
 ## Table of Contents
 
@@ -28,7 +28,7 @@ summary: "Decision-oriented summary of the product thesis, owned microkernel, po
 
 ## Executive Decision
 
-Proceed as an **independently implemented, portable operating system** centered on a Rust-first microkernel and native capability-oriented contracts. Do not redefine the project as an Android distribution, Linux phone, Fuchsia fork, or Pixel-specific custom ROM.
+Proceed as a **portable operating system built on a fork of Fuchsia/Zircon**, with a Rust-first product layer and native capability-oriented contracts. The base kernel and driver framework are taken from Fuchsia (Zircon, DFv2, FIDL, Magma, Starnix); do not redefine the project as an Android distribution, Linux phone, or Pixel-specific custom ROM.
 
 Use Android/Linux only inside the Pixel 9 evidence programme and only to the minimum extent required for stock-baseline measurement, lawful trace collection, recovery, firmware acquisition where permitted, and temporary subsystem bridges. Every bridge has an isolated compatibility cell, source-taint class, owner, native replacement, and last acceptable milestone.
 
@@ -44,7 +44,7 @@ flowchart TB
     PR --> SYS[Entity, action, history, identity, policy, package, update services]
     SYS --> DEV[Portable device-service contracts]
     DEV --> BK[Target backends and isolated user-space drivers]
-    BK --> K[Native Agent OS microkernel]
+    BK --> K[Forked Zircon microkernel]
     K --> AR[Architecture ports]
     AR --> BP[Board packages, boot, power, recovery]
 

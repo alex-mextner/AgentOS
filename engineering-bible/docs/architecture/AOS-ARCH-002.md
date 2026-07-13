@@ -6,12 +6,12 @@ version: "1.0.0"
 baseline_date: "2026-07-13"
 owners: "Agent OS Architecture Council"
 audience: "Engineering, product, security, legal, and program leadership"
-summary: "Scope, object model, syscall discipline, unsafe policy, fault behavior, determinism, and acceptance for the original microkernel."
+summary: "Scope, object model, syscall discipline, unsafe policy, fault behavior, determinism, and acceptance for the forked Fuchsia/Zircon microkernel."
 ---
 
 # Microkernel Specification
 
-> Scope, object model, syscall discipline, unsafe policy, fault behavior, determinism, and acceptance for the original microkernel.
+> Scope, object model, syscall discipline, unsafe policy, fault behavior, determinism, and acceptance for the forked Fuchsia/Zircon microkernel.
 
 ## Table of Contents
 
@@ -31,7 +31,7 @@ summary: "Scope, object model, syscall discipline, unsafe policy, fault behavior
 
 ## Kernel Scope
 
-The Agent OS microkernel implements the minimum mechanisms required for isolation, explicit authority, scheduling, memory protection, and hardware mediation. It is a real product kernel, not a simulator-only model; however, its first acceptance target is QEMU because deterministic evidence and rapid iteration are essential.
+The Agent OS kernel is a fork of Fuchsia's Zircon microkernel, providing isolation, explicit authority, scheduling, memory protection, and hardware mediation. Zircon supplies the object and capability model; the project adds board drivers and product layers and maintains the fork. Its first acceptance target is QEMU/FEMU because deterministic evidence and rapid iteration are essential.
 
 Kernel-resident objects are limited to those whose invariants require privileged enforcement or fast cross-domain coordination. Filesystems, device policy, network protocols, graphics policy, package management, entity semantics, agent policy, and most security policy remain in user space.
 

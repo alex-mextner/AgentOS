@@ -1,6 +1,6 @@
 # Agent OS
 
-Agent OS is an original Rust-first mobile operating-system programme built around an owned microkernel, capability-secured IPC, portable device-service contracts, and agent-oriented system layers.
+Agent OS is a Rust-first mobile operating-system programme built on a fork of Fuchsia/Zircon, with capability-secured IPC, portable device-service contracts, and agent-oriented system layers on top.
 
 ## Status
 
@@ -17,7 +17,7 @@ Foundation engineering, public documentation, task infrastructure, and early ker
 
 ## Architectural boundaries
 
-- The project owns its microkernel and native system contracts.
+- The project forks Fuchsia/Zircon as its kernel base and adds native system contracts on top.
 - Portable layers must not expose Linux, Android, Binder, POSIX, or vendor ABI types.
 - Android/Linux use is restricted to the isolated Pixel 9 evidence and bring-up track.
 - Device-service adapters must not add avoidable hot-path copies or hidden format conversion.

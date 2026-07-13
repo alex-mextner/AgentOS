@@ -35,9 +35,9 @@ summary: "Inventory, validation state, reproducibility rules, canonical datasets
 
 ## Release Scope
 
-This release is a normative planning and research foundation for an independently implemented Rust-first microkernel, portable system and product layers, parallel hardware tracks, and a future partner/custom-device route. It is not a claim that the operating system, drivers, Pixel 9 support, camera stack, cellular stack, certifications, or production device already exist.
+This release is a normative planning and research foundation for a Fuchsia/Zircon-fork operating system, its Rust-first portable system and product layers, parallel hardware tracks, and a future partner/custom-device route. It is not a claim that the operating system, drivers, Pixel 9 support, camera stack, cellular stack, certifications, or production device already exist.
 
-Historical Fuchsia-oriented and Android/Linux-oriented material is retained as immutable prior art and provenance. Current requirements are defined by canonical `AOS-*` documents and ADRs.
+The Fuchsia/Zircon fork is the chosen base; Android/Linux-oriented material is retained as prior art and provenance. Current requirements are defined by canonical `AOS-*` documents and ADRs.
 
 <a id="canonical-artifacts"></a>
 

@@ -8,7 +8,7 @@ status: foundation
 
 ## Mission
 
-Build an original Rust-first mobile operating system around an owned microkernel, capability-secured IPC, portable device-service contracts, and agent-oriented product layers.
+Build a Rust-first mobile operating system on a fork of Fuchsia/Zircon, with capability-secured IPC, portable device-service contracts, and agent-oriented product layers on top.
 
 ## Architectural boundary
 

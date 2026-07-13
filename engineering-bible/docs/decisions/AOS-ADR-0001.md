@@ -1,14 +1,14 @@
 ---
 id: "AOS-ADR-0001"
-title: "ADR-0001: Build and Own the Microkernel"
+title: "ADR-0001: Fork Fuchsia/Zircon as the Microkernel Base"
 status: "Accepted foundation decision"
 version: "1.0.0-foundation"
 baseline_date: "2026-07-13"
 owners: "Architecture Council"
 audience: "Engineering, product, security, legal, programme, partner, and community readers"
-summary: "ADR-0001: Build and Own the Microkernel: scope, decisions, requirements, evidence, risks, and traceability for the Agent OS programme."
+summary: "ADR-0001: Fork Fuchsia/Zircon as the microkernel base: scope, decisions, requirements, evidence, risks, and traceability for the Agent OS programme. Zircon, DFv2, FIDL, Magma, and Starnix are taken from Fuchsia; board drivers and the Rust-first product layer are built on top."
 ---
-# ADR-0001: Build and Own the Microkernel
+# ADR-0001: Fork Fuchsia/Zircon as the Microkernel Base
 
 > This record freezes a high-cost architectural decision, its rationale, consequences, reversal conditions, and required evidence.
 
@@ -32,7 +32,7 @@ summary: "ADR-0001: Build and Own the Microkernel: scope, decisions, requirement
 
 This record freezes a high-cost architectural decision, its rationale, consequences, reversal conditions, and required evidence.
 
-This document owns the semantics implied by **ADR-0001: Build and Own the Microkernel**. It does not assert that every described subsystem already exists. It defines the target model, constraints, evidence needed to trust an implementation, and the boundary with adjacent documents.
+This document owns the semantics implied by **ADR-0001: Fork Fuchsia/Zircon as the Microkernel Base**. The kernel is Zircon (from a Fuchsia fork), not a from-scratch implementation; the scope statements below describe the kernel boundary the fork maintains. It does not assert that every described subsystem already exists. It defines the target model, constraints, evidence needed to trust an implementation, and the boundary with adjacent documents.
 <a id="normative-position"></a>
 
 ## Normative Position

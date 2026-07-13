@@ -27,7 +27,7 @@ summary: "English disposition of implementation/.../tasks/session-task-plan.md."
 
 ## Digest
 
-The source session plan uses phases 0–8 for reconnaissance, research, architecture, specifications, Rust work, scaffold, MVP implementation, simulator proof, and reporting. The current programme retains a nine-phase execution model but aligns it to the owned microkernel: source intake; evidence experiments; portable contracts; normative kernel/platform specs; Rust engineering baseline; QEMU scaffold; microkernel vertical slice; physical-board and Pixel evidence tracks; review and community publication.
+The source session plan uses phases 0–8 for reconnaissance, research, architecture, specifications, Rust work, scaffold, MVP implementation, simulator proof, and reporting. The current programme retains a nine-phase execution model but aligns it to the Fuchsia/Zircon fork: source intake; evidence experiments; portable contracts; normative kernel/platform specs; Rust engineering baseline; QEMU scaffold; microkernel vertical slice; physical-board and Pixel evidence tracks; review and community publication.
 
 This chronological model coexists with ten thematic documentation volumes. The two taxonomies are orthogonal and are represented separately in task data.
 

@@ -6,11 +6,11 @@ version: "1.0.0-foundation"
 baseline_date: "2026-07-13"
 owners: "Agent OS Architecture Council"
 audience: "Engineering, product, security, legal, programme, partner, and community readers"
-summary: "Cross-linked architecture, hardware, research, legal, planning, glossary, evidence, and import package for an owned portable microkernel system."
+summary: "Cross-linked architecture, hardware, research, legal, planning, glossary, evidence, and import package for a Fuchsia/Zircon-fork portable operating system."
 ---
 # Agent OS Engineering Bible
 
-This repository is a research-backed foundation for an owned microkernel operating system and entity-first personal computing environment. “Agent OS” is an internal descriptive working name; stable IDs use `AOS-*`.
+This repository is a research-backed foundation for an operating system built on a fork of Fuchsia/Zircon, with an entity-first personal computing environment on top. “Agent OS” is an internal descriptive working name; stable IDs use `AOS-*`.
 
 ## Start Here
 
@@ -25,7 +25,7 @@ This repository is a research-backed foundation for an owned microkernel operati
 
 ## Non-Negotiable Model
 
-- The project owns its Rust-first microkernel and native system contracts.
+- The project forks Fuchsia/Zircon as its microkernel base and writes its Rust-first product layer and native system contracts on top.
 - Product and service layers are portable across board backends.
 - Android and Linux are not general foundations. Their use is confined to bounded Pixel 9 evidence, extraction, recovery, or temporary adapter work with explicit replacement gates.
 - QEMU and documented boards prove architecture and portability; Pixel 9 tests quality-ceiling feasibility; a future ODM/JDM device is anticipated but not assumed.

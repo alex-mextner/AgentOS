@@ -29,7 +29,7 @@ summary: "English disposition of implementation/*.md."
 
 The existing specifications define a system overview, bootstrap toolchain, source-session assignment, kernel primitives, capability IPC, Pixel-shaped simulator, UI composition, and real-device operation. They are coherent as an early implementation scaffold but mix a host reference runtime, Fuchsia assumptions, and product goals.
 
-The normative rewrite separates: (1) architecture-independent contracts; (2) the owned microkernel; (3) user-space services; (4) board and device backends; (5) Pixel-only evidence/legacy adapters; and (6) product surfaces. The old documents remain immutable source material and must not be mistaken for current requirements.
+The normative rewrite separates: (1) architecture-independent contracts; (2) the forked Fuchsia/Zircon microkernel; (3) user-space services; (4) board and device backends; (5) Pixel-only evidence/legacy adapters; and (6) product surfaces. The old documents remain immutable source material and must not be mistaken for current requirements.
 
 <a id="current-disposition"></a>
 

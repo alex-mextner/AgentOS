@@ -26,7 +26,7 @@
    "id": "AOS-BRIEF",
    "title": "Executive Briefing",
    "status": "Research-backed normative foundation",
-   "summary": "Decision-oriented summary of the product thesis, owned microkernel, portable layers, hardware routes, legal controls, first actions, purchases, budget, and evidence gates.",
+   "summary": "Decision-oriented summary of the product thesis, Fuchsia/Zircon-fork kernel, portable layers, hardware routes, legal controls, first actions, purchases, budget, and evidence gates.",
    "category": "AOS-BRIEF.md",
    "path": "engineering-bible/docs/AOS-BRIEF.md"
   },
@@ -50,7 +50,7 @@
    "id": "AOS-README",
    "title": "Agent OS Engineering Bible",
    "status": "Foundation release",
-   "summary": "Cross-linked architecture, hardware, research, legal, planning, glossary, evidence, and import package for an owned portable microkernel system.",
+   "summary": "Cross-linked architecture, hardware, research, legal, planning, glossary, evidence, and import package for a Fuchsia/Zircon-fork portable operating system.",
    "category": "AOS-README.md",
    "path": "engineering-bible/docs/AOS-README.md"
   },
@@ -66,7 +66,7 @@
    "id": "AOS-ARCH-002",
    "title": "Microkernel Specification",
    "status": "Normative planning baseline",
-   "summary": "Scope, object model, syscall discipline, unsafe policy, fault behavior, determinism, and acceptance for the original microkernel.",
+   "summary": "Scope, object model, syscall discipline, unsafe policy, fault behavior, determinism, and acceptance for the forked Fuchsia/Zircon microkernel.",
    "category": "architecture",
    "path": "engineering-bible/docs/architecture/AOS-ARCH-002.md"
   },
@@ -240,9 +240,9 @@
   },
   {
    "id": "AOS-ADR-0001",
-   "title": "ADR-0001: Build and Own the Microkernel",
+   "title": "ADR-0001: Fork Fuchsia/Zircon as the Microkernel Base",
    "status": "Accepted foundation decision",
-   "summary": "ADR-0001: Build and Own the Microkernel: scope, decisions, requirements, evidence, risks, and traceability for the Agent OS programme.",
+   "summary": "ADR-0001: Fork Fuchsia/Zircon as the microkernel base: scope, decisions, requirements, evidence, risks, and traceability for the Agent OS programme. Zircon, DFv2, FIDL, Magma, and Starnix are taken from Fuchsia; board drivers and the Rust-f",
    "category": "decisions",
    "path": "engineering-bible/docs/decisions/AOS-ADR-0001.md"
   },
@@ -1000,15 +1000,15 @@
   },
   {
    "id": "AOS-RES-012",
-   "title": "Lessons from the Fuchsia/Pixel-9 Custom-OS Specification (Prior Art)",
-   "status": "Prior-art digest, actualized",
-   "summary": "The earlier 60-page Fuchsia/Zircon-on-Pixel-9 specification is superseded as an implementation plan (AgentOS now owns its microkernel and targets the demo brick), but several of its frameworks are platform-independent and are carried forwar",
+   "title": "Fuchsia/Zircon-Fork Specification — Engineering Digest",
+   "status": "Design reference (chosen approach)",
+   "summary": "Digest of the 60-page specification for the chosen approach: forking Fuchsia/Zircon (taking Zircon, DFv2, FIDL, Magma, Starnix as-is), writing the Rust-first entity/agent product layer from scratch, and bringing hardware up on a separate tr",
    "category": "research",
    "path": "engineering-bible/docs/research/RES-012-fuchsia-spec-lessons.md"
   },
   {
    "id": "agent-os-wider-lens.md",
-   "title": "agent-os-wider-lens.md",
+   "title": "",
    "status": "",
    "summary": "",
    "category": "research",
@@ -1016,7 +1016,7 @@
   },
   {
    "id": "agentos-spec-digest-product-architecture.md",
-   "title": "agentos-spec-digest-product-architecture.md",
+   "title": "",
    "status": "",
    "summary": "",
    "category": "research",
@@ -1024,7 +1024,7 @@
   },
   {
    "id": "ios-vs-android-vs-agent-os.md",
-   "title": "ios-vs-android-vs-agent-os.md",
+   "title": "",
    "status": "",
    "summary": "",
    "category": "research",
@@ -1032,7 +1032,7 @@
   },
   {
    "id": "prior-art-atlas.md",
-   "title": "prior-art-atlas.md",
+   "title": "",
    "status": "",
    "summary": "",
    "category": "research",

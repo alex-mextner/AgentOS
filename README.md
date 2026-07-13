@@ -1,6 +1,6 @@
 # Agent OS
 
-Agent OS is an open, local-first, document/task/project-first mobile operating system that treats people, projects, documents, tasks, events, places, messages, devices, and agents as first-class system entities rather than data trapped inside applications. Shared entity and action contracts, semantic history, malleable views, transclusion, and capability-secured agents make the whole system searchable, scriptable, inspectable, reversible, and portable across hardware. The native implementation is Rust-first and built around an owned microkernel.
+Agent OS is an open, local-first, document/task/project-first mobile operating system that treats people, projects, documents, tasks, events, places, messages, devices, and agents as first-class system entities rather than data trapped inside applications. Shared entity and action contracts, semantic history, malleable views, transclusion, and capability-secured agents make the whole system searchable, scriptable, inspectable, reversible, and portable across hardware. The native implementation is Rust-first and built on a fork of Fuchsia/Zircon (Zircon, DFv2, FIDL, Magma, Starnix taken as-is).
 
 **Public engineering portal:** https://agentos-bible.vercel.app
 

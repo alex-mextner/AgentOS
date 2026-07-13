@@ -1863,7 +1863,7 @@ Definitions are normative only to the extent required by the linked specificatio
 
 ### Native microkernel
 
-**Definition.** The independently implemented Agent OS kernel that owns isolation, capabilities, IPC, scheduling, memory enforcement, interrupts, and minimal architecture mechanisms.
+**Definition.** The Agent OS kernel — a fork of Fuchsia's Zircon microkernel — providing isolation, capabilities, IPC, scheduling, memory enforcement, interrupts, and minimal architecture mechanisms, with project-specific board drivers and product layers on top.
 
 **Why it matters.** It distinguishes the project from an Android distribution, Linux phone stack, or Fuchsia fork.
 

@@ -54,7 +54,7 @@ Normalized digests use stable IDs, retain source paths, identify conflicts, and 
 
 ## Conflict Handling
 
-Conflicts are recorded in [the conflict map](AOS-RES-005.md#conflict-register). The current model is an owned microkernel with portable native contracts. Fuchsia, Android, Linux, seL4, and other systems are prior art or bounded evidence environments; they are not hidden runtime foundations. Android/Linux use is restricted by [ADR-0004](AOS-ADR-0004.md#decision).
+Conflicts are recorded in [the conflict map](AOS-RES-005.md#conflict-register). The current model is a Fuchsia/Zircon fork with portable native contracts on top. Zircon/DFv2/FIDL/Magma/Starnix are the taken-as-is base; Android, Linux, seL4, and other systems are prior art or bounded evidence environments. Android/Linux use is restricted by [ADR-0004](AOS-ADR-0004.md#decision).
 
 <a id="pdf-handling"></a>
 

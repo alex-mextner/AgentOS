@@ -180,7 +180,7 @@ Use `README.md` for the entry sequence, `BRIEFING.md` for decisions and first ex
 
 ### Decisions
 
-- [AOS-ADR-0001 — ADR-0001: Build and Own the Microkernel](AOS-ADR-0001.md)
+- [AOS-ADR-0001 — ADR-0001: Fork Fuchsia/Zircon as the Microkernel Base](AOS-ADR-0001.md)
 - [AOS-ADR-0002 — ADR-0002: Portable Layer Contracts](AOS-ADR-0002.md)
 - [AOS-ADR-0003 — ADR-0003: Parallel Hardware Tracks](AOS-ADR-0003.md)
 - [AOS-ADR-0004 — ADR-0004: Minimal Android/Linux Use on Pixel 9](AOS-ADR-0004.md)
