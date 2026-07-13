@@ -1,6 +1,6 @@
 # Agent OS
 
-Agent OS is an open, local-first, document/task/project-first mobile operating system that treats people, projects, documents, tasks, events, places, messages, devices, and agents as first-class system entities rather than data trapped inside applications. Shared entity and action contracts, semantic history, malleable views, transclusion, and capability-secured agents make the whole system searchable, scriptable, inspectable, reversible, and portable across hardware. The native implementation is Rust-first and built on a fork of the entire Fuchsia tree (Zircon, DFv2, FIDL, Magma, Scenic/Flatland, Starnix taken as-is).
+Agent OS is an open, local-first, document/task/project-first mobile operating system that treats people, projects, documents, tasks, events, places, messages, devices, and agents as first-class system entities rather than data trapped inside applications. Shared entity and action contracts, semantic history, malleable views, transclusion, and capability-secured agents make the whole system searchable, scriptable, inspectable, reversible, and portable across hardware. The native implementation is Rust-first and built on a **fork of the entire Fuchsia tree** (Zircon, DFv2, FIDL, Magma, Scenic/Flatland, Starnix taken as-is) — not an owned-from-scratch microkernel.
 
 **Public engineering portal:** https://agentos-bible.vercel.app
 
@@ -15,23 +15,38 @@ Agent OS is an open, local-first, document/task/project-first mobile operating s
 - **Local and private by default** — data and computation remain user-controlled; remote providers receive bounded, inspectable inputs.
 - **Portable native stack** — product and system layers use owned contracts above architecture ports, board packages, and replaceable device-service providers.
 
+## Kernel approach
+
+Agent OS forks the entire Fuchsia tree — Zircon, the DFv2 driver framework, FIDL, Magma, Scenic/Flatland, and Starnix are taken as-is — and adds board drivers plus the Rust-first entity/agent product layer on top. No document should imply Agent OS authors its own kernel from scratch; if you find such framing, it is a regression to fix (see `scripts/check-framing.sh`).
+
 ## Architecture boundary
 
 The native architecture does not depend on Android, Linux, POSIX, Binder, or Android HAL contracts. Android and Linux are permitted only inside the isolated Pixel 9 evidence and bring-up track as stock-device oracles, trace sources, recovery mechanisms, and explicitly temporary bridges with replacement criteria.
 
-## Public engineering environment
+## Documentation: engineering bible is the source of truth
 
-- `knowledge/` — canonical Markdown Wiki, specifications, research, claims, experiments, and glossary;
-- `data/` — validated public projections used by the portal;
-- GitHub Issues — executable work and public discussion;
-- GitHub Projects — portfolio fields, schedule, roadmap, and board views;
-- `portal/` — Wiki, comparison, task explorer, Gantt, traceability, and API frontend;
-- `.github/workflows/` — validation, task bootstrap, and derived-data automation;
-- `docs/MOBILE-EDITING.md` — iPhone and Markdown editing workflow.
+Canonical documentation lives in **`engineering-bible/`**. Everything else is a projection of it:
+
+- `engineering-bible/` — the authoritative, cross-linked, `AOS-*`-identified corpus: architecture, hardware, product, research, legal, planning, glossary, registers, sources, and validation. Start at [`engineering-bible/README.md`](engineering-bible/README.md).
+- `portal/` — the public Vercel site rendered from the engineering bible: a four-audience front door plus Wiki, task explorer, Gantt, registers, and API views.
+- `knowledge/` — **deprecated** legacy compatibility mirror. Do not edit as a source of truth (see [`knowledge/DEPRECATED.md`](knowledge/DEPRECATED.md)); a future change removes or fully regenerates it.
+- `crates/`, `sim/` — Rust crates and simulation harnesses (early bootstrap).
+- `data/` — validated public projections used by the portal.
+- `.github/workflows/` — validation, task bootstrap, and derived-data automation.
+- `scripts/` — Fuchsia SDK/build helpers and the documentation validation gate (`validate-all.sh`, `check-cyrillic.sh`, `check-links.sh`, `gen-checksums.sh`, `check-framing.sh`).
+
+## Four-audience portal
+
+The public portal front door routes readers into four lanes, each with tailored copy sharing one visual system derived from the engineering spec's layered map:
+
+- **Build OS** — contributors building the operating system itself.
+- **Developers** — third-party developers targeting the platform.
+- **Investors** — the thesis, roadmap, and programme risk.
+- **Users** — early users of the entity-first product.
 
 ## Hardware strategy
 
-Current milestones must be deliverable on QEMU and available research hardware. The architecture is prepared to support a later contract-manufactured device without rewriting portable system or product layers. This is a compatibility requirement, not an assumption that an ODM, JDM, or OEM agreement, budget, volume, or delivery date already exists.
+Current milestones must be deliverable on QEMU and available research hardware. The architecture is prepared to support a later contract-manufactured device without rewriting portable system or product layers. This is a compatibility requirement, not an assumption that an ODM, JDM, or OEM agreement, budget, volume, or delivery date already exists. The Pixel 9 hardware target is archived (ADR-0007) in favour of a demo-brick bring-up track; the Fuchsia-fork software approach is current.
 
 ## Performance boundary
 
@@ -39,7 +54,16 @@ Portable device-service contracts do not imply generic runtime translation or pa
 
 ## Current status
 
-Foundation publication is live. The project currently provides the product vision, architecture boundaries, hardware tracks, public Wiki, task catalog, validation rules, and engineering portal. It does **not** claim that the microkernel or native Pixel 9 support is already implemented.
+Foundation publication is live. The project currently provides the product vision, architecture boundaries, hardware tracks, public Wiki, task catalog, validation rules, and engineering portal. It does **not** claim that the kernel or native Pixel 9 support is already implemented.
+
+## Documentation validation
+
+Run the doc-integrity gate before proposing documentation changes:
+
+```sh
+scripts/validate-all.sh        # Cyrillic, internal links, framing (non-zero exit on failure)
+scripts/gen-checksums.sh       # regenerate engineering-bible checksum manifests
+```
 
 ## Licensing
 
@@ -48,13 +72,14 @@ The current repository policy uses Apache-2.0 for original software and automati
 ## Start here
 
 - [Public portal](https://agentos-bible.vercel.app)
-- [Executive briefing](knowledge/BRIEFING.md)
-- [Documentation index](knowledge/docs/INDEX.md)
-- [Product vision](knowledge/normalized/product-vision.md)
-- [Portable architecture](knowledge/docs/architecture/ARCH-001-portable-system-architecture.md)
-- [Microkernel specification](knowledge/docs/architecture/ARCH-002-microkernel.md)
-- [Hardware target portfolio](knowledge/docs/hardware/HW-001-target-portfolio.md)
-- [Roadmap and Gantt authority](knowledge/docs/planning/PLAN-002-roadmap-and-gantt.md)
+- [Engineering bible](engineering-bible/README.md)
+- [Executive briefing](engineering-bible/BRIEFING.md)
+- [Release manifest](engineering-bible/MANIFEST.md)
+- [Product vision](engineering-bible/docs/vision/AOS-VSN-001.md)
+- [Portable system architecture](engineering-bible/docs/architecture/AOS-ARCH-001.md)
+- [Kernel base — Fuchsia/Zircon fork](engineering-bible/docs/architecture/AOS-ARCH-002.md)
+- [Hardware target portfolio](engineering-bible/docs/hardware/AOS-HW-001.md)
+- [Roadmap and Gantt authority](engineering-bible/docs/planning/AOS-PLAN-002.md)
 - [Mobile editing](docs/MOBILE-EDITING.md)
 
 ## Contribution model
