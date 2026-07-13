@@ -2,7 +2,7 @@
 id: "AOS-HW-019"
 title: "Power Architecture and Ultra-Low-Power Standby"
 status: "Normative planning baseline"
-version: "1.1.0"
+version: "1.2.0"
 baseline_date: "2026-07-13"
 owners: "Agent OS Architecture Council"
 audience: "Engineering, product, and program leadership"
@@ -21,6 +21,10 @@ summary: "Heterogeneous power architecture for the demo brick: an always-on micr
 - [Power States](#power-states)
 - [Standby Modes](#standby-modes)
 - [Mapping to Layered Boot](#layered-boot-map)
+- [Island MCU Selection](#island-mcu)
+- [Island Operating Modes](#island-modes)
+- [Load-Switch and Rail Map](#rail-map)
+- [Power Track Matrix](#power-tracks)
 - [Component Choices](#components)
 - [Alternatives Considered](#alternatives)
 - [Requirements](#requirements)
@@ -41,21 +45,13 @@ This document owns the power architecture of the demo brick ([AOS-HW-018](HW-018
 
 ## The Core Problem
 
-Correctly separated into hardware facts and OS-dependent unknowns (correction v1.1: earlier text over-anchored on Linux measurements, which bound a *running Linux* floor, not the silicon):
-
-- **Hardware facts.** The CM5/Pi 5 PMIC natively supports a near-off state (milliwatt class) with wake by power button and **RTC alarm** — this is silicon+PMIC capability, independent of any OS, and it already implements the S3 semantics below without external hardware. Its limitation: wake is a cold boot, not a resume, and its wake sources are only button and RTC.
-- **OS-dependent unknown.** The BCM2712 TRM is not public, so the true *native-OS* active-idle floor (aggressive WFI, core/cluster gating, clock floors, DRAM self-refresh) is **unmeasured, not "bad"**: Linux community figures (~2.0–2.7 W tuned idle) are a Linux floor. Native idle floor is an open experiment with its own claim record; it may be substantially lower.
-- **What no configuration changes.** While the A76 domain is powered and executing an OS, microwatt draw is not achievable; nanowatt/microwatt territory requires the domain off, reachable either via the native PMIC off-state or via external rail gating.
-
-At Linux-like idle, a 5 Ah pack gives ~10 hours; at PMIC-off it gives months but with nothing running. The architecture below fills the space between.
+A Raspberry Pi CM5 (BCM2712, quad Cortex-A76) idles at roughly 2–3 W and has no phone-grade deep-sleep silicon. Community evidence: idle drops from ~2.7 W to ~2.0 W only with clock-floor tuning; true microwatt sleep is not achievable while a Linux-class OS runs, but nanowatt-class sleep *is* achievable by cutting power to the processor entirely with an external MCU gating the DC-DC enable pin. A 5 Ah pack at 2.5 W gives roughly ten hours of idle — hours, not days. That is the gap this architecture closes.
 
 <a id="two-domain"></a>
 
 ## Two-Domain Architecture
 
 The device is split into an always-on island and a switchable high-power domain.
-
-The island's role, precisely: it does **not** invent sleep — S3-class off exists natively via the PMIC. The island adds what the PMIC lacks: rich wake sources (modem ring/SMS, accelerometer tap, BLE), an always-available glance surface, and independent per-rail gating of peripherals (modem, audio, NVMe, second Wi-Fi) while the SoC runs or sleeps.
 
 **Always-on island (microwatts–low milliwatts):**
 - A low-power MCU (nRF5340 or ESP32-C6/-H2 class) that never sleeps below its own µA retention floor.
@@ -96,6 +92,70 @@ S3 is the headline: the main SoC is fully powered down, the island keeps time an
 
 The island's states map onto the boot layers of [AOS-ARCH-021](../architecture/ARCH-021-layered-boot-and-instant-modes.md): S3 wake resumes to L2 (a primitive mode) first and ascends only as far as the task needs. A typewriter or reader session can run at L2 with the modem and most of the domain still gated, so the "focus mode" feature and the "days of standby" feature are the same mechanism. Radio-less instant modes hold no radio capabilities, so the island can keep those load switches open the entire session.
 
+<a id="island-mcu"></a>
+
+## Island MCU Selection: Two Tracks
+
+Founder direction: run tracks, not a premature winner.
+
+| Criterion | Track I-A: Nordic nRF5340 | Track I-B: ESP32-C6 |
+| --- | --- | --- |
+| Deepest sleep | System OFF ≈1 µA class | Deep sleep ≈7 µA class |
+| Radios | BLE 5.x + 802.15.4 (excellent quality/power) | **Wi-Fi 6** + BLE + 802.15.4 |
+| Unique power trick | Lowest floor; best BLE beacon/find-my duty | **Island itself can periodically poll Wi-Fi notifications with the SoC fully off** — the "ESP32 wakes Wi-Fi briefly" pattern natively |
+| Security | TrustZone-M dual CM33, mature secure-boot story | Basic secure boot |
+| Tooling | Zephyr (first-class) | ESP-IDF / Zephyr |
+| Cost | $4–8 module | $2–5 module |
+| Track verdict | Primary for lowest-µW glance/beacon standby | Primary for comms-standby experiments over Wi-Fi |
+
+Both islands run the same island firmware contract (wake sources, rail map, watchdog, I2C ownership); the contract is the deliverable, the chip is a backend — same replaceability rule as everywhere else in Agent OS.
+
+<a id="island-modes"></a>
+
+## Island Operating Modes
+
+The island itself is tiered, per founder direction:
+
+| Mode | Island state | Active functions | Island draw target |
+| --- | --- | --- | --- |
+| I0 Normal | MCU active | glance display updates, BLE connectable, sensor polling, rail control | 1–10 mW |
+| I1 Eco | MCU mostly asleep, periodic wake | RTC, button/tap wake, slow fuel-gauge poll, BLE advertising bursts | 30–300 µW |
+| I2 Ultra | System OFF / deep sleep | RTC + button (and tap if the IMU's own wake pin is used) only | 1–10 µW |
+
+Device standby = (island mode) × (SoC state): e.g. S3+I1 is the everyday pocket state; S3+I2 is shelf storage that still keeps the clock; S4 kills even the island rails except the coin cell.
+
+<a id="rail-map"></a>
+
+## Load-Switch and Rail Map
+
+| Rail | Load | Switch class | Peak | Notes |
+| --- | --- | --- | --- | --- |
+| R1 SoC/SoM | CM5 (or alt SoM) | PMIC enable line preferred; else 3 A high-side switch | 5 A burst | Prefer commanding the module's own PMIC off-state; hard switch is the fault path |
+| R2 Modem | LTE module | 3 A-class switch (TPS22990/SiP32431) with inrush limit | 2–3 A TX bursts | Bulk capacitance at the modem per vendor guide; never brown-out on TX |
+| R3 Display+backlight | DSI panel | 2 A switch | 1 A | Backlight separately PWM-gated |
+| R4 Camera(s) | IMX585 + CM3 | 500 mA switch each | — | Power-sequenced per sensor datasheet |
+| R5 Audio | XVF3800 + amps | 1 A switch | speaker bursts | Hardware mute is *upstream* of this rail for the mics |
+| R6 NVMe | 2230 SSD | 2 A switch | 1.5 A bursts | **Sequencing rule: island may cut R6 only after SoC confirms unmount, except in declared fault states** |
+| R7 Second Wi-Fi | USB radio | 1 A switch | — | Off in all radio-less modes by construction |
+| R8 Sensors/glance | IMU, ALS, e-ink, island I2C bus | always-on (island domain) | mA | The only rail besides the island itself in I0/I1 |
+
+Instrumentation: INA3221-class 3-channel current monitors on R1/R2/R3 (and a bench PPK2) so every power claim is a measurement, not a datasheet quote. I2C ownership: the island owns the PMIC/fuel-gauge/monitor bus; the SoC accesses power telemetry through the island's typed service, never directly.
+
+<a id="power-tracks"></a>
+
+## Power Track Matrix (founder-directed)
+
+All economy mechanisms are combined and raced as tracks:
+
+| Track | Application processor | Island | What it proves | Status |
+| --- | --- | --- | --- | --- |
+| P-A1 | CM5 | nRF5340 | V1 baseline: PMIC-off + island wake sources; native idle floor experiment | V1 build |
+| P-A2 | CM5 | ESP32-C6 | Wi-Fi comms-standby with SoC off | V1 alternate island |
+| P-B | i.MX 8M Plus SoM | either | documented suspend-to-RAM (true S2) + documented ISP on one SoC | bench track, reuses AOS-OPEN-091 dossier |
+| P-C | Snapdragon/Dimensity SoM | either | phone-grade sleep ceiling as the measurement reference | evaluation only; closed stack recorded |
+
+Per-track evidence: measured S0–S4 × I0–I2 grid, wake-latency distributions, and standby-days projection. The competitive claim ("beats phone standby") may only be made from the measured grid of the shipping track.
+
 <a id="components"></a>
 
 ## Component Choices
@@ -115,7 +175,7 @@ The island adds cost and one more processor to the software surface, but it is t
 
 ## Alternatives Considered
 
-- **Different application processor instead of CM5.** Options with better idle: i.MX 8M Plus (documented low-power states and a documented VeriSilicon ISP) or a Snapdragon/Dimensity-class SoM. Precision on the camera coupling: the Sony sensor itself is portable — any 4-lane MIPI CSI-2 host can take IMX585 raw output — but **ISP tuning is not**: the shipped StarlightEye tuning targets the Raspberry Pi PiSP/libcamera pipeline specifically. Moving to i.MX 8M Plus means re-tuning with NXP/VeriSilicon tools (weeks-to-months, partly partner-gated) — feasible, and already the strategic documented-ISP path of AOS-HW-006; moving to Snapdragon means sensor bring-up plus tuning inside the NDA-gated CamX/Chromatix stack — effectively closed at prototype scale. i.MX 93 is struck from this list: it lacks a full ISP and is not a camera-grade part. Decision: keep CM5 for V1 because the *tuned* pipeline exists there today; add the island to fix idle; re-evaluate the application processor at the custom-carrier stage (AOS-ODM-021), by which point the portable pipeline's own versioned calibration (AOS-HW-006/AOS-HW-012) reduces ISP lock-in.
+- **Different application processor instead of CM5.** Options with better idle: an i.MX 8M Plus or i.MX 93 (documented low-power states, the AOS-HW-017 documented-ISP path already in scope) or a Snapdragon/Dimensity-class SoC via SoM. Trade-off: leaving the Raspberry Pi camera/tuning ecosystem and the fast bring-up. Decision: keep CM5 for V1 speed and camera quality; add the island to fix idle; re-evaluate the application processor at the custom-carrier stage (AOS-ODM-021) where a low-power SoC plus the island can be co-designed.
 - **RP1 southbridge low-power modes only.** Insufficient; the A76 cores dominate idle.
 - **Software suspend alone.** Necessary but not sufficient — S2 helps, S3 requires the hardware island.
 
@@ -151,8 +211,7 @@ Degradation must be explicit rather than accidental. If the island cannot confir
 
 ## Risks and Open Questions
 
-- CM5 suspend-to-RAM (S2) support under a native OS is unproven (TRM closed); if absent, S3 (PMIC/island power-down) carries the standby story alone and wake latency rises.
-- Native-OS active-idle floor (S1) is an open measurement, not a known value; the competitive-standby claim is made only from measured S-state evidence.
+- CM5 suspend-to-RAM (S2) support quality under a native OS is unproven; if weak, S3 (full power-down) carries the standby story alone and wake latency rises.
 - The island adds firmware that must itself be trustworthy and updatable; it is a second security surface.
 - Comms-standby duty cycle trades connectivity for battery; the honest framing must survive a demo where a call is missed.
 - E-ink glance strip adds mechanical and driver work; it is optional to the core standby claim.

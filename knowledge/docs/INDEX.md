@@ -25,6 +25,7 @@ status: foundation
 - [Prototype travel and border considerations](legal/LEGAL-012-prototype-travel-and-borders.md)
 - [Layered boot and instant modes](architecture/ARCH-021-layered-boot-and-instant-modes.md)
 - [Power architecture and ultra-low-power standby](hardware/HW-019-power-architecture-standby.md)
+- [Demo brick task intake (AOS-DEMO)](planning/PLAN-017-demo-brick-task-intake.md)
 
 ## Planned volumes
 

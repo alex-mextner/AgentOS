@@ -2,7 +2,7 @@
 id: "AOS-RES-011"
 title: "Interim Hardware Market Survey and Demo BOM Sourcing"
 status: "Research-backed evidence map"
-version: "1.2.0"
+version: "1.3.0"
 baseline_date: "2026-07-13"
 owners: "Research Lead / Hardware Programme"
 audience: "Engineering, product, security, legal, and program leadership"
