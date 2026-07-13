@@ -1,215 +1,212 @@
-> **Language: Russian · non-normative research.** iOS/Android critique and Agent OS motivation. Retained in the original language for fidelity; not a normative English specification. An English summary is tracked as a follow-up task.
+> **English research doc (translated from the original Russian atlas).** iOS/Android critique and Agent OS motivation. Non-normative — normative requirements are defined by the linked architecture, product, hardware, legal, and planning documents.
 
 # iOS vs Android vs Agent OS
 
-> Ревизия: 10.07.2026. Это реестр претензий и фактов, из которого растёт мотивация Agent OS. Претензии к обеим системам → раздел «Почему обе исчерпаны» → он же продуктовый тезис Agent OS (см. заметку «Своя мобильная ОС»).
+> Revision: 2026-07-10. This is a register of grievances and facts that the Agent OS motivation grows out of. Grievances against both systems → "Why both are exhausted" section → which is itself the Agent OS product thesis (see the "Own Mobile OS" note).
 
 ---
 
-## Почему андроид до сих пор хуже iOS
+## Why Android is still worse than iOS
 
-1. **Нет хорошо работающей авто яркости**. Все ее выключают
-2. **Нет полноценного разделения шторок** на нотификации и контролы
-     UPDATE: One UI 7+, AgentOS, Android 16 QPR — есть
-3. **Нет** единой системы шеринга файлов по WiFi/bluetooth (**AirDrop**). Но есть некая quickshare.google которая якобы и с iOS и windows работает
-     Find Hub (бывший Find My Device) — краудсорсинговая сеть с апреля 2024, метки Chipolo/Pebblebee/Moto Tag, UWB. Плотность сети всё ещё хуже эппловской, но система есть. Тоже полка сомнительно. 
-4. **Нет** единой широкой хорошо работающей универсальной кросс-платформенной системы поиска вещей (**AirTag**)
-     Google реверснул протокол AirDrop без участия Apple: Pixel 10 (ноябрь 2025), с June 2026 Feature Drop — флагманы Samsung, Xiaomi, OPPO, vivo, Honor, OnePlus. Работает с iPhone/iPad/Mac напрямую, p2p, без интернета. Ограничение: только режим «Everyone for 10 minutes», «Contacts Only» пока нет. Итог: Android теперь шарит с айфоном лучше, чем Apple шарит с Android. (https://www.androidauthority.com/google-android-airdrop-expansion-3638222/). Хотя мы вот проверили 1) без интернета не работает 2) pixel 5 не смог на iPhone 17pro max и причины как водится не объяснил 
-5. Material UI визуально хуже Apple HIG, в плане цветов, анимаций, философии, иконок, проработки паттернов и тд.
-		 Material 3 Expressive (2025) — большой редизайн. Стало живее; хуже/лучше — вкус
-6. Нет нормального spotlight: сквозного поиска по системе (файлы, приложения, фотки,,,), калькулятор, словарь, конвертер,,,
-7. **«Нет Dynamic Island / нормального статус-бара»**. В pixel есть 
-      — частично устарело. Android 16 добавил Live Updates (прогресс-нотификации в статус-баре), Xiaomi сделала HyperIsland — буквальную копию Dynamic Island.
-8. Лепят вверху экрана иконки приложений зачем-то. В pixel нормально 
-9. Постоянно надо все закрывать иначе кончился память и сядет батарейка 
-10. Мало **хороших** приложений
-11. Google не умеет в продуктовый UX: Maps/Drive/Docs/Gmail/Translator — нефункционально, некрасиво, непродуманно, много багов, офлайн перевод и карты не работают, перечислять можно долго. Есть Яндекс сервисы аналогичные сделанные гораздо лучше но со встроеным КГБ. Впрочем у Apple зачастую еще хуже в перечисленном наборе сервисов. Хотя Pages/Numbers сделаны по приятнее но менее функциональны в плане api и автоматизаций 
-12. Фрагментация железа
-13. Гугл ворует и продает пользовательские данные -- бизнес модель. Apple -- privacy first  
-14. Всегда хуже софт камеры. Но могут быть всякие плохо сделанные или нишевые фишки. У последних pixel якобы на уровне. 
-15. Хуже дизайн emoji. Pixel вроде эпловские использует ну ок 
-16. Менее качественные приложения из-за менее строгих проверок 
-17. Нет нормального бекапа как в iOS (в пределе просто продолжаешь пользоваться телефоном словно и не переходил на другой, обычно надо только залогиниться в сторонних приложениях). Уточнить
-18. ~~Нет нормального ночного режима, автоматического don’t disturb~~
-      Android 15 Modes (расписания, bedtime). В google pixel тоже давно уже что-то худо бедно есть 
-19. Нет кнопки беззвучного 
-19. **Нет** экосистемы **continuity** (единый буфер обмена, видеоискатель камеры на часах/маке, проброс между устройствами оповещений, otp прямо в поле ввода, смс, статусов заказов и тп). Есть общие пароли и история+закладки хрома. 
-20. Нотификации вверху зачем-то всплывают пачками новые + зачем-то старые. Пиздец. В таким виде их все равно никто не пытается читать 
-21. Нотификации нельзя временно загасить от отдельного приложения, отдельного чата/группы
-      Android 15+ имеет notification cooldown (гасит спам от одного приложения). Дефолты всё равно шумные — претензия к дефолтам остаётся.
-21. **Battery**. Нет ограничителя зарядки батареи и адаптивной зарядки. Плохое или отсутствует Display time, статистка разряда, подробный анализ состояния батареи   
-      Pixel умеет лимит 80% и adaptive charging с 2024.
-22. Обычно нет нормальных системных жестов (идеальные те что apple спиздили с blackberry с хендлом внизу).  А вместо них допотопные 3 кнопки внизу 
-23. Для разработчиков много запретов нарушение которых приводит к невозможности исползать google play 
-24. Google play это что блять за название такое? Это что плеер? Дебилы 
-25. Нет ни одного юзабельного андроид планшета. Их все надо просто сжечь и запретить 
-      стало лучше (Android 16 desktop windowing, требования Google к large screen), но экосистема планшетных приложений всё ещё не iPad.
-26. Нет возможности отказаться от части запросов разрешений при установки приложений. Уточнить 
-27. Нет нормального безопасного распознавания лица (Face ID). У Apple работает в темноте и более безопасно.
-      TrueDepth: ИК-проектор точек + ИК-камера (structured light). У большинства андроидов распознавание лица камерой, без depth-железа; исключение — Pixel 8+ (Class 3, годится для платежей).
-28. Сами устройства обычно сильно хуже. Сопоставимого качества стоят дороже. Усиленное стекло, водонепроницаемость, металл, сборка
-29. Апдейты системы обычно если и приходят то один раз 
-      устарело для флагманов: Pixel 8+ и Galaxy S24+ — 7 лет обновлений ОС. Для дешёвых андроидов по-прежнему правда.
-30. Традиционная гонка за мегабайтами и мегапикселями вместо проработки UX и вертикальной интеграции
-31. Нет Taptic Engine и единой системы откликов, так же звуковые оповещения обычно сделаны гораздо хуже, например для сообщения звуки часто чрезмерно длительные 
-32. WiFi и симка объединены в единый раздел по крайней мере на pixel. Большое тапов
-33. ~~Часто камера не умеет читать QR.~~ 
-      устарело лет на пять, читают все
-34. Сири может без интернета делать простые вещи 
-35. Always on экран. На Самсунг бывает 
-36. Нельзя нажать вверху экрана чтобы просмотреть вверх документа
-37. На iOS есть удобный навигатор по тексту зажатием пробела 
-38. У iOS / iPhone есть экстренная спутниковая связь и есть движение к тому чтобы использовать ее и как фолбек к смс
-39. Файловый менеджер в android по историческим причинам показывает свалку из системных и пользовательских файлов. А работа с sd картой реализована не очень удобно 
-40. В iOS достаточно давно большую часть действий можно стало делать в один жест даже если требуется войти в под меню. Лонгтап, открывается контекстное меню, не допуская пальца ведем и отпускаем на нужном пункте. Работает и для нескольких уровней. Но к сожалению не сделано декларативно и универсально и зачастую в сторонних приложениях сломано 
-41. У iOS есть офлайн словари, толковые и с переводами слов на разные языки и некоторые другие. В идеале можно было бы иметь локальную мини Википедию если на устройстве 1ТБ+
-
-
-### Fable summary 
-
-- Фрагментация железа и качества приложений; слабые проверки в сторе.
-- Сбор пользовательских данных как бизнес-модель.
-- Хаптика: Taptic Engine и единая система откликов — по-прежнему только у Apple; звуки уведомлений у андроидов чрезмерные.
-- Бекап/перенос всё ещё не «продолжил пользоваться, как будто ничего не менял».
-- Софт камеры у большинства вендоров хуже (Pixel — исключение).
+1. **No auto-brightness that actually works.** Everyone turns it off.
+2. **No proper split of the shade** into notifications and controls.
+     UPDATE: One UI 7+, AgentOS, Android 16 QPR — now exists.
+3. **No** unified system for sharing files over WiFi/Bluetooth (**AirDrop**). There is some quickshare.google that allegedly works with both iOS and Windows.
+     Find Hub (formerly Find My Device) — a crowdsourced network since April 2024, Chipolo/Pebblebee/Moto Tag tags, UWB. Network density is still worse than Apple's, but the system exists. Also a dubious shelf item.
+4. **No** unified, broad, well-working, universal cross-platform system for finding things (**AirTag**).
+     Google reverse-engineered the AirDrop protocol without Apple's involvement: Pixel 10 (November 2025), and with the June 2026 Feature Drop — Samsung, Xiaomi, OPPO, vivo, Honor, OnePlus flagships. Works directly with iPhone/iPad/Mac, p2p, no internet needed. Limitation: only "Everyone for 10 minutes" mode, no "Contacts Only" yet. Bottom line: Android now shares with the iPhone better than Apple shares with Android. (https://www.androidauthority.com/google-android-airdrop-expansion-3638222/) Though we tested it ourselves: 1) doesn't work without internet 2) Pixel 5 couldn't connect to an iPhone 17 Pro Max and, as usual, gave no explanation.
+5. Material UI is visually worse than Apple's HIG — colors, animations, philosophy, icons, pattern polish, etc.
+     Material 3 Expressive (2025) — a big redesign. It's livelier now; better/worse is taste.
+6. No proper spotlight: system-wide search (files, apps, photos...), calculator, dictionary, converter...
+7. **"No Dynamic Island / proper status bar."** Pixel has one now.
+      — partly outdated. Android 16 added Live Updates (progress notifications in the status bar), Xiaomi made HyperIsland — a literal copy of Dynamic Island.
+8. App icons get stuck at the top of the screen for no reason. Fine on Pixel.
+9. You constantly have to close everything or you run out of memory and the battery drains.
+10. Few **good** apps.
+11. Google can't do product UX: Maps/Drive/Docs/Gmail/Translator — nonfunctional, ugly, unpolished, lots of bugs, offline translation and maps don't work, the list goes on. Yandex has equivalent services made much better but with the KGB built in. That said, Apple is often even worse across that same set of services. Though Pages/Numbers are nicer but less functional in terms of API and automation.
+12. Hardware fragmentation.
+13. Google steals and sells user data — that's the business model. Apple — privacy first.
+14. Camera software is always worse. But there can be all sorts of poorly made or niche gimmicks. The latest Pixels are allegedly on par.
+15. Worse emoji design. Pixel seems to use Apple's, which is fine.
+16. Lower-quality apps due to laxer review.
+17. No proper backup like iOS's (in the ideal case you just keep using the phone as if you never switched devices, usually you only need to log into third-party apps). Needs clarifying.
+18. ~~No proper night mode, automatic do-not-disturb~~
+      Android 15 Modes (schedules, bedtime). Google Pixel also has had something serviceable for a while now.
+19. No silent-mode button.
+19. **No** **continuity** ecosystem (a shared clipboard, camera viewfinder on watch/Mac, notification handoff between devices, OTP straight into the input field, SMS, order status, etc.). There are shared passwords and Chrome history+bookmarks.
+20. New notifications pop up at the top in batches for no reason, plus old ones for no reason. A mess. Nobody even tries to read them in that state anyway.
+21. You can't temporarily mute notifications from a single app, a single chat/group.
+      Android 15+ has notification cooldown (throttles spam from a single app). Defaults are still noisy — the complaint about defaults stands.
+21. **Battery.** No charge limiter or adaptive charging. Poor or absent screen-on-time, discharge stats, detailed battery health analysis.
+      Pixel has an 80% limit and adaptive charging since 2024.
+22. Usually no proper system gestures (the good ones are the ones Apple stole from BlackBerry, with the bottom handle). Instead, antiquated 3 buttons at the bottom.
+23. Lots of restrictions for developers, violating which makes it impossible to use Google Play.
+24. Google Play — what kind of name is that? Is it a player? Idiots.
+25. Not a single usable Android tablet exists. They should all just be burned and banned.
+      It's gotten better (Android 16 desktop windowing, Google's large-screen requirements), but the tablet app ecosystem still isn't iPad-level.
+26. No way to opt out of individual permission requests during app install. Needs clarifying.
+27. No proper secure face recognition (Face ID). Apple's works in the dark and is more secure.
+      TrueDepth: IR dot projector + IR camera (structured light). Most Androids do camera-only face recognition, no depth hardware; exception — Pixel 8+ (Class 3, good enough for payments).
+28. The devices themselves are usually much worse-built. Comparable quality costs more. Reinforced glass, water resistance, metal, build quality.
+29. System updates, when they arrive at all, usually come once.
+      Outdated for flagships: Pixel 8+ and Galaxy S24+ — 7 years of OS updates. Still true for cheap Androids.
+30. The traditional race for megabytes and megapixels instead of polishing UX and vertical integration.
+31. No Taptic Engine or unified haptic feedback system; sound notifications are usually also made much worse, e.g. message sounds are often excessively long.
+32. WiFi and SIM are lumped into a single section, at least on Pixel. Too many taps.
+33. ~~The camera often can't read QR codes.~~
+      Outdated by about five years, they all read them now.
+34. Siri can do simple things without internet.
+35. Always-on display. Sometimes on Samsung.
+36. Can't tap the top of the screen to scroll to the top of a document.
+37. iOS has a convenient text navigator via press-and-hold on the space bar.
+38. iOS/iPhone has emergency satellite connectivity, and there's movement toward using it as an SMS fallback too.
+39. For historical reasons the Android file manager shows a dump of system and user files mixed together. And working with an SD card isn't implemented very conveniently.
+40. On iOS, for a long time now, most actions can be done in a single gesture even if it requires entering a submenu. Long press, a context menu opens, without lifting your finger you drag and release on the item you want. Works across multiple levels too. Unfortunately not done declaratively or universally, and it's often broken in third-party apps.
+41. iOS has offline dictionaries — definitions and translations into various languages, plus a few others. Ideally you could have a local mini-Wikipedia if the device has 1TB+.
 
 
-## Где не все так плохо 
-1. Google pixel не имеет части из этих проблем 
-2. Xiaomi и другие производители сейчас пытаются копировать iOS 
+### Fable summary
+
+- Hardware and app-quality fragmentation; weak store review.
+- Collecting user data as a business model.
+- Haptics: Taptic Engine and a unified feedback system — still Apple-only; Android notification sounds are excessive.
+- Backup/migration still isn't "kept using it like nothing changed."
+- Most vendors' camera software is worse (Pixel is the exception).
 
 
-## Где андроид пока еще почему-то лучше (apple пиздец!)
-1. Можно раздавать принимаемый WiFi (dual band)
-2. Можно показать QR код для WiFi 
-2. ~~Можно перейти в настройки вайфай зажав иконку в шторке~~ -- не прошло и тысячи лет и эпл исподоюились добавить 
-3. Карты эпл еще хуже чем Гугл. Хотя казалось бы уже дно. 
-     Карты Apple: стали заметно лучше (в 2026), но справедливо в основном для силиконовой долины и немного для остальных США 
-4. Эпл совсем не умеет в веб-сервисы, pages/numbers/photos нельзя нормально смотреть на других системах 
-5. ~~В капс режиме символы на клавиатуре не становятся прописными~~ -- сделали достаточно давно 
-6. ~~Скопированный текст не появляется в саджесте~~ -- сделано в iOS 27 наконец-то. Но на пикселе есть даже мульти буфер обмена. И на iOS работает через раз. Чаще не работает чем работает
-7. Единый жест назад. Спорно, в iOS он в виде паттерна. Все нормальные приложения его поддерживают. Но универсальный обычно лучше 
-8. Айфон каждый раз очень сильно теряет в цене после выхода очередной осенней новинки из-за этого экономически не очень оправданно продолжать прозваться устройством которое может прослужить 5 лет и быть актуальным (при условии смены батарейки)
-9. Несмотря на очень оптимальный системный софт размер батареи обычно настолько меньше а технология настолько консервативнее что айфоны постоянно приходится таскать на павербанке и искать розетку 
-10. **Даже на iPad нет полноценной или хотя бы какой-то многозадачности. На айпаде можно вывести хотя бы 2 окна но и то с натяжкой. Айфон держит в памяти второе приложение несколько секунд. А после блокировки выкидывает из памяти все и способа работать резидентно фактически нет. Самые лучшие приложения требуют держать их открытыми чтобы докачать/дообновить/завершить бдительный процесс** 
-      iPadOS 26 (2025) завёз настоящую оконную систему: свободно ресайзящиеся окна, менюбар. На iPad вопрос частично закрыт, но несколько приложений все равно на открыть а длительный процесс требует сидеть перед устройством и тыкать в экран каждые 30 секунд
-11. Если Эппл, то обычно закрытое и работающее только с эпл. Впрочем AirTag протокол сделали общим, так же как и swift и HomeKit, (уточнить)
-12. Большинству не нужно такое дорогое устройство. Впрочем, позапрошлый айфон всегда лучше любого последнего андроида и по качеству и по софту и по времени жизни и по цене. Основной проигрыш обычно только в батарее. Но можно брать позапрошлый pro max и будет совсем хорошо. 
-13. Заряжать другой телефон своим, менять направление. По кабелю или Qr
-14. ИИ в андроидах обычно лучше 
-15. Андроиды ещё бывают с microSD картой. Это все еще может быть очень полезно 
-16. ~~«Линзы». ИИ камера~~. С iOS 27 появилась 
-17. Сири тупа как валенок. 
-      Siri AI (WWDC 2026) работает на Apple Foundation Models — это модели Apple, обученные с дистилляцией из «одолженных» Gemini-моделей (сделка ~$1 млрд/год, анонс 12.01.2026; у Apple полный доступ к Gemini в своих датацентрах для дистилляции). Роутинг трёхуровневый: простое — on-device AFM (~3–4B, дообучены на Gemini-данных), среднее — AFM на Private Cloud Compute, самое тяжёлое — кастомный 1.2T Gemini на Google Cloud (Nvidia, PCC-сертификация). Т.е. не «Сири = Gemini», а «Apple не смогла вырастить мозги сама и дистиллирует чужие». Пункт «ИИ в андроидах лучше» закрывается формулировкой «настолько лучше, что Apple учит свои модели у гугловских». (https://appleinsider.com/articles/26/06/08/apples-new-foundation-models-dont-contain-a-drop-of-gemini-as-we-said-they-wouldnt)
-18. В App Store 30% комиссии с разработчиков со всех платежей. 100$ за аккаунт 
-      размылось: 15% для small business, в ЕС по DMA — альтернативные сторы и сторонние платежи, в США после Epic-решения (2025) — внешние платёжные ссылки.
-19. На андроид обычно удобно переключать языки свайпом по пробелу
-20. ~~На iOS Нет никакого доступа к файловой системе~~. Достаточно давно появилось Files app. Но сохранять приложения по умолчанию для форматов полноценно нельзя. Зато не помойка как в android 
-21. Редактор фото на андроиде во встроенном Photos гораздо функциональнее чем у apple. При этом тот же Google Photos на iOS урезан. И на iOS хорошего бесплатного или дешевого фото ретушера нет 
-22. Apple намеренно не дает допускает сторонние платежные системы через NFC, в приложениях и сторонние магазины приложений 
+## Where it's not all bad
 
-### Обновления
-
-**iOS 27 (WWDC, июнь 2026)** — год починки: +30% скорость запуска приложений, +80% скорость AirDrop, слайдер прозрачности Liquid Glass (признание, что редизайн не зашёл), раздельная громкость будильника, Markdown в Notes, один номер на двух айфонах, поддержка вплоть до iPhone 11. В бете iOS 27 нашли foldState/angleDegrees — складной айфон близко. Тим Кук уходит 31.08.2026, дальше John Ternus. (https://www.apple.com/newsroom/2026/06/apple-unveils-next-generation-of-apple-intelligence-siri-ai-and-more/)
+1. Google Pixel doesn't have some of these problems.
+2. Xiaomi and other manufacturers are now trying to copy iOS.
 
 
+## Where Android is still, for some reason, better (Apple, damn it!)
 
+1. You can share received WiFi (dual band).
+2. You can show a QR code for WiFi.
+2. ~~You could go into WiFi settings by long-pressing the icon in the shade~~ — better late than never, Apple finally added it.
+3. Apple Maps are still worse than Google's. And you'd think that was already rock bottom.
+     Apple Maps: noticeably improved (in 2026), but mostly fair for Silicon Valley and a bit for the rest of the US.
+4. Apple has no idea how to do web services — Pages/Numbers/Photos can't be properly viewed on other systems.
+5. ~~In caps mode the keyboard characters don't turn uppercase~~ — fixed a while ago.
+6. ~~Copied text doesn't show up in suggestions~~ — finally fixed in iOS 27. But Pixel even has a multi-item clipboard. And on iOS it works maybe half the time. More often it doesn't than it does.
+7. Unified back gesture. Debatable — on iOS it's more of a pattern. All well-behaved apps support it. But a universal one is usually better.
+8. The iPhone loses a huge chunk of value every time a new fall model comes out, which makes it economically questionable to keep proclaiming it a device that can last 5 years and stay relevant (assuming you replace the battery).
+9. Despite very optimized system software, the battery size is usually so much smaller and the technology so much more conservative that you constantly have to carry a power bank for the iPhone and hunt for an outlet.
+10. **Even the iPad has no full-fledged, or even any real, multitasking. On the iPad you can show at least 2 windows, but even that is a stretch. The iPhone keeps a second app in memory for a few seconds. After locking, it dumps everything from memory and there's essentially no way to run things resident. The best apps require you to keep them open to finish downloading/updating/complete a watchdog process.**
+      iPadOS 26 (2025) brought a real windowing system: freely resizable windows, a menu bar. On iPad the issue is partly closed, but you still can't open more than a few apps, and a long-running process requires sitting in front of the device and tapping the screen every 30 seconds.
+11. With Apple, it's usually closed and only works with Apple. Though the AirTag protocol was made open, same with Swift and HomeKit (needs clarifying).
+12. Most people don't need such an expensive device. That said, the second-to-last iPhone is always better than any latest Android in build quality, software, longevity, and price. The main loss is usually just the battery. But you can get the second-to-last Pro Max and it'll be quite good.
+13. Charging another phone from yours, reversing the direction. Via cable or QR.
+14. AI is usually better on Androids.
+15. Androids still come with a microSD card sometimes. That can still be very useful.
+16. ~~"Lens" AI camera~~. Arrived with iOS 27.
+17. Siri is dumb as a brick.
+      Siri AI (WWDC 2026) runs on Apple Foundation Models — these are Apple's own models, trained with distillation from "borrowed" Gemini models (a deal worth ~$1B/year, announced 2026-01-12; Apple has full access to Gemini in its own data centers for distillation). Three-tier routing: simple queries — on-device AFM (~3–4B, fine-tuned on Gemini data), medium — AFM on Private Cloud Compute, the heaviest — a custom 1.2T Gemini on Google Cloud (Nvidia, PCC-certified). I.e. not "Siri = Gemini," but "Apple couldn't grow the brains itself and distills someone else's." The "AI is better on Androids" point closes with the formulation "so much better that Apple trains its own models on Google's." (https://appleinsider.com/articles/26/06/08/apples-new-foundation-models-dont-contain-a-drop-of-gemini-as-we-said-they-wouldnt)
+18. App Store takes a 30% cut from developers on all payments. $100 for an account.
+      Softened: 15% for small business, in the EU under the DMA — alternative stores and third-party payments, in the US after the Epic ruling (2025) — external payment links.
+19. On Android it's usually convenient to switch languages by swiping on the space bar.
+20. ~~iOS had no filesystem access at all~~. The Files app arrived a fair while ago. But you still can't fully set default apps for formats. On the plus side, it's not a dumping ground like Android.
+21. Android's built-in Photos photo editor is far more functional than Apple's. Meanwhile the same Google Photos on iOS is stripped down. And there's no good free or cheap photo retoucher on iOS.
+22. Apple deliberately blocks third-party payment systems via NFC, in-app, and third-party app stores.
 
-## Для кого нет разницы 
-1. Для праздных маглов использующих телефон только для мемов, рилсов тиктоков, порно, глупых сериалов и казуальных игр. Похуй на них. Ладно, простите, просто мне интересны только похожие на меня люди, те кто что то создает и меняет, чинит и изучает, узнает и учит, рассказывает и помогает другим 
+### Updates
 
-
-
-## Почему и андроид и iOS говнище
-1. App centric подход давно себя исчерпал. Нужна project/task/document/person first система 
-	1. Поиск и установка приложений вручную очень вырывается из флоу пользователя
-	2. Нет единой истории как в браузере но сквозь все типы выполняемых задач 
-	3. Постоянно убивают бизнесы создавая клоны существовавших в апп сторе платных приложений 
-	4. Берут 30% с разработчиков 
-	5. Никому не надо очередное приложение для кофейни, но по другому выстроить контакт с потребителем сложно в этой парадигме  
-	6. Не должно быть так что с Антоном ты общаешься в element, со всеми в телеге, с родителями в вайбере, иностранцами в ватсапе, с Машей вообще в инсте а с друзьями задротами в дискорде а с коллегами в шлаке, а для видео созвонов в зуме а с Россией / Дубаем с еще одним набором приложений
-	7. Возврат купленного приложения обычно невозможен 
-	8. Нельзя в любом месте любого приложения добавить заметку для себя 
-	9. Если в приложении нет пары необходимых функций то с этим надо или мириться или переходить на другое где может не быть чего-то другого 
-	10. Если в приложении что то работает локально/удаленно то только так это и будет
-	11. Маркетплейсы (App Store) не помогают в продвижении приложений
-2. Поиск по настройкам и системы все еще очень поверхностный 
-3. ИИ ассистенты все еще очень поверхностные и всегда такими будут из-за багажа приложений. Каждое положение должно регистрировать 100% действий и данных через специальную сквозную систему видимцю для ии и спотлайта и IntentBox’а (ии саджест действий)
-4. Вендор Лок на (неудобную) экосистему 
-5. Не работают нормально вместе 
-6. Нет полноценного сквозного local first подхода 
-7. Закрытый софт систем (нет, андроид не открытый)
-8. **Клавиатура и ввод**.  Кроме как от Яндекса нет больше ни одной продуманной клавиатуры. Но Яндекс это НКВД/Z/смерть/гроб/кладбище
-	1. Ни одна клавиатура не учится нормально на вводе пользователя создавая автоматические замены опечаток в словах типичные для пользователя 
-	2. и не адаптируют в достаточной мере action box’ы клавиш  
-	3. И не делают продолжение по длительному контексту а не по последнему слову, учитывая еще и историю (автоматические сниппеты и заготовленные сообщения без ручного их создания, в том числе контактные данные и автоответы)
-	4. iOS постоянно считает опечатками даже распространённые английские слова
-	5. В iOS нет пользовательского словаря слов, если подчеркивается опечатка то ничего с этим сделать нельзя
-	6. В android нет магнитов к границе слов. В iOS их нельзя ни выключить ни обойти 
-9. Настройки и дефолты нотификаций все еще недостаточны для снижения лишнего шума. По умолчанию все должно идти в трей и классифицироваться как в хороших mail клиентах. Только срочное и важное имеет право всплывать 
-10. Бекап системы даже iOS все еще не 100%. Надо чтобы даже состояние в памяти переносилось и ты мог продолжить редактировать несохраненный документ в момент когда у тебя взорвался скажем телефон и ты купил новый. Не говоря уже о том что перелргиневаться везде и во многих случаях терять часть данных и настроек это вообще неприемлемо в 21 веке 
-11. Bluetooth это пиздец и эпл вместо того чтобы его починить сделали свою закрытую систему airdrops. Она умеет более менее грамотно менеджить источники звука. А не подключаться всегда к первому найденному устройству автоматически. Эппловские клавиатуры и трекпады например надо забывать на одном компьютере и перезагружать чтобы подключить к другому а KVM like системы нет 
-12. Нет 100% запрета на кастомные дизайн системы как на уровне токенов и компонентов так и на уровне философии и подходов 
-13. Health kit’ы закрытые даже для персональных автоматизаций и локального ии
-14. PDF читалки ужасные (нет навигации по страницам, нет закладок, не работает поиск по тексту если он не размечен, номер страницы перекрывает контент именно там где глаза привычно читать, нет быстрых заметок, нет автоподгона зума для съедания лишних полей (двойной тап надо делать самому, он порой сбивается при листании и смене ориентации а так же не лочит горизонтальный скролл), при переворачивании телефона скролл сбивается, нет автоматического ночного режима, нет распознавания кросс ссылок если отсутствует разметка, часто копирование работает криво если плохая разметка, в горизонтальном режиме нет разворота как в книге и нельзя включить, на iOS есть чуть более удобный Books app, но импорт PDF в него работает только при наличии интернета, при попытке выделить слово страница может прыгать далеко вниз выделяя почти весь текст ,,,)
-15. В Wallet’ы нельзя добавлять любые карточки и документы 
-16. Много ограничений по звуку. Не может быть параллельных источников и приемников звука. Обычно Нельзя играть музыку и записывать видео. Нельзя настраивать громкость отдельных приложений. Нельзя созваниваться и играть музыку. Много багов со звуком и Bluetooth, громкий режим забывает переключиться. 
-17. captive.apple.com и все что связано с подключением к WiFi когда требуется ввести какие-то данные по крайней мере на iOS сделано очень плохо. Появляется какое-то модальное окно, если его неправильно смахнуть WiFi отключается и какой нибудь код или номер телефона и тп не получается скопировать. Если закрыть поавидбно без отключения от WiFi дальше надо найти сайт без https например этот captive но он еще и не запоминается в истории браузера и вообще это не очевидный UX и мало кто догадается так сделать. А если симки нет а смс приходят через интернет то и вовсе код получить не выйдет. Часто WiFi ловится именно потому что симки нет а с симкой он зачастую и не нужен. Решением может быть предоставление встроенной бесплатной системной eSIM для ограниченной для пополнения балансов, получения OTP кодов по sms/email. Потому что часто мобильные операторы без интернета даже пополнить баланс на дают-- это ухе один кейс
-18. Нет возможности настроить Bluetooth в режиме не подключаться автоматически 
-19. AirDrop даже спустя многие годы улучшений так и остается медленным глючным говнищем
-20. В приложениях про умолчанию нельзя выделять и копировать текст. Идея: по лонгтапу выделять и объект/карточку/пост если есть и текст. Лонг тап на кнопки обрабатывать комплексно. 1) если есть предусмотренное действие сразу выполнять, это должно быть экранное действие, не выполняющее никаких изменений в данных 2) ненавязчиво предлагать скопировать текст если сразу после лонгтапа скажем выпадушка закрыта (wrong action detection) и затем открыт ии чат (FlexLight)
-21. Нет мультибуфера обмена. В pixel как минимум оказывается можно листать саджест буфера обмена в клавиатуре
-22. Настройки приложений разбросаны по 3 местам обычно: само приложение, система, веб. Причем настройки приложений в системе не ищутся через поиск настроек и системный поиск. А built in приложения на iOS обычно все настройки хранят в системе отдельно от самого приложения что ворде и ок, но заходить из приложения в его настройки надо очень криво и долго а быстрого пути на например на macOS по cmd+, нельзя. При этом все сторонние приложения имеют свой отдельный логин и соответсвенно там логично и настройки располагаются. У встроенных же это не нужно потому что у них общий логин -- Apple ID/google account. Вместо этого нужен единый подход и для builin и для 3rd party. И вообще значимость builtin должна быль ниже 
-23. Фокус инпутов слишком сильно масштабирует страницу что некрасиво и неудобно и обычно избыточно. 
-24. В мобильные системы совсем не заложены esc и ctrl/cmd, из-за чего даже с внешней клавиатурой с ними все равно не очень удобно работать полноценно 
-25. Почти нигде кроме (ограниченно) некоторых Linux дистрибутивов нет сквозного keymap’а. А глобального поиска экшенов совсем нигде нет. Ограниченно на macOS работает Cmd+? Для действий в меню активного приложения но сделано с багами и очень ограниченно и обычно покрывает малую часть действий 
-26. Не принято убирать тяжелые редко-используемые модули в догружаемые по требованию динамические библиотеки. В если делается то не очень удачно. Например модуль ai редактирования фото в iOS photos сначала был доступен сразу а потом был вынесен в доп модуль но не был загружен в idle time несмотря на то что могла бы быть собрана статистика частого использования 
-27. Автоматические апдейты ночью чаще всего не проходят без внятной причины  
-28. Нет понятия временной настройки. Все настройки делаются или на один раз или навсегда пока не будут снова изменены. Лишь изредка отдельно продумано как это будет использоваться. Например обычно если ставится беззвучный нет опции поставить его до утра/конца встречи и тп. Хотя именно этот конкретный кейс скорее всего уже предусмотрен в ряде мобильных ОС и приложений. Но это полумеры. Это должно быль сквозной концепцией системы без которой невозможно создать нигде никакой настройки 
-29. Сетевой стек всех распространённых ОС вшит в ядро. Из-за чего стало популярным использовать UDP а дальше все реализовывать самостоятельно потому что влиять на обновления системы из приложений нельзя 
-30. Нет (простого/какого либо) способа управлять роутингом пакетов между разными интернет аплинками, vpn’ами и прокси. Для резервирования каналов, ускорения благодаря параллельным потокам и обхода нелегальных блокировок сомнительных государств. 
-31. Несмотря на то что у устройств есть фронтальная камера а у iOS еще и ик сканер устройство не умеет отслеживать внимание и не гасить экран. На некоторых ос подобное было в разное время реализовано но не всегда удачно и в мейнстриме ос ю отсутствует. Особенно бесит на iOS при работе с Notification Center 
-32. 
+**iOS 27 (WWDC, June 2026)** — a year of fixes: +30% app launch speed, +80% AirDrop speed, a Liquid Glass transparency slider (an admission that the redesign didn't land), separate alarm volume, Markdown in Notes, one number across two iPhones, support down to iPhone 11. In the iOS 27 beta, `foldState`/`angleDegrees` were found — a foldable iPhone is close. Tim Cook is leaving 2026-08-31, John Ternus next. (https://www.apple.com/newsroom/2026/06/apple-unveils-next-generation-of-apple-intelligence-siri-ai-and-more/)
 
 
 
 
-### Summary Почему обе исчерпаны (= тезис Agent OS)
+## For whom there's no difference
 
-Тренд 2025–2026 подтверждает диагноз: платформы сползаются в одну точку. Google реверсит AirDrop, Apple покупает мозги у Google, Xiaomi копирует Dynamic Island, Apple копирует оконность. Дифференциация на уровне «фич» закончилась — обе упёрлись в один потолок: **app-centric парадигму**.
-
-1. **App-centric себя исчерпал.** Нужна project/task/document/person-first система. Установка приложений руками вырывает из флоу; сквозной истории (как в браузере, но через все задачи) нет; связь с Антоном в element, со всеми в телеге, с родителями в вайбере — это не «выбор мессенджера», это отказ системы от понятия «человек».
-2. **ИИ-ассистенты навсегда поверхностны на этом багаже.** Приложение — чёрный ящик; ассистент видит пиксели и Intents. Пока каждое действие и каждый байт данных не регистрируются в сквозной системе, видимой ИИ (спотлайт, IntentBox, саджест) — ассистент останется автоответчиком. Siri AI на Gemini это не лечит: модель умная, доступа к данным нет.
-3. **Бекап не 100%.** Даже iOS не переносит состояние памяти. Телефон взорвался → купил новый → продолжил редактировать несохранённый документ — вот критерий.
-4. **Local-first нет ни у кого.** Где живут данные и логика — решает приложение, а не система/пользователь.
-5. **Клавиатуры не учатся** на вводе пользователя (персональные автозамены, продолжение по длинному контексту, автосниппеты).
-6. **Нотификации**: по умолчанию всё в трей с классификацией как в хороших mail-клиентах; всплывает только срочное. Никто так не делает.
-7. **Health/Wallet/звук** — закрытые вертикали: HealthKit без локального r/w API для своих автоматизаций, в Wallet нельзя положить произвольный документ, параллельные аудио-источники запрещены.
-8. **Bluetooth** сломан у всех; Apple вместо починки сделала закрытую надстройку.
+1. For idle normies who only use the phone for memes, reels, TikToks, porn, dumb shows, and casual games. Don't care about them. Fine, sorry, I'm just only interested in people like me — people who create and change things, fix and study things, learn and teach, tell and help others.
 
 
 
-## Что есть хорошего в современных мобильных ос и железе 
+## Why both Android and iOS are garbage
 
-1. Вычислительная фотография
-2. TTS/ASR на устройстве
-3. Много софта и большие сообщества разработчиков
-4. Драйвера связи и датчиков
-5. Оптимизации производительности и батареи
-6. Предиктивные клавиатуры. Правда не слишком удобные и давно не развивающиеся 
-7. OTP/passkey, биометрия, secure chip
-8. Зачатки вытягивания OTP из sms/email
-9. Распознавание и подсветка базовых сущностей в текстах (телефон, email, OTP). Зачаток SideMemo. (Т.н. detectors в iOS)
+1. The app-centric approach has long since exhausted itself. What's needed is a project/task/document/person-first system.
+	1. Manually searching for and installing apps rips you right out of your flow.
+	2. There's no unified history the way there is in a browser, but across every kind of task performed.
+	3. They constantly kill businesses by cloning paid apps that already existed in the app store.
+	4. They take 30% from developers.
+	5. Nobody needs yet another app for a coffee shop, but there's no other way to build contact with the customer in this paradigm.
+	6. It shouldn't be the case that you talk to Anton on Element, to everyone on Telegram, to your parents on Viber, to foreigners on WhatsApp, to Masha specifically on Insta, to your nerd friends on Discord, to coworkers on Slack, on Zoom for video calls, and yet another set of apps for Russia/Dubai.
+	7. Refunding a purchased app is usually impossible.
+	8. You can't add a note to yourself anywhere within any app.
+	9. If an app is missing a couple of necessary features, you either have to live with it or switch to another one that may be missing something else.
+	10. If something in the app works locally/remotely, that's the only way it will ever work.
+	11. Marketplaces (App Store) don't actually help promote apps.
+2. Search across settings and the system is still very shallow.
+3. AI assistants are still very shallow and always will be because of the app baggage. Every action should register 100% of actions and data through a special end-to-end visibility system for AI, both for spotlight and for an IntentBox (an AI action-suggest system).
+4. Vendor lock-in to an (inconvenient) ecosystem.
+5. Things don't work together properly.
+6. There's no full end-to-end local-first approach.
+7. Closed system software (no, Android isn't open).
+8. **Keyboard and input.** Other than Yandex's, there isn't a single well-thought-out keyboard. But Yandex is the NKVD/Z/death/coffin/graveyard.
+	1. No keyboard properly learns from user input to create automatic typo corrections typical for that user.
+	2. And they don't adequately adapt the keys' action boxes.
+	3. And they don't do continuation based on long context instead of just the last word, factoring in history too (automatic snippets and prepared messages without manually creating them, including contact details and auto-replies).
+	4. iOS constantly flags even common English words as typos.
+	5. iOS has no user dictionary — if a typo is underlined, there's nothing you can do about it.
+	6. Android has no snap-to-word-boundary. On iOS you can neither disable it nor work around it.
+9. Notification settings and defaults still aren't enough to reduce excess noise. By default everything should go to a tray and be classified the way good mail clients do. Only urgent and important things have the right to pop up.
+10. System backup, even on iOS, still isn't 100%. Even in-memory state should be carried over, so you can keep editing an unsaved document at the exact moment your phone, say, blows up and you buy a new one. Not to mention having to re-login everywhere and, in many cases, lose part of your data and settings — that's simply unacceptable in the 21st century.
+11. Bluetooth is a mess, and instead of fixing it Apple built its own closed AirDrop-like system. It manages audio sources reasonably well. Rather than always auto-connecting to the first device found. Apple keyboards and trackpads, for example, need to be forgotten on one computer and rebooted to connect to another, and there's no KVM-like system.
+12. There's no 100% ban on custom design systems, either at the token/component level or at the philosophy/approach level.
+13. HealthKits are closed even to personal automations and local AI.
+14. PDF readers are terrible (no page navigation, no bookmarks, text search doesn't work if the text isn't tagged, the page number overlaps content exactly where your eyes normally read, no quick notes, no auto-fit zoom to crop extra margins — you have to double-tap yourself, and it sometimes resets when paging or changing orientation, and doesn't lock horizontal scroll either; when flipping the phone the scroll position resets; no automatic night mode; no cross-reference recognition if there's no markup; copying is often glitchy with poor markup; in landscape mode there's no book-style spread and you can't turn it on; iOS has a slightly more convenient Books app, but importing a PDF into it only works with internet; when trying to select a word the page can jump far down and select almost all the text, etc.)
+15. You can't add arbitrary cards and documents to Wallet.
+16. Lots of audio restrictions. Can't have parallel audio sources and sinks. Usually can't play music and record video simultaneously. Can't adjust per-app volume. Can't be on a call and play music. Lots of audio/Bluetooth bugs, loud mode forgets to switch back.
+17. captive.apple.com and everything related to WiFi connections requiring some data entry, at least on iOS, is done very poorly. Some modal pops up, and if you swipe it away wrong, WiFi disconnects, and copying some code or phone number, etc. doesn't work. If you close it properly without disconnecting from WiFi, you then have to find a non-https site — such as this captive page — but it's not even saved in browser history, and overall it's not an obvious UX and few people would figure out how to do it. And if there's no SIM and texts arrive over internet, you can't get the code at all. WiFi often gets caught specifically because there's no SIM, and with a SIM it's often unnecessary anyway. A solution could be a built-in free system eSIM, limited to topping up balances and receiving OTP codes by SMS/email — because often mobile carriers don't even let you top up your balance without internet — that's already one use case.
+18. No way to configure Bluetooth to not auto-connect.
+19. AirDrop, even after many years of improvements, is still slow, buggy garbage.
+20. By default you can't select and copy text in apps. Idea: on a long press, select the object/card/post if there is one, plus the text. Handle a long press on buttons comprehensively. 1) if there's a predefined action, execute it immediately — it should be an on-screen action that doesn't make any data changes 2) unobtrusively offer to copy the text if, say, right after the long-press a popup closes (wrong action detection) and then an AI chat opens (FlexLight).
+21. No multi-item clipboard. On Pixel, at least, you can apparently scroll through clipboard suggestions in the keyboard.
+22. App settings are usually scattered across 3 places: the app itself, the system, the web. And app settings within the system aren't found through settings search or system search. Built-in iOS apps usually store all their settings in the system, separate from the app itself, which is fine for them, but going from the app into its settings is very roundabout and slow, and there's no quick shortcut like Cmd+, on macOS. Meanwhile all third-party apps have their own separate login, so it makes sense for their settings to live there too. Built-in apps don't need that because they share a common login — Apple ID/Google account. Instead, a unified approach is needed for both built-in and third-party. And overall, built-in apps' privileged status should be lowered.
+23. Input focus zooms the page too aggressively, which is ugly, inconvenient, and usually excessive.
+24. Mobile systems don't account for Esc and Ctrl/Cmd at all, so even with an external keyboard it's still not very convenient to work fully with them.
+25. Almost nowhere — except (in a limited way) some Linux distros — is there an end-to-end keymap. And a global action search doesn't exist anywhere at all. On macOS, Cmd+? works in a limited way for actions in the active app's menu, but it's buggy, very limited, and usually covers only a small fraction of actions.
+26. It's not common practice to move heavy, rarely-used modules into dynamically loaded-on-demand libraries. And when it is done, it's often not done well. For example, the AI photo-editing module in iOS Photos was initially available immediately, then later moved into an add-on module, but wasn't preloaded during idle time even though usage statistics could have been collected to justify it.
+27. Automatic nightly updates most often fail to complete for no clear reason.
+28. There's no concept of a temporary setting. All settings are either one-time or permanent until changed again. Only rarely is it specifically designed with usage in mind. For example, usually if you enable silent mode there's no option to set it until morning/end of a meeting/etc. Though this specific case is probably already handled in a number of mobile OSes and apps. But those are half-measures. This should be a cross-cutting system concept, without which no setting anywhere should be creatable.
+29. The network stack of all mainstream OSes is baked into the kernel. Which is why it's become popular to use UDP and then implement everything yourself, because you can't influence system updates from apps.
+30. There's no (simple/any) way to manage packet routing across different internet uplinks, VPNs, and proxies. For link redundancy, speedup via parallel streams, and getting around illegal blocking by dubious states.
+31. Despite devices having a front camera, and iOS even an IR scanner, the device can't track attention and dim the screen accordingly. Some OSes have implemented something like this at various times, not always successfully, and it's absent from mainstream OSes. Especially annoying on iOS when working with the Notification Center.
+32.
 
----
-
-→ Ответ на каждый пункт — в «[[Своя мобильная ОС|./svoya-mobilnaya-os.md]]»: entity/agent-модель вместо приложений, глобальная история, local-first + CRDT, capability-модель для агентов, 100% бекап включая состояние, open source. Концептуальная база каждого решения — в [UX RESEARCHES](https://thsm.notion.site/95302a962f5c426e98d48271b13cc73a): п.1 → IdeaOS и «Микро-приложения», п.2 → FlexLight/IntentBox, п.5 → SideMemo, теговая FS → TagFS.
 
 
 
+### Summary: Why both are exhausted (= the Agent OS thesis)
+
+The 2025–2026 trend confirms the diagnosis: the platforms are converging on the same point. Google reverse-engineers AirDrop, Apple buys brains from Google, Xiaomi copies Dynamic Island, Apple copies windowing. Differentiation at the "feature" level is over — both have hit the same ceiling: the **app-centric paradigm**.
+
+1. **App-centric has exhausted itself.** What's needed is a project/task/document/person-first system. Manually installing apps rips you out of your flow; there's no unified history (like a browser, but across all task types); talking to Anton on Element, to everyone on Telegram, to your parents on Viber — that's not "choice of messenger," that's the system's refusal to have a concept of "a person."
+2. **AI assistants will always be shallow on this baggage.** The app is a black box; the assistant sees pixels and Intents. Until every action and every byte of data is registered in an end-to-end system visible to AI (spotlight, IntentBox, suggest) — the assistant will remain an answering machine. Siri AI on Gemini doesn't fix this: the model is smart, but there's no access to the data.
+3. **Backup isn't 100%.** Even iOS doesn't carry over in-memory state. Phone blows up → you buy a new one → you keep editing the unsaved document — that's the bar.
+4. **Nobody has local-first.** Where data and logic live is decided by the app, not the system/user.
+5. **Keyboards don't learn** from user input (personal auto-corrections, long-context continuation, auto-snippets).
+6. **Notifications**: by default everything goes to a tray with classification like good mail clients; only urgent things pop up. Nobody does this.
+7. **Health/Wallet/audio** — closed verticals: HealthKit has no local r/w API for your own automations, Wallet won't accept an arbitrary document, parallel audio sources are forbidden.
+8. **Bluetooth** is broken everywhere; instead of fixing it, Apple built a closed add-on.
+
+
+
+## What's actually good in modern mobile OSes and hardware
+
+1. Computational photography.
+2. On-device TTS/ASR.
+3. Lots of software and large developer communities.
+4. Connectivity and sensor drivers.
+5. Performance and battery optimizations.
+6. Predictive keyboards. Though not very convenient and haven't developed in a long time.
+7. OTP/passkey, biometrics, secure chip.
+8. Early signs of pulling OTP out of SMS/email.
+9. Recognition and highlighting of basic entities in text (phone number, email, OTP). An early form of SideMemo. (The so-called "detectors" in iOS.)
 
 ---
-Annotations: 0,24972 SHA-256 f769873d392501162332  
-@Alex Ultra <invntrm@gmail.com>: 256 300,2 306,17 336,2 360,2 366,13 396,2 424,6 483,2 488,2 540,2 549,2 626,6 828,2 833,2 843,60 925,2 933,2 936,6 1210 1224 1385,124 1522,2 1540 1546,80 1833,50 1898,6 2292,11 2497,159 2672 2697,27 2730,42 2778,8 2801,93 2916,41 2966 3216,2 3248 3250,16 3272,16 3326,55 3414,2 3419,2 3433,2 3445,2 3504,87 3777,97 4011,13 4079,100 4637,7 4933,2 4941 4978,7 5248,53 5357,7 5581 5743,4 5767,32 5807,15 5827,2 5861,2 5864,7 5993,133 6238,685 6924,3 6930,14 7562,4 7787,8 7933,6 7944 8245,60 9268,7 9376,150 9540 10052 10059 10061,11 10079,2 10175,35 10988,86 11224,578 11803,16 12326,4 12652 14380,24 14934,266 16343,3 16362,818 17187,2 18544,3626 22172 22177,10 24000,524 24554,2 24573,3 24597,2 24795 24809  
-&AI: 430,49 632,192 942,268 1211,13 1225,160 1626,79 1904,153 3288,38 3874,132 4179,49 4644,130 4985,185 5364,111 5871,32 7795,120 9275,101 10210,777 11074,150 11819,507  
-...
+
+→ An answer to every point is in "[Own Mobile OS](../../AgentOS.md)" (`engineering-bible/AgentOS.md`; still Russian — a separate, not-yet-scheduled translation): an entity/agent model instead of apps, global history, local-first + CRDT, a capability model for agents, 100% backup including state, open source. The conceptual foundation for each solution is in [UX RESEARCHES](https://thsm.notion.site/95302a962f5c426e98d48271b13cc73a): item 1 → IdeaOS and "micro-apps," item 2 → FlexLight/IntentBox, item 5 → SideMemo, tag-based FS → TagFS.
+
+<!-- Note: a trailing Notion-export annotation/provenance block (author highlight byte-offset ranges keyed to the original Russian text) was dropped here on translation — those offsets no longer map onto the English text and would be misleading if kept. -->

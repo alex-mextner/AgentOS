@@ -95,12 +95,14 @@ prev/next, backlinks, "related specs/tasks/claims" panel, provenance panel; cros
 search over bodies (not just index); Mermaid/PNG/SVG render polish; verify every "Edit on GitHub"
 URL resolves under `engineering-bible/`.
 
-### 2.4 Translate the 3 remaining Russian atlases
-`docs/research/ios-vs-android-vs-agent-os.md`, `prior-art-atlas.md`, `agent-os-wider-lens.md` are
-valuable but still fully Russian. Full English translations are already in progress on a separate
-branch; land that branch (or redo the translation here if it doesn't land) so these are the last
-files in the repo carrying non-English text. Repository policy is English-only with no standing
-exception — do not keep an original-language version as the shipped file once translated.
+### 2.4 English translation of the 3 Russian atlases (DONE)
+`docs/research/ios-vs-android-vs-agent-os.md`, `prior-art-atlas.md`, `agent-os-wider-lens.md` have
+been translated to English in place (full translation, not a separate summary file) — all three
+files carry zero Cyrillic. They remain under `docs/research/` and are non-normative, same as
+before. Together with the derussification pass (which translated `engineering-bible/AgentOS.md`,
+the digest, and the RES-012 excerpts), the repository is now zero-Cyrillic repo-wide. Repository
+policy is English-only with no standing exception — original-language text is never kept as the
+shipped file once translated.
 
 ### 2.5 §13 Final cleanup
 Dedupe any legacy copies under `knowledge/` (already deprecated — decide delete vs keep as archive),
