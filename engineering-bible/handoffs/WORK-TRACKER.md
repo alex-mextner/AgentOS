@@ -29,8 +29,8 @@ Honest status of the full sol handoff (§1–13) plus the content plan. Not "alm
 - **Vercel deploy + browser QA** — HANDOFF-vercel-portal-deploy.md.
 
 ### I CAN do (queued, in priority order)
-1. **§12 License strategy** — per-component; now shaped by forking Fuchsia (inherits BSD/Apache/MIT). Verify Fuchsia licensing, write LEGAL doc. (NEXT)
-2. **§7 Portal completeness** — add missing routes: /claims /experiments /sources /risks /glossary /decisions /procurement /contacts; per-doc TOC, backlinks, prev/next, provenance panel, full-text search, Mermaid/image render, Edit-on-GitHub → engineering-bible.
+1. ~~§12 License strategy~~ — DONE (LEGAL-014; Apache-2.0 default, CC BY docs, CERN-OHL hw, DCO, trademark policy).
+2. **§7 Portal completeness** — PARTIAL: added /claims /experiments /sources /risks /glossary /decisions (from registers). STILL TODO: /procurement /contacts; per-doc TOC, backlinks, prev/next, provenance panel, cross-doc full-text search, Mermaid/image render polish, verify Edit-on-GitHub URLs.
 3. **§8 Research-grade comparisons** — deep iOS/Android/AgentOS matrix (system object model, action APIs, agent authority, history, sandboxing, updates, privacy, offline…); detailed pages for Fuchsia/Zircon, seL4, Genode, Redox, postmarketOS, GrapheneOS, MINIX3, QNX, Haiku, Plan 9/Inferno, KeyKOS/EROS/CapROS, Tock, Hubris, Theseus, Barrelfish, HarmonyOS, App Intents/AppFunctions, Anytype, Automerge, Loro. Each claim sourced.
 4. **§9 Hardware/device catalogue** — per-target matrix (role, quality ceiling, docs access, boot control, GPU, camera, modem, power, security, debug, firmware, legal route, cost, availability, replacement, go/no-go); local images+provenance for Pixel 9, Fairphone, PinePhone Pro, VIM3, i.MX 8M, RK3588, RISC-V, custom carrier, camera modules.
 5. **English summaries** of the 3 Russian atlases (research task).
