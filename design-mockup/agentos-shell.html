@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent OS — Shell &amp; UX Design Proposal</title>
+<style>
+  /* ============================================================
+     Agent OS shell mockup — "typed ink"
+     Visual system = type system. Entity kind is the palette.
+     Self-contained: no external fonts, scripts, or assets.
+     ============================================================ */
+  :root {
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+    /* entity kinds — categorical, distinct around the hue wheel */
+    --k-person:   #E3A64B;
+    --k-project:  #8E7BFF;
+    --k-task:     #46C08A;
+    --k-document: #5B93E6;
+    --k-event:    #E169B0;
+    --k-message:  #34C2C9;
+    --k-device:   #B08A5E;
+    --agent:      #58A6FF;  /* the one restrained system accent: agent proposals */
+  }
+  :root[data-theme="dark"] {
+    --bg:      #0E1116;
+    --bg-2:    #141922;
+    --panel:   #171D27;
+    --panel-2: #1C2331;
+    --line:    #262E3B;
+    --line-2:  #313B4B;
+    --ink:     #E8ECF2;
+    --ink-2:   #A7B0BF;
+    --ink-3:   #6B7686;
+    --chip:    #1E2634;
+    --glow:    rgba(88,166,255,.16);
+  }
+  :root[data-theme="light"] {
+    --bg:      #EDEFEC;
+    --bg-2:    #F3F5F4;
+    --panel:   #FBFCFB;
+    --panel-2: #F1F3F1;
+    --line:    #DEE2DD;
+    --line-2:  #CBD1CA;
+    --ink:     #17201B;
+    --ink-2:   #495449;
+    --ink-3:   #7C867C;
+    --chip:    #EBEEEA;
+    --glow:    rgba(60,120,220,.12);
+    --k-person:#B4791F; --k-project:#5B49D6; --k-task:#1F9166;
+    --k-document:#2E6FC4; --k-event:#C13F8C; --k-message:#127E86; --k-device:#8A6636;
+    --agent:#2C6FD6;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans);
+    background:
+      radial-gradient(1200px 700px at 82% -8%, var(--glow), transparent 60%),
+      var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  a { color: inherit; }
+
+  /* ---------- page shell ---------- */
+  .wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 40px 28px 80px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 940px) {
+    .wrap { grid-template-columns: 1fr; gap: 36px; }
+    .stage { justify-self: center; }
+  }
+
+  /* ---------- left column: thesis ---------- */
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--agent);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.02;
+    letter-spacing: -.03em;
+    font-weight: 640;
+    margin: 0 0 20px;
+  }
+  h1 .em { color: var(--ink-2); font-weight: 500; }
+  .lede {
+    font-size: 18px;
+    color: var(--ink-2);
+    max-width: 46ch;
+    margin: 0 0 30px;
+  }
+  .lede b { color: var(--ink); font-weight: 600; }
+
+  .legend {
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+    margin-top: 4px;
+  }
+  .legend h3, .principles h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0 0 14px;
+  }
+  .kinds { display: flex; flex-wrap: wrap; gap: 8px 10px; }
+  .kind {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--mono); font-size: 12px; color: var(--ink-2);
+    background: var(--chip);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 11px 5px 9px;
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex: none;
+         box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 22%, transparent); }
+
+  .principles { margin-top: 30px; }
+  .principles ol { margin: 0; padding: 0; list-style: none; counter-reset: p; }
+  .principles li {
+    counter-increment: p;
+    display: grid; grid-template-columns: 26px 1fr; gap: 12px;
+    padding: 11px 0; border-top: 1px solid var(--line);
+    font-size: 14px; color: var(--ink-2);
+  }
+  .principles li:first-child { border-top: none; }
+  .principles li::before {
+    content: counter(p, decimal-leading-zero);
+    font-family: var(--mono); font-size: 11px; color: var(--agent);
+    padding-top: 2px; letter-spacing: .04em;
+  }
+  .principles li b { color: var(--ink); font-weight: 600; }
+
+  .themebtn {
+    margin-top: 30px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-2); background: var(--chip);
+    border: 1px solid var(--line-2); border-radius: 8px;
+    padding: 9px 14px; cursor: pointer; transition: border-color .15s, color .15s;
+  }
+  .themebtn:hover { color: var(--ink); border-color: var(--agent); }
+
+  /* ---------- stage / device ---------- */
+  .stage { position: sticky; top: 28px; }
+  .segmented {
+    display: inline-flex; gap: 2px; padding: 4px;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; margin: 0 auto 18px; width: 100%;
+  }
+  .seg {
+    flex: 1; text-align: center; font-family: var(--mono);
+    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-3); background: transparent; border: 0; border-radius: 8px;
+    padding: 9px 6px; cursor: pointer; transition: background .15s, color .15s;
+  }
+  .seg[aria-selected="true"] { background: var(--panel-2); color: var(--ink); }
+  .seg:focus-visible { outline: 2px solid var(--agent); outline-offset: 2px; }
+
+  .phone {
+    width: 392px; height: 812px; position: relative;
+    background: var(--bg-2);
+    border: 1px solid var(--line-2);
+    border-radius: 46px;
+    padding: 12px;
+    box-shadow: 0 40px 90px -40px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.02) inset;
+  }
+  .screen {
+    position: absolute; inset: 12px;
+    background: var(--bg);
+    border-radius: 36px; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .notch {
+    position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+    width: 118px; height: 26px; background: var(--bg-2);
+    border-radius: 0 0 16px 16px; z-index: 40; pointer-events: none;
+    border: 1px solid var(--line); border-top: none;
+  }
+  .statusbar {
+    height: 46px; flex: none; display: flex; align-items: flex-end;
+    justify-content: space-between; padding: 0 22px 6px;
+    font-family: var(--mono); font-size: 12px; color: var(--ink-2);
+  }
+  .statusbar .r { display: flex; gap: 7px; align-items: center; }
+
+  .view { display: none; flex: 1; min-height: 0; flex-direction: column; }
+  .view.on { display: flex; }
+
+  .topbar { padding: 6px 18px 12px; flex: none; }
+  .topbar .space {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
+    color: var(--ink-3); text-transform: uppercase;
+  }
+  .topbar h2 { margin: 6px 0 0; font-size: 21px; letter-spacing: -.02em; font-weight: 620; }
+  .topbar h2 .sub { color: var(--ink-3); font-weight: 400; }
+
+  /* proactive agent banner */
+  .proactive {
+    margin: 10px 18px 4px; flex: none;
+    display: grid; grid-template-columns: auto 1fr auto; gap: 11px; align-items: center;
+    padding: 12px 13px;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--agent) 12%, var(--panel)), var(--panel));
+    border: 1px solid color-mix(in srgb, var(--agent) 40%, var(--line));
+    border-radius: 15px;
+  }
+  .spark { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center;
+           background: color-mix(in srgb, var(--agent) 22%, transparent);
+           color: var(--agent); font-size: 15px; }
+  .proactive .msg { font-size: 13px; color: var(--ink); }
+  .proactive .msg span { color: var(--ink-3); font-family: var(--mono); font-size: 11px; display: block; margin-top: 1px; letter-spacing: .04em; }
+  .mini {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--bg); background: var(--agent); border: 0; border-radius: 8px;
+    padding: 7px 11px; cursor: pointer; white-space: nowrap;
+  }
+  .mini.ghost { background: transparent; color: var(--agent);
+                border: 1px solid color-mix(in srgb, var(--agent) 50%, transparent); }
+
+  /* ---------- graph ---------- */
+  .graph { position: relative; flex: 1; min-height: 0; }
+  .graph svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .edge { stroke: var(--line-2); stroke-width: 1.4; fill: none; }
+  .edgelabel { font-family: var(--mono); font-size: 8.5px; fill: var(--ink-3); letter-spacing: .04em; }
+  .node {
+    position: absolute; transform: translate(-50%, -50%);
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    width: 92px; text-align: center; cursor: pointer;
+  }
+  .node .puck {
+    width: 46px; height: 46px; border-radius: 15px;
+    background: var(--panel); border: 1.5px solid var(--kc);
+    display: grid; place-items: center; font-size: 19px;
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--kc) 12%, transparent);
+    transition: transform .18s, box-shadow .18s;
+  }
+  .node:hover .puck { transform: translateY(-2px); box-shadow: 0 0 0 6px color-mix(in srgb, var(--kc) 20%, transparent); }
+  .node.center .puck { width: 62px; height: 62px; border-radius: 20px; font-size: 25px; border-width: 2px; }
+  .node .nm { font-size: 12px; color: var(--ink); font-weight: 560; line-height: 1.15; }
+  .node .kd { font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--kc); }
+
+  /* ---------- entity detail ---------- */
+  .scroll { overflow-y: auto; flex: 1; min-height: 0; scrollbar-width: thin; }
+  .scroll::-webkit-scrollbar { width: 5px; }
+  .scroll::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 4px; }
+
+  .detail { position: relative; padding: 4px 16px 22px; }
+  .view[data-view="entity"] .detail { padding-right: 156px; }
+  .ehead { display: flex; align-items: center; gap: 11px; padding: 4px 0 12px; }
+  .ehead .puck { width: 42px; height: 42px; border-radius: 13px; background: var(--panel);
+                 border: 1.5px solid var(--k-project); display: grid; place-items: center; font-size: 19px;
+                 box-shadow: 0 0 0 4px color-mix(in srgb, var(--k-project) 14%, transparent); flex: none; }
+  .ehead h2 { margin: 0; font-size: 19px; letter-spacing: -.02em; }
+  .ehead .kd { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--k-project); }
+
+  .sect { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+          color: var(--ink-3); margin: 18px 0 9px; display: flex; align-items: center; gap: 8px; }
+  .sect::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  .attrs { display: grid; grid-template-columns: auto 1fr; gap: 7px 14px; font-size: 13px; }
+  .attrs dt { font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: .03em; }
+  .attrs dd { margin: 0; color: var(--ink); }
+
+  .edges { display: flex; flex-wrap: wrap; gap: 7px; }
+  .echip {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12px; color: var(--ink); background: var(--chip);
+    border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px 5px 8px; cursor: pointer;
+  }
+  .echip .rel { font-family: var(--mono); font-size: 9px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .08em; }
+  .echip:hover { border-color: var(--kc); }
+
+  /* body text with an inline SideMemo trigger token */
+  .body { font-size: 13.5px; color: var(--ink-2); line-height: 1.62; }
+  .tok { color: var(--ink); border-bottom: 1.5px dashed var(--agent);
+         cursor: pointer; padding-bottom: 1px; }
+
+  /* history timeline */
+  .timeline { position: relative; margin-left: 6px; padding-left: 18px; }
+  .timeline::before { content: ""; position: absolute; left: 4px; top: 4px; bottom: 4px; width: 1.5px; background: var(--line); }
+  .ev { position: relative; padding: 0 0 15px; }
+  .ev::before { content: ""; position: absolute; left: -18px; top: 4px; width: 9px; height: 9px; border-radius: 50%;
+                background: var(--bg); border: 2px solid var(--evc, var(--ink-3)); }
+  .ev .t { font-family: var(--mono); font-size: 10px; color: var(--ink-3); letter-spacing: .04em; }
+  .ev .h { font-size: 13px; color: var(--ink); margin: 1px 0 2px; }
+  .ev .h em { font-style: normal; color: var(--evc, var(--ink)); font-weight: 560; }
+  .ev .prov { font-family: var(--mono); font-size: 10px; color: var(--ink-3); }
+  .ev.agentev::before { border-color: var(--agent); box-shadow: 0 0 0 3px var(--glow); }
+  .ev.agentev .badge {
+    display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono);
+    font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--agent);
+    border: 1px solid color-mix(in srgb, var(--agent) 40%, transparent); border-radius: 5px; padding: 1px 5px; margin-left: 6px;
+  }
+
+  /* ---------- SideMemo rail ---------- */
+  .memorail {
+    position: absolute; top: 58px; right: 8px; width: 142px;
+    display: flex; flex-direction: column; gap: 10px; padding: 0; z-index: 25;
+  }
+  .memo {
+    background: color-mix(in srgb, var(--agent) 7%, var(--panel));
+    border: 1px solid color-mix(in srgb, var(--agent) 34%, var(--line));
+    border-radius: 12px; padding: 10px; box-shadow: 0 12px 30px -18px rgba(0,0,0,.7);
+    transition: opacity .25s, transform .25s;
+  }
+  .memo .lbl { display: flex; align-items: center; gap: 5px; font-family: var(--mono);
+               font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--agent); margin-bottom: 6px; }
+  .memo .txt { font-size: 12px; color: var(--ink); line-height: 1.4; }
+  .memo .txt b { color: var(--kc, var(--ink)); }
+  .memo .prev { font-family: var(--mono); font-size: 10px; color: var(--ink-3); margin-top: 6px;
+                border-top: 1px dashed var(--line); padding-top: 6px; }
+  .memo .acts { display: flex; gap: 6px; margin-top: 9px; }
+  .memo button {
+    flex: 1; font-family: var(--mono); font-size: 10px; letter-spacing: .05em; text-transform: uppercase;
+    border-radius: 7px; padding: 6px 4px; cursor: pointer; border: 1px solid transparent;
+  }
+  .apply { background: var(--agent); color: var(--bg); }
+  .dismiss { background: transparent; color: var(--ink-3); border-color: var(--line-2); }
+  .memo .tier { font-family: var(--mono); font-size: 8.5px; color: var(--ink-3); margin-top: 7px; letter-spacing: .03em; }
+  .memo.gone { opacity: 0; transform: translateX(12px); pointer-events: none; height: 0; padding: 0; margin: 0; border: 0; overflow: hidden; }
+  .leaders { position: absolute; inset: 0; pointer-events: none; z-index: 20; }
+  .leaders path { stroke: color-mix(in srgb, var(--agent) 78%, transparent); stroke-width: 1.4; fill: none; stroke-dasharray: 3 3; }
+
+  /* ---------- bottom bar ---------- */
+  .tabbar {
+    height: 62px; flex: none; border-top: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-around; padding: 0 6px;
+    background: var(--bg);
+  }
+  .tabbar button {
+    background: none; border: 0; color: var(--ink-3); font-family: var(--mono);
+    font-size: 9px; letter-spacing: .06em; text-transform: uppercase; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .tabbar button .ic { font-size: 17px; line-height: 1; }
+  .tabbar button.act { color: var(--agent); }
+  .flexbtn {
+    position: absolute; bottom: 74px; left: 50%; transform: translateX(-50%);
+    z-index: 30; display: flex; align-items: center; gap: 9px;
+    background: var(--panel); border: 1px solid var(--line-2); border-radius: 999px;
+    padding: 10px 16px; cursor: pointer; box-shadow: 0 14px 34px -16px rgba(0,0,0,.8);
+    color: var(--ink-2); font-size: 13px; transition: border-color .15s;
+  }
+  .flexbtn:hover { border-color: var(--agent); }
+  .flexbtn kbd { font-family: var(--mono); font-size: 10px; color: var(--ink-3);
+                 border: 1px solid var(--line-2); border-radius: 5px; padding: 1px 5px; }
+  .flexbtn .sp { color: var(--agent); }
+
+  /* ---------- FlexLight overlay ---------- */
+  .flexlight {
+    position: absolute; inset: 12px; z-index: 60; border-radius: 36px;
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter: blur(9px); -webkit-backdrop-filter: blur(9px);
+    display: none; flex-direction: column; padding: 58px 16px 16px;
+  }
+  .flexlight.on { display: flex; }
+  .fl-box {
+    background: var(--panel); border: 1px solid var(--line-2); border-radius: 18px;
+    box-shadow: 0 30px 70px -30px rgba(0,0,0,.85); overflow: hidden;
+    display: flex; flex-direction: column; max-height: 100%;
+  }
+  .fl-input { display: flex; align-items: center; gap: 10px; padding: 15px 16px; border-bottom: 1px solid var(--line); }
+  .fl-input .sp { color: var(--agent); font-size: 16px; }
+  .fl-input .q { font-size: 16px; color: var(--ink); }
+  .fl-input .q .cursor { display: inline-block; width: 2px; height: 17px; background: var(--agent);
+                         vertical-align: -3px; margin-left: 1px; animation: blink 1.1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .fl-results { overflow-y: auto; padding: 8px 0; }
+  .fl-group { font-family: var(--mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
+              color: var(--ink-3); padding: 10px 16px 5px; }
+  .fl-row { display: flex; align-items: center; gap: 11px; padding: 9px 16px; cursor: pointer; }
+  .fl-row:hover, .fl-row.sel { background: var(--panel-2); }
+  .fl-row .ic { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; font-size: 14px;
+                background: var(--chip); border: 1px solid var(--kc, var(--line)); color: var(--kc, var(--ink)); flex: none; }
+  .fl-row .main { flex: 1; min-width: 0; }
+  .fl-row .main .l1 { font-size: 13.5px; color: var(--ink); }
+  .fl-row .main .l2 { font-family: var(--mono); font-size: 10px; color: var(--ink-3); }
+  .fl-row .hint { font-family: var(--mono); font-size: 10px; color: var(--ink-3); }
+
+  .fl-plan { margin: 6px 12px 12px; border: 1px solid color-mix(in srgb, var(--agent) 38%, var(--line));
+             border-radius: 14px; background: color-mix(in srgb, var(--agent) 7%, var(--panel-2)); padding: 12px; }
+  .fl-plan .lbl { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 9px;
+                  letter-spacing: .12em; text-transform: uppercase; color: var(--agent); margin-bottom: 8px; }
+  .fl-plan ol { margin: 0; padding-left: 16px; font-size: 12.5px; color: var(--ink); line-height: 1.7; }
+  .fl-plan ol code { font-family: var(--mono); font-size: 11px; color: var(--ink-2); }
+  .fl-plan .foot { display: flex; align-items: center; justify-content: space-between; margin-top: 11px; }
+  .fl-plan .tier { font-family: var(--mono); font-size: 9px; color: var(--ink-3); }
+  .fl-plan .go { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
+                 background: var(--agent); color: var(--bg); border: 0; border-radius: 8px; padding: 7px 13px; cursor: pointer; }
+  .fl-close { position: absolute; top: 60px; right: 22px; z-index: 61; background: var(--chip);
+              border: 1px solid var(--line-2); color: var(--ink-2); border-radius: 8px; font-family: var(--mono);
+              font-size: 10px; padding: 5px 9px; cursor: pointer; display: none; }
+  body.flex-on .fl-close { display: block; }
+
+  .caption { text-align: center; font-family: var(--mono); font-size: 11px; color: var(--ink-3);
+             letter-spacing: .04em; margin: 16px auto 0; max-width: 392px; line-height: 1.6; }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= LEFT: thesis ================= -->
+  <section>
+    <p class="eyebrow">Agent OS · Shell &amp; UX · design proposal v0.1</p>
+    <h1>The margin<br>is the interface.<br><span class="em">Entities, not files and apps.</span></h1>
+    <p class="lede">Agent OS replaces the desktop, the filesystem, and the app grid with a
+      <b>typed graph of entities</b> — people, projects, tasks, documents, events, messages,
+      devices — joined by labelled edges. The agent lives in the <b>right margin</b>, reading
+      your graph and proposing links, actions, and shortcuts you preview and apply. Nothing
+      happens silently; everything is recorded in a reversible global history.</p>
+
+    <div class="legend">
+      <h3>Entity kinds — the palette is the type system</h3>
+      <div class="kinds">
+        <span class="kind" style="color:var(--k-person)"><i class="dot" style="background:var(--k-person)"></i>Person</span>
+        <span class="kind" style="color:var(--k-project)"><i class="dot" style="background:var(--k-project)"></i>Project</span>
+        <span class="kind" style="color:var(--k-task)"><i class="dot" style="background:var(--k-task)"></i>Task</span>
+        <span class="kind" style="color:var(--k-document)"><i class="dot" style="background:var(--k-document)"></i>Document</span>
+        <span class="kind" style="color:var(--k-event)"><i class="dot" style="background:var(--k-event)"></i>Event</span>
+        <span class="kind" style="color:var(--k-message)"><i class="dot" style="background:var(--k-message)"></i>Message</span>
+        <span class="kind" style="color:var(--k-device)"><i class="dot" style="background:var(--k-device)"></i>Device</span>
+        <span class="kind" style="color:var(--agent)"><i class="dot" style="background:var(--agent)"></i>Agent proposal</span>
+      </div>
+    </div>
+
+    <div class="principles">
+      <h3>Principles, traced to the UX research</h3>
+      <ol>
+        <li><span><b>Entities, not apps.</b> Home is a graph of typed objects — IdeaOS, "tasks first."</span></li>
+        <li><span><b>The margin is the interface.</b> SideMemo: implicit links as marginalia.</span></li>
+        <li><span><b>Propose · preview · apply.</b> IntentBox + visible trust tiers, never silent.</span></li>
+        <li><span><b>One box for intent.</b> FlexLight spans the system and every domain model.</span></li>
+        <li><span><b>History is first-class.</b> A reversible journal of every semantic event.</span></li>
+        <li><span><b>Type is visible structure.</b> Kind, provenance, and edges are shown, in mono.</span></li>
+      </ol>
+    </div>
+
+    <button class="themebtn" id="themeToggle">Toggle light / dark</button>
+  </section>
+
+  <!-- ================= RIGHT: device ================= -->
+  <div class="stage">
+    <div class="segmented" role="tablist" aria-label="Hero screens">
+      <button class="seg" role="tab" aria-selected="true"  data-view="home">Home · Graph</button>
+      <button class="seg" role="tab" aria-selected="false" data-view="entity">Entity · Agent</button>
+      <button class="seg" role="tab" aria-selected="false" data-view="history">History</button>
+    </div>
+
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="r"><span>agent ●</span><span>local ⌁</span><span>82%</span></span>
+        </div>
+
+        <!-- ---------- VIEW: HOME / GRAPH ---------- -->
+        <div class="view on" data-view="home">
+          <div class="topbar">
+            <span class="space">◇ space · you</span>
+            <h2>Alex <span class="sub">· person</span></h2>
+          </div>
+
+          <div class="proactive">
+            <span class="spark">✦</span>
+            <div class="msg">3 messages from <b>Mira</b> reference "Shell sign-off" — group into the project?
+              <span>proactive · 1 tap · reversible</span></div>
+            <button class="mini">Group</button>
+          </div>
+
+          <div class="graph" id="graph">
+            <svg id="edges" viewBox="0 0 360 500" preserveAspectRatio="none">
+              <path class="edge" d="M180,250 L180,120"/>
+              <path class="edge" d="M180,250 L70,175"/>
+              <path class="edge" d="M180,250 L292,180"/>
+              <path class="edge" d="M180,250 L74,340"/>
+              <path class="edge" d="M180,250 L286,335"/>
+              <path class="edge" d="M180,250 L180,405"/>
+              <text class="edgelabel" x="188" y="188">owns</text>
+              <text class="edgelabel" x="112" y="205">works_with</text>
+              <text class="edgelabel" x="228" y="212">assigned</text>
+              <text class="edgelabel" x="108" y="300">attends</text>
+              <text class="edgelabel" x="228" y="295">from</text>
+              <text class="edgelabel" x="188" y="335">drafted</text>
+            </svg>
+            <div class="node center" style="--kc:var(--k-person); left:50%; top:50%"
+                 data-goto="entity"><div class="puck">🧭</div><div class="nm">Alex</div><div class="kd">Person</div></div>
+            <div class="node" style="--kc:var(--k-project); left:50%; top:24%" data-goto="entity">
+              <div class="puck">◫</div><div class="nm">AgentOS Shell</div><div class="kd">Project</div></div>
+            <div class="node" style="--kc:var(--k-person); left:19%; top:35%">
+              <div class="puck">🧑</div><div class="nm">Mira</div><div class="kd">Person</div></div>
+            <div class="node" style="--kc:var(--k-task); left:81%; top:36%">
+              <div class="puck">✓</div><div class="nm">Ship mockup</div><div class="kd">Task</div></div>
+            <div class="node" style="--kc:var(--k-event); left:20%; top:68%">
+              <div class="puck">◷</div><div class="nm">Design review</div><div class="kd">Event</div></div>
+            <div class="node" style="--kc:var(--k-message); left:79%; top:67%">
+              <div class="puck">✉</div><div class="nm">"sign-off?"</div><div class="kd">Message</div></div>
+            <div class="node" style="--kc:var(--k-document); left:50%; top:81%">
+              <div class="puck">▤</div><div class="nm">Shell spec</div><div class="kd">Document</div></div>
+          </div>
+        </div>
+
+        <!-- ---------- VIEW: ENTITY DETAIL + SIDEMEMO ---------- -->
+        <div class="view" data-view="entity">
+          <div class="scroll">
+            <div class="detail" id="detail">
+              <div class="ehead">
+                <div class="puck">◫</div>
+                <div><h2>AgentOS Shell</h2><div class="kd">Project · owned by Alex</div></div>
+              </div>
+
+              <div class="sect">Attributes</div>
+              <dl class="attrs">
+                <dt>id</dt><dd>prj_9f3a·shell</dd>
+                <dt>status</dt><dd>In design → sign-off</dd>
+                <dt>space</dt><dd>you / product</dd>
+                <dt>tags</dt><dd>#os · #shell · #hero</dd>
+                <dt>provenance</dt><dd>created by you · 12 Jul</dd>
+              </dl>
+
+              <div class="sect">Linked entities</div>
+              <div class="edges">
+                <span class="echip" style="--kc:var(--k-person)"><span class="rel">owner</span>🧭 Alex</span>
+                <span class="echip" style="--kc:var(--k-person)"><span class="rel">collab</span>🧑 Mira</span>
+                <span class="echip" style="--kc:var(--k-task)"><span class="rel">task</span>✓ Ship mockup</span>
+                <span class="echip" style="--kc:var(--k-event)"><span class="rel">event</span>◷ Design review</span>
+                <span class="echip" style="--kc:var(--k-document)"><span class="rel">doc</span>▤ Shell spec</span>
+              </div>
+
+              <div class="sect">Note</div>
+              <p class="body">Hero screens for the shell. Show the entity graph and the agent
+                margin to <span class="tok" id="tok-mira">Mira</span> before the
+                <span class="tok" id="tok-review">design review on Thu 16:00</span>. Pull the
+                approved direction into the <span class="tok" id="tok-spec">Shell spec</span>.</p>
+
+              <div class="sect">History · semantic events</div>
+              <div class="timeline">
+                <div class="ev agentev" style="--evc:var(--agent)">
+                  <div class="t">just now</div>
+                  <div class="h"><em>Agent</em> proposed 2 links<span class="badge">✦ proposal</span></div>
+                  <div class="prov">planner · gemini · tier: propose · reversible</div>
+                </div>
+                <div class="ev" style="--evc:var(--k-task)">
+                  <div class="t">2h ago · you</div>
+                  <div class="h">Linked task <em>Ship mockup</em></div>
+                  <div class="prov">authority: you · manual</div>
+                </div>
+                <div class="ev" style="--evc:var(--k-message)">
+                  <div class="t">5h ago · Mira</div>
+                  <div class="h">Message "sign-off?" arrived</div>
+                  <div class="prov">provider: signal · imported</div>
+                </div>
+                <div class="ev" style="--evc:var(--k-project)">
+                  <div class="t">12 Jul · you</div>
+                  <div class="h">Created project <em>AgentOS Shell</em></div>
+                  <div class="prov">authority: you · origin event</div>
+                </div>
+              </div>
+              <div style="height:8px"></div>
+            </div>
+          </div>
+
+          <!-- SideMemo agent rail -->
+          <svg class="leaders" id="leaders"></svg>
+          <div class="memorail" id="memorail">
+            <div class="memo" style="--kc:var(--k-person)" data-tok="tok-mira" id="memo-mira">
+              <div class="lbl">✦ SideMemo · implicit link</div>
+              <div class="txt">"Mira" matches <b>Mira Sato</b>, a person you work with.</div>
+              <div class="prev">→ add edge: collaborator</div>
+              <div class="acts"><button class="apply">Apply</button><button class="dismiss">Dismiss</button></div>
+              <div class="tier">tier: reversible · one tap</div>
+            </div>
+            <div class="memo" style="--kc:var(--k-event)" data-tok="tok-review" id="memo-review">
+              <div class="lbl">✦ SideMemo · date detected</div>
+              <div class="txt">"Thu 16:00" reads as a time. Create event <b>Design review</b>?</div>
+              <div class="prev">→ event · Thu 16:00 · +Mira</div>
+              <div class="acts"><button class="apply">Apply</button><button class="dismiss">Dismiss</button></div>
+              <div class="tier">tier: confirm · sensitive</div>
+            </div>
+            <div class="memo" style="--kc:var(--k-task)" data-tok="tok-spec" id="memo-pattern">
+              <div class="lbl">✦ Pattern · repeated 3×</div>
+              <div class="txt">You tag hero docs <b>#hero</b>. Auto-tag the Shell spec?</div>
+              <div class="prev">→ tag #hero on drafted docs</div>
+              <div class="acts"><button class="apply">Apply</button><button class="dismiss">Dismiss</button></div>
+              <div class="tier">tier: reversible · undo anytime</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- VIEW: GLOBAL HISTORY ---------- -->
+        <div class="view" data-view="history">
+          <div class="topbar">
+            <span class="space">◇ global journal</span>
+            <h2>History <span class="sub">· all effects, reversible</span></h2>
+          </div>
+          <div class="scroll">
+            <div class="detail">
+              <div class="timeline">
+                <div class="ev agentev" style="--evc:var(--agent)">
+                  <div class="t">just now</div>
+                  <div class="h"><em>Agent</em> grouped 3 messages into <em>AgentOS Shell</em><span class="badge">✦ applied</span></div>
+                  <div class="prov">planner · gemini · inputs: 3 msgs · cost: 0.4¢ · undo ↩</div>
+                </div>
+                <div class="ev" style="--evc:var(--k-person)">
+                  <div class="t">08:32 · you</div>
+                  <div class="h">Linked <em>Mira</em> as collaborator</div>
+                  <div class="prov">authority: you · from SideMemo proposal</div>
+                </div>
+                <div class="ev agentev" style="--evc:var(--agent)">
+                  <div class="t">08:31 · agent</div>
+                  <div class="h"><em>Agent</em> proposed event <em>Design review</em><span class="badge">✦ pending</span></div>
+                  <div class="prov">tier: confirm · awaiting you · nothing changed</div>
+                </div>
+                <div class="ev" style="--evc:var(--k-document)">
+                  <div class="t">Yesterday · you</div>
+                  <div class="h">Edited <em>Shell spec</em> · +2 sections</div>
+                  <div class="prov">authority: you · doc @rev 14</div>
+                </div>
+                <div class="ev" style="--evc:var(--k-message)">
+                  <div class="t">Yesterday · provider</div>
+                  <div class="h">Imported 6 messages from Signal</div>
+                  <div class="prov">provider: signal · consent: granted · scope: text</div>
+                </div>
+                <div class="ev agentev" style="--evc:var(--agent)">
+                  <div class="t">Mon · agent</div>
+                  <div class="h"><em>Agent</em> archived 40 blurry photos<span class="badge">✦ applied</span></div>
+                  <div class="prov">tier: reversible · restored 2 · undo ↩</div>
+                </div>
+                <div class="ev" style="--evc:var(--k-project)">
+                  <div class="t">12 Jul · you</div>
+                  <div class="h">Created project <em>AgentOS Shell</em></div>
+                  <div class="prov">authority: you · origin event</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FlexLight summon button -->
+        <button class="flexbtn" id="flexOpen">
+          <span class="sp">✦</span> Ask, search, or state an intent <kbd>/</kbd>
+        </button>
+
+        <!-- ---------- FlexLight / IntentBox overlay ---------- -->
+        <button class="fl-close" id="flexClose">esc</button>
+        <div class="flexlight" id="flexlight">
+          <div class="fl-box">
+            <div class="fl-input">
+              <span class="sp">✦</span>
+              <span class="q">send Mira the mockup after review<span class="cursor"></span></span>
+            </div>
+            <div class="fl-results">
+              <div class="fl-group">Entities</div>
+              <div class="fl-row sel" style="--kc:var(--k-person)">
+                <span class="ic">🧑</span>
+                <span class="main"><div class="l1">Mira Sato</div><div class="l2">person · collaborator · 3 shared</div></span>
+                <span class="hint">↵ open</span>
+              </div>
+              <div class="fl-row" style="--kc:var(--k-document)">
+                <span class="ic">▤</span>
+                <span class="main"><div class="l1">agentos-shell.html · mockup</div><div class="l2">document · drafted by you</div></span>
+                <span class="hint">⌘↵</span>
+              </div>
+              <div class="fl-group">Actions · from domain model</div>
+              <div class="fl-row" style="--kc:var(--k-event)">
+                <span class="ic">◷</span>
+                <span class="main"><div class="l1">after → Design review (Thu 16:00)</div><div class="l2">trigger · when event ends</div></span>
+                <span class="hint">rpc</span>
+              </div>
+              <div class="fl-row" style="--kc:var(--k-message)">
+                <span class="ic">✉</span>
+                <span class="main"><div class="l1">Share document → Mira</div><div class="l2">action · provider: signal</div></span>
+                <span class="hint">rpc</span>
+              </div>
+            </div>
+            <div class="fl-plan">
+              <div class="lbl">✦ IntentBox · proposed plan · preview</div>
+              <ol>
+                <li>Wait for <code>event:Design review</code> to end</li>
+                <li>Share <code>doc:mockup</code> → <code>person:Mira</code> via Signal</li>
+                <li>Log to history · reversible</li>
+              </ol>
+              <div class="foot">
+                <span class="tier">tier: confirm · sensitive · nothing runs until you apply</span>
+                <button class="go">Apply</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- bottom tab bar -->
+        <div class="tabbar">
+          <button class="act" data-view="home"><span class="ic">◇</span>Graph</button>
+          <button data-view="history"><span class="ic">◷</span>History</button>
+          <button data-view="entity"><span class="ic">✦</span>Agent</button>
+          <button data-view="home"><span class="ic">⌗</span>Spaces</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="caption">Static sign-off prototype · switch screens above · tap a node, press <b>/</b> for FlexLight,
+      Apply / Dismiss the agent's margin notes.</p>
+  </div>
+</div>
+
+<script>
+  "use strict";
+  const root = document.documentElement;
+
+  /* theme toggle */
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+    requestAnimationFrame(drawLeaders);
+  });
+
+  /* view switching (segmented control + bottom tabs + node goto) */
+  function show(view) {
+    document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.dataset.view === view));
+    document.querySelectorAll(".seg").forEach(s =>
+      s.setAttribute("aria-selected", String(s.dataset.view === view)));
+    document.querySelectorAll(".tabbar button").forEach(b =>
+      b.classList.toggle("act", b.dataset.view === view));
+    if (view === "entity") requestAnimationFrame(drawLeaders);
+  }
+  document.querySelectorAll("[data-view]").forEach(el =>
+    el.addEventListener("click", () => show(el.dataset.view)));
+  document.querySelectorAll("[data-goto]").forEach(el =>
+    el.addEventListener("click", () => show(el.dataset.goto)));
+
+  /* FlexLight overlay */
+  const flex = document.getElementById("flexlight");
+  const openFlex = () => { flex.classList.add("on"); document.body.classList.add("flex-on"); };
+  const closeFlex = () => { flex.classList.remove("on"); document.body.classList.remove("flex-on"); };
+  document.getElementById("flexOpen").addEventListener("click", openFlex);
+  document.getElementById("flexClose").addEventListener("click", closeFlex);
+  document.addEventListener("keydown", e => {
+    if (e.key === "/" && !flex.classList.contains("on")) { e.preventDefault(); openFlex(); }
+    if (e.key === "Escape") closeFlex();
+  });
+
+  /* SideMemo apply / dismiss -> writes a history line feel by removing card */
+  document.querySelectorAll(".memo .dismiss").forEach(b =>
+    b.addEventListener("click", e => { collapse(e.target.closest(".memo")); }));
+  document.querySelectorAll(".memo .apply").forEach(b =>
+    b.addEventListener("click", e => {
+      const memo = e.target.closest(".memo");
+      const tok = document.getElementById(memo.dataset.tok);
+      if (tok) { tok.style.borderBottom = "1.5px solid var(--k-task)"; tok.style.color = "var(--ink)"; }
+      collapse(memo);
+    }));
+  function collapse(memo) { memo.classList.add("gone"); setTimeout(drawLeaders, 60); }
+
+  /* leader lines: connect each visible memo to its trigger token */
+  const leaders = document.getElementById("leaders");
+  function drawLeaders() {
+    const host = leaders.closest(".view");
+    if (!host || !host.classList.contains("on")) return;
+    const box = host.getBoundingClientRect();
+    leaders.setAttribute("viewBox", `0 0 ${box.width} ${box.height}`);
+    let d = "";
+    document.querySelectorAll(".memo:not(.gone)").forEach(memo => {
+      const tok = document.getElementById(memo.dataset.tok);
+      if (!tok) return;
+      const t = tok.getBoundingClientRect(), m = memo.getBoundingClientRect();
+      const x1 = t.right - box.left, y1 = t.top + t.height / 2 - box.top;
+      const x2 = m.left - box.left, y2 = m.top + 16 - box.top;
+      const mx = (x1 + x2) / 2;
+      d += `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2} `;
+    });
+    leaders.innerHTML = d ? `<path d="${d}"/>` : "";
+  }
+  window.addEventListener("resize", drawLeaders);
+  document.querySelectorAll(".view[data-view='entity'] .scroll").forEach(s =>
+    s.addEventListener("scroll", drawLeaders, { passive: true }));
+
+  /* deep-link the initial screen: #entity | #history | #flex (aids review) */
+  function applyHash() {
+    const h = location.hash.replace("#", "");
+    if (h === "flex") { show("entity"); openFlex(); }
+    else if (["home", "entity", "history"].includes(h)) show(h);
+  }
+  window.addEventListener("load", () => { applyHash(); requestAnimationFrame(drawLeaders); });
+</script>
+</body>
+</html>
