@@ -1,21 +1,21 @@
 {
  "generated": "2026-07-13",
- "total": 151,
+ "total": 156,
  "categories": {
   "AOS-BRIEF.md": 1,
   "AOS-INDEX.md": 1,
   "AOS-MANIFEST.md": 1,
   "AOS-README.md": 1,
-  "architecture": 22,
+  "architecture": 23,
   "decisions": 7,
   "glossary": 1,
   "governance": 6,
-  "hardware": 20,
-  "legal": 13,
+  "hardware": 21,
+  "legal": 14,
   "meta": 4,
   "planning": 19,
   "product": 15,
-  "research": 16,
+  "research": 18,
   "templates": 5,
   "validation": 6,
   "vision": 3,
@@ -229,6 +229,14 @@
    "summary": "The concrete format that makes ARCH-021 layered boot and instant modes buildable: a declarative layer/mode manifest and the capability model that enforces radio-less modes and scoped agent authority by construction.",
    "category": "architecture",
    "path": "engineering-bible/docs/architecture/ARCH-022-layer-manifest-and-capabilities.md"
+  },
+  {
+   "id": "AOS-ARCH-023",
+   "title": "Build Strategy and Developer Experience for the Fuchsia Fork",
+   "status": "Normative planning baseline",
+   "summary": "How we neutralize the heavy Fuchsia full-tree build: a two-tier model where day-to-day product work uses the Bazel SDK against prebuilt platform artifacts (no platform build at all), and only kernel/driver deltas require the full GN/ninja tree; incremental ninja + ccache make the full tree a first-build-only cost; Apple Silicon guidance and prebuilt-bundle emulator path included.",
+   "category": "architecture",
+   "path": "engineering-bible/docs/architecture/ARCH-023-build-strategy-and-devex.md"
   },
   {
    "id": "AOS-ADR-0007",
@@ -503,6 +511,14 @@
    "path": "engineering-bible/docs/hardware/HW-019-power-architecture-standby.md"
   },
   {
+   "id": "AOS-HW-020",
+   "title": "Device Catalogue and Per-Target Matrix",
+   "status": "Normative foundation",
+   "summary": "Per-target device catalogue: role, quality ceiling, documentation access, boot control, GPU, camera, modem, power, security, debug, firmware, legal route, cost, availability, replacement, and go/no-go for every candidate the programme tracks, aligned with ADR-0007 (Pixel 9 hardware archived, demo brick current) and the hardware portfolio.",
+   "category": "hardware",
+   "path": "engineering-bible/docs/hardware/HW-020-device-catalogue.md"
+  },
+  {
    "id": "AOS-LEGAL-001",
    "title": "Legal and Compliance Framework",
    "status": "Counsel-review engineering framework",
@@ -605,6 +621,14 @@
    "summary": "One place that states what the demo brick and AgentOS defend against, what they explicitly do not, the honest limits of the CM5 platform (closed boot ROM, no verified boot), and the security properties that hold anyway — so 'privacy-first' ",
    "category": "legal",
    "path": "engineering-bible/docs/legal/LEGAL-013-threat-model-and-security.md"
+  },
+  {
+   "id": "AOS-LEGAL-014",
+   "title": "Per-Component License Strategy",
+   "status": "Normative planning baseline",
+   "summary": "Component-by-component licensing decision for Agent OS, shaped by the fact that we fork the entire Fuchsia tree (Zircon MIT-style; userspace BSD/Apache-2.0 with a patent grant). Because Fuchsia is fully permissive, our own code may be licensed freely; this document chooses per component by business and community model rather than by default.",
+   "category": "legal",
+   "path": "engineering-bible/docs/legal/LEGAL-014-license-strategy.md"
   },
   {
    "id": "AOS-META-001",
@@ -1005,6 +1029,22 @@
    "summary": "Digest of the 60-page specification for the chosen approach: forking Fuchsia/Zircon (taking Zircon, DFv2, FIDL, Magma, Starnix as-is), writing the Rust-first entity/agent product layer from scratch, and bringing hardware up on a separate tr",
    "category": "research",
    "path": "engineering-bible/docs/research/RES-012-fuchsia-spec-lessons.md"
+  },
+  {
+   "id": "AOS-RES-013",
+   "title": "OS Comparison Matrix — iOS vs Android vs Agent OS",
+   "status": "Research-backed evidence map",
+   "summary": "Sourced, dimension-by-dimension comparison of iOS, Android, and Agent OS across system object model, action/intent APIs, agent authority, global history, sandboxing/capabilities, update model, privacy, offline behaviour, extensibility, interop, identity, and developer distribution. Every iOS/Android cell is backed by a citation to a vendor developer/security document or a credible primary analysis; every Agent OS cell cites an internal AOS-* specification. Feeds the portal #compare view.",
+   "category": "research",
+   "path": "engineering-bible/docs/research/AOS-RES-013-os-comparison-matrix.md"
+  },
+  {
+   "id": "AOS-RES-014",
+   "title": "System Survey: What Agent OS Takes From Twenty-One Prior Operating Systems and Data Substrates",
+   "status": "Research-backed evidence map",
+   "summary": "A sourced, one-section-each survey of the operating systems, verified kernels, embedded runtimes, action frameworks, and CRDT substrates that most shape Agent OS. Each system states what it is, the one to three ideas that matter to us, and an explicit takeaway for the Fuchsia-fork product line: what to adopt, what to study, and where our APP-LAST, local-first, agent-native model deliberately diverges.",
+   "category": "research",
+   "path": "engineering-bible/docs/research/AOS-RES-014-system-survey.md"
   },
   {
    "id": "agent-os-wider-lens.md",

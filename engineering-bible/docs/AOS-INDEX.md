@@ -87,6 +87,9 @@ Use `README.md` for the entry sequence, `BRIEFING.md` for decisions and first ex
 - [AOS-ARCH-018 — Legacy Containment and Replacement](AOS-ARCH-018.md)
 - [AOS-ARCH-019 — Formal Models and Assurance Roadmap](AOS-ARCH-019.md)
 - [AOS-ARCH-020 — Portable Device-Service Contracts](AOS-ARCH-020.md)
+- [AOS-ARCH-021 — Layered Boot and Instant Modes](ARCH-021-layered-boot-and-instant-modes.md)
+- [AOS-ARCH-022 — Layer Manifest Format and Capability Model](ARCH-022-layer-manifest-and-capabilities.md)
+- [AOS-ARCH-023 — Build Strategy and Developer Experience for the Fuchsia Fork](ARCH-023-build-strategy-and-devex.md)
 
 ### Product
 
@@ -102,6 +105,9 @@ Use `README.md` for the entry sequence, `BRIEFING.md` for decisions and first ex
 - [AOS-PROD-010 — Transclusion, SideMemo, and Contextual Linking](AOS-PROD-010.md)
 - [AOS-PROD-011 — Action and Provider Interoperability](AOS-PROD-011.md)
 - [AOS-PROD-012 — Product Surface Tiers and Dependency Rules](AOS-PROD-012.md)
+- [AOS-PROD-013 — Compute Subscription and Elastic Offload](PROD-013-compute-subscription-and-offload.md)
+- [AOS-PROD-014 — Native App Clients and Service Integration](PROD-014-native-app-clients.md)
+- [AOS-PROD-015 — Voice Agent and Conversational Interface](PROD-015-voice-agent.md)
 
 ### Hardware
 
@@ -121,6 +127,11 @@ Use `README.md` for the entry sequence, `BRIEFING.md` for decisions and first ex
 - [AOS-HW-014 — Pixel 9 Evidence and Reverse-Engineering Dossier](AOS-HW-014.md)
 - [AOS-HW-015 — Debug, Power, Camera, and Reliability Laboratory](AOS-HW-015.md)
 - [AOS-HW-016 — Vendor Documentation and Support Acquisition](AOS-HW-016.md)
+- [AOS-HW-017 — Interim Demo Device: Module Brick](HW-017-interim-demo-device.md)
+- [AOS-HW-018 — Demo Brick V1 Configuration Baseline](HW-018-demo-brick-v1-configuration.md)
+- [AOS-HW-018-BOM — Demo Brick V1 — Bill of Materials (Appendix A to AOS-HW-018)](HW-018A-demo-brick-bom.md)
+- [AOS-HW-019 — Power Architecture and Ultra-Low-Power Standby](HW-019-power-architecture-standby.md)
+- [AOS-HW-020 — Device Catalogue and Per-Target Matrix](HW-020-device-catalogue.md)
 
 ### Research
 
@@ -134,6 +145,14 @@ Use `README.md` for the entry sequence, `BRIEFING.md` for decisions and first ex
 - [AOS-RES-008 — GPU, Camera, Cellular, Power, and Boot Prior Art](AOS-RES-008.md)
 - [AOS-RES-009 — Literature and Prior-Art Reading Programme](AOS-RES-009.md)
 - [AOS-RES-010 — Claim-to-Experiment Matrix](AOS-RES-010.md)
+- [AOS-RES-011 — Interim Hardware Market Survey and Demo BOM Sourcing](RES-011-interim-hardware-market-survey.md)
+- [AOS-RES-012 — Fuchsia/Zircon-Fork Specification — Engineering Digest](RES-012-fuchsia-spec-lessons.md)
+- [AOS-RES-013 — OS Comparison Matrix — iOS vs Android vs Agent OS](AOS-RES-013-os-comparison-matrix.md)
+- [AOS-RES-014 — System Survey: What Agent OS Takes From Twenty-One Prior Operating Systems and Data Substrates](AOS-RES-014-system-survey.md)
+- [agent-os-wider-lens — Widening the Lens: Who's Already Digging Our Tunnels](agent-os-wider-lens.md)
+- [agentos-spec-digest-product-architecture — AgentOS Spec Digest — Product Architecture](agentos-spec-digest-product-architecture.md)
+- [ios-vs-android-vs-agent-os — iOS vs Android vs Agent OS](ios-vs-android-vs-agent-os.md)
+- [prior-art-atlas — Prior Art Atlas: Who, When, and How It's Already Been Tried](prior-art-atlas.md)
 
 ### Legal
 
@@ -148,6 +167,9 @@ Use `README.md` for the entry sequence, `BRIEFING.md` for decisions and first ex
 - [AOS-LEGAL-009 — Community Contributions, Licensing, and IP Governance](AOS-LEGAL-009.md)
 - [AOS-LEGAL-010 — Data Protection, Agent Processing, and Privacy Engineering](AOS-LEGAL-010.md)
 - [AOS-LEGAL-011 — Certification, Carrier, Security, and Compliance Contact Plan](AOS-LEGAL-011.md)
+- [AOS-LEGAL-012 — Prototype Travel and Border Considerations](LEGAL-012-prototype-travel-and-borders.md)
+- [AOS-LEGAL-013 — Consolidated Threat Model and Security Posture](LEGAL-013-threat-model-and-security.md)
+- [AOS-LEGAL-014 — Per-Component License Strategy](LEGAL-014-license-strategy.md)
 
 ### Planning
 
@@ -167,6 +189,8 @@ Use `README.md` for the entry sequence, `BRIEFING.md` for decisions and first ex
 - [AOS-PLAN-014 — Linear and GitHub Import and Reconciliation Runbook](AOS-PLAN-014.md)
 - [AOS-PLAN-015 — Review, Briefing, and Decision Cadence](AOS-PLAN-015.md)
 - [AOS-PLAN-016 — Agent Execution Brief for Documentation and Tracker Automation](AOS-PLAN-016.md)
+- [AOS-PLAN-017 — Demo Brick Task Intake (AOS-DEMO family)](PLAN-017-demo-brick-task-intake.md)
+- [AOS-PLAN-018 — Demo Brick Kickoff Sequence (first 30 days)](PLAN-018-kickoff-sequence.md)
 - [AOS-TASKS — Canonical Task Catalog](AOS-TASKS.md)
 
 ### Governance
@@ -186,6 +210,7 @@ Use `README.md` for the entry sequence, `BRIEFING.md` for decisions and first ex
 - [AOS-ADR-0004 — ADR-0004: Minimal Android/Linux Use on Pixel 9](AOS-ADR-0004.md)
 - [AOS-ADR-0005 — ADR-0005: Data and Backup Classes](AOS-ADR-0005.md)
 - [AOS-ADR-0006 — ADR-0006: Working Name and Trademark Clearance](AOS-ADR-0006.md)
+- [AOS-ADR-0007 — ADR-0007: Archive the Pixel 9 Native Route](ADR-0007-archive-pixel-9-route.md)
 
 ### Validation
 
@@ -194,6 +219,7 @@ Use `README.md` for the entry sequence, `BRIEFING.md` for decisions and first ex
 - [AOS-VAL-003 — Documentation, Link, Source, and Task Validation](AOS-VAL-003.md)
 - [AOS-VAL-004 — Hardware Test and Quality Matrix](AOS-VAL-004.md)
 - [AOS-VAL-005 — Security, Privacy, and Agent Assurance Plan](AOS-VAL-005.md)
+- [AOS-VALIDATION — Release Validation Report](AOS-VALIDATION.md)
 
 ### Metadata and Templates
 
