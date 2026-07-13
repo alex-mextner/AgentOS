@@ -24,6 +24,7 @@ Honest status of the full sol handoff (§1–13) plus the content plan. Not "alm
 ## REMAINING — with owner
 
 ### Needs access I lack (HANDOFF to claude code / user)
+- **Fuchsia first build + emulator** — container infeasible (1 core / 3GB RAM / 10GB disk vs ~90GB checkout). HANDOFF-fuchsia-first-build.md: SDK quickstart tonight (no build), full build overnight on x86-64 Linux VM/box; scripts/ ready. Build strategy is normative in ARCH-023.
 - **§10 Project v2 board population** — token has no Projects permission. HANDOFF-project-v2-board.md.
 - **§11 Portal write-back** (GitHub App/OAuth: create/edit issues, dates, PRs for wiki) — needs app credentials.
 - **Vercel deploy + browser QA** — HANDOFF-vercel-portal-deploy.md.
