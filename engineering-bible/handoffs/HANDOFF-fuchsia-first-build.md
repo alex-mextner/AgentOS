@@ -12,8 +12,14 @@ The docs agent's container has 1 core / 3 GB RAM / 10 GB free disk — a Fuchsia
 needs ~90 GB and the build hours of CPU. Infeasible there. Scripts are ready; run them where
 the hardware is.
 
+## Verdict on Mac builds (verified)
+- **SDK / component / driver builds run NATIVELY on the M4 Pro (macOS arm64)** via the Bazel-based
+  Fuchsia SDK (`darwin_arm64` config). This is Tier 1 and it's most of our work. No VM, no Linux box.
+- Only the **full GN/ninja platform tree** is Linux-only (x86-64 Debian). That's a CI/remote-builder
+  job, run once per pinned revision — not the daily loop.
+
 ## Fast win tonight (minutes, NO build) — do this first
-On the M4 Pro directly:
+On the M4 Pro directly (native):
 ```bash
 bash scripts/fuchsia-sdk-quickstart.sh
 # then: tools/ffx product download <bundle-url> ~/fuchsia-bundles/x

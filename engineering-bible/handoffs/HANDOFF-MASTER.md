@@ -51,8 +51,9 @@ Portal source is ready and pushed; it needs a deploy and a human/agent set of ey
   render; mobile + Safari; check external image/CORS and keyboard focus.
 
 ### 1.3 Fuchsia first build + emulator boot  — runbook: `HANDOFF-fuchsia-first-build.md`
-This agent's container is 1 core / 3 GB RAM / ~10 GB free disk — a Fuchsia checkout alone needs ~90 GB.
-Infeasible here. Scripts are in `scripts/`:
+**Verdict (verified):** the SDK/component/driver build runs **natively on the M4 Pro (macOS arm64)** via the
+Bazel SDK — that's Tier 1 and most of our work. Only the **full platform tree** is Linux-only (x86-64
+Debian), a CI/remote-builder job. This agent's container (1 core / 3 GB / ~10 GB) can't do either build; Scripts are in `scripts/`:
 - **Tonight, minutes, no build:** `bash scripts/fuchsia-sdk-quickstart.sh` then
   `tools/ffx product download <bundle>` + `tools/ffx emu start`. Boots a prebuilt image; works on
   Apple Silicon (prefer arm64 bundle; note qemu-arm64 is "very limited").

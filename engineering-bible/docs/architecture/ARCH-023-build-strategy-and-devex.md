@@ -37,7 +37,8 @@ The full Fuchsia tree builds through GN/ninja/fx, officially on x86-64 Linux (De
 
 ## Facts (verified against fuchsia.dev)
 
-- Full-tree host support: **x86-64 Linux (Debian-based)**; Windows unsupported; macOS is not a supported full-tree build host.
+- **Full-tree** host support: **x86-64 Linux (Debian-based)** only; Windows unsupported; macOS is not a supported full-tree build host (any CPU).
+- **SDK** host support is broader: the Bazel-based SDK builds components/drivers **natively on macOS arm64** (`darwin_arm64` Bazel config, confirmed in the Pigweed Fuchsia SDK workflow); `ffx` and SDK core are published for macOS via CIPD. This is the key fact that makes an Apple-Silicon workstation viable.
 - **ccache** is officially supported for the full tree ("enabled automatically if CCACHE_DIR refers to an existing directory") and caches C/C++ artifacts across builds.
 - GN/ninja is **incremental by design**: after the first build, `fx build` recompiles only changed targets.
 - The **Fuchsia SDK (Bazel-based)** exists precisely so components, drivers, and even product assembly happen **out-of-tree against prebuilt platform artifacts** — the IDK/SDK "can be used to develop Fuchsia components without checking out Fuchsia's source code or using Fuchsia's own build system," and Fuchsia itself converged on Bazel+SDK as the well-lit path (RFC-0139, RFC-0186).
@@ -105,15 +106,32 @@ Sizing the builder: ≥16 modern cores, 64 GB RAM, ≥250 GB NVMe free. On such 
 
 <a id="apple"></a>
 
-## Apple Silicon (M-series) Guidance
+## Apple Silicon (M-series) Guidance — Verdict
 
-Native macOS is **not** a supported full-tree host. On an M4 Pro the realistic options, best first:
+**Short answer: yes, the daily build works natively on an M4 Pro. Only the full platform tree does not.** The two questions were conflated; here they are separated with verified facts.
 
-1. **Tier 1 only (recommended daily driver):** SDK/Bazel product development + emulator with prebuilt bundles. This is light and is most of our work anyway.
-2. **Remote Tier-2 builder:** a rented x86-64 Linux box (Hetzner AX/EX class or cloud) as the platform builder; the Mac is the editor/terminal. This matches the "dedicated build machine/CI" the spec already assumed — but only for platform deltas.
-3. **Linux VM on the Mac (arm64):** UTM/Parallels with 10–12 cores and ~250 GB disk can build the **arm64** target; expect a first build in the low single-digit hours (estimate; unverified on M4 Pro — record actual numbers as evidence) and note that host arm64 / target arm64 support is less trodden than x64 (the emulator docs call qemu-arm64 "very limited"). Treat this as an experiment, not the well-lit path.
+### What works natively on macOS arm64 (this is 90% of our work)
+The Fuchsia **SDK is build-system-agnostic and Bazel-native on Apple Silicon**. Bazel auto-detects the host and produces a `darwin_arm64` configuration (`darwin_arm64-fastbuild` for host builds, `darwin_arm64-opt-exec` for build tools) — confirmed in the Pigweed/Sapphire Fuchsia SDK workflow, which runs on macOS arm64 hosts. The SDK core is published for macOS via CIPD (`fuchsia/sdk/core/mac-*`), and `ffx` host tools run on macOS. So on the M4 Pro, natively and fast:
 
-Estimated M4 Pro numbers to validate by experiment (EXP): first full build in an arm64 Linux VM: ~2–6 h; incremental after small change: ~10 s–3 min; SDK component build: seconds–minutes; emulator boot from prebuilts: minutes.
+- Build our components, drivers, and packages against the prebuilt platform (Bazel `--config=fuchsia`).
+- Run `ffx`, assemble packages, push to a target, stream logs, debug with `zxdb`.
+- Boot the emulator from prebuilt product bundles.
+
+This is Tier 1, and it is the entire product-layer effort (entity/agent, shell, services, apps) plus driver work against the SDK. It needs no Linux box.
+
+### What does NOT work natively on macOS (the sentence in the source)
+The **full GN/ninja platform build** (`fx set` / `fx build` of the whole tree) is supported only on x86-64 Debian-based Linux. The historical macOS SDK-core CIPD path is `mac-amd64` (Intel); Apple Silicon runs host tools via Rosetta or native where published, but the **platform tree itself is not a supported macOS build** on any CPU. So "compile the forked Zircon + full image" is a Linux-only job.
+
+### The resolution
+Because we split Tier 1 (SDK, native on the Mac) from Tier 2 (full tree, Linux), the M4 Pro is a **fully capable primary workstation**: all product and SDK-level driver work is native and fast there. The only thing it can't do is produce the platform image — and that is a CI/remote-builder job by design, run once per pinned revision, not per iteration.
+
+Concretely for the M4 Pro:
+
+1. **Primary (native, recommended):** SDK + Bazel + emulator on macOS arm64. Fast, no VM.
+2. **Platform image (when needed):** a remote x86-64 Linux builder (cloud/Hetzner) or CI produces the fork's image and publishes artifacts the Mac consumes. This is the "dedicated build machine" the source assumed — needed only for platform deltas.
+3. **Local Linux VM (optional, for platform hacking on the go):** x86-64 Debian VM under UTM/Parallels can run `fx build`; slower and heavier (rosetta/emulated x86-64 on arm64), first build in hours. Use only if you must build the tree offline; otherwise the remote builder is better.
+
+Estimated M4 Pro numbers to validate by experiment (record as evidence, replace these): native SDK component build — seconds to low minutes; emulator boot from prebuilts — 1–3 min; **full tree** is not run on the Mac (Linux builder: first build ~1–3 h on 16+ cores, incremental minutes).
 
 <a id="tonight"></a>
 
