@@ -2,7 +2,7 @@
 id: "AOS-HW-018"
 title: "Demo Brick V1 Configuration Baseline"
 status: "Normative planning baseline"
-version: "1.5.0"
+version: "1.6.0"
 baseline_date: "2026-07-13"
 owners: "Agent OS Architecture Council"
 audience: "Engineering, product, security, legal, and program leadership"
@@ -64,7 +64,7 @@ The demo brick runs the native Agent OS, not Linux. The CM5 platform is admissib
 - Raspberry Pi has published the **PiSP image signal processor specification** and the **RP1 southbridge peripherals datasheet**, so the camera pipeline and most I/O peripherals can be driven by native Agent OS drivers written from public documentation.
 - The boot chain (BCM2712 boot ROM plus the EEPROM bootloader) loads an arbitrary kernel image; it is a closed but OS-agnostic component, recorded as a compromise in the AOS-HW-013 ledger together with the Wi-Fi/BT firmware blobs, which are required regardless of the operating system.
 - The full BCM2712 technical reference is not public; gaps are filled from the RP1/PiSP documents, published open-source drivers as *reference reading*, and bounded experiments — never by linking Linux code into portable layers.
-- Linux with libcamera is used only as a **bench oracle**: a known-good stack on identical hardware for image-quality and behavior comparison, exactly analogous to the Pixel stock-oracle rule of [ADR-0004](../decisions/ADR-0004.md#decision). No Linux userland or kernel component ships on the demo brick.
+- Linux with libcamera is used only as a **bench oracle**: a known-good stack on identical hardware for image-quality and behavior comparison, exactly analogous to the Pixel stock-oracle rule of [ADR-0004](AOS-ADR-0004.md#decision). No Linux userland or kernel component ships on the demo brick.
 
 <a id="v1-configuration"></a>
 
@@ -219,9 +219,9 @@ Single USB-C port carrying PD charging, data, and debug. Charge controller (BQ25
 
 Founder-requested sweep of "what will bite us"; each item is a claim/experiment candidate, ordered by severity.
 
-**P1 — Idle power (the biggest one).** CM5 has no phone-grade suspend: a Pi-class board idles at watts, not milliwatts, so a 5 Ah pack gives hours of standby, not days. Mitigations: aggressive display/radio gating, undervolt/clock floors, a "pocket state" that suspends to RAM where driver support allows, and honest demo expectations (a demo day, not a standby week). This is a permanent gap versus phone SoCs and is recorded in the compromise ledger.
+**P1 — Idle power (the biggest one).** CM5 has no phone-grade suspend: a Pi-class board idles at watts, not milliwatts, so a 5 Ah pack gives hours of standby, not days. Mitigations: aggressive display/radio gating, undervolt/clock floors, a "pocket state" that suspends to RAM where driver support allows, and honest demo expectations (a demo day, not a standby week). This is addressed structurally by the heterogeneous power architecture in [AOS-HW-019](HW-019-power-architecture-standby.md): an always-on MCU island hard-gates the CM5 and radios, turning hours-of-idle into days-of-standby. The bare-CM5 gap is real but is a design input, not the final story.
 
-**P2 — Wi-Fi hotspot / tethering (founder requirement: must fully work).** No special modem is needed: the modem only supplies the WAN data pipe (USB/QMI or PCIe); a hotspot is the Wi-Fi radio in AP mode plus NAT/routing in the network service. Two real constraints instead: (a) the CM5 onboard Wi-Fi (CYW43455-class) supports AP mode, but *simultaneous* STA+AP on one radio is channel-locked and fragile — for the "receive Wi-Fi and re-share it" repeater case, and for robust LTE-hotspot-while-connected, V1 adds a second Wi-Fi radio (MT7612U/MT7921AU-class USB module with strong open AP support); (b) operators police tethering via plan terms and traffic inspection — hotspot behavior is verified per operator with the cellular evidence, and any throttling is an operator finding, not a device defect.
+**P2 — Wi-Fi hotspot / tethering (founder requirement: must fully work).** No special modem is needed: the modem only supplies the WAN data pipe (USB/QMI or PCIe); a hotspot is the Wi-Fi radio in AP mode plus NAT/routing in the network service. Two real constraints instead: (a) the CM5 onboard Wi-Fi (CYW43455-class) supports AP mode, but *simultaneous* STA+AP on one radio is channel-locked and fragile — for the "receive Wi-Fi and re-share it" repeater case, and for robust LTE-hotspot-while-connected, V1 adds a second Wi-Fi radio (MT7612U/MT7921AU-class USB module with strong open AP support); (b) operators police tethering via plan terms and traffic inspection — the working plan is to use a subscription whose terms permit tethering (open the tethering allowance on the SIM/plan) rather than to defeat detection; hotspot behavior is verified per operator, and any throttling is an operator/plan finding.
 
 **P3 — Single USB-C for charge + data.** Charging while a demo uses USB peripherals requires a proper PD path with a data mux; the ReSpeaker in I2S mode (not USB) keeps the external port free. Design rule: external USB-C is PD sink + debug; all internal peripherals live on carrier USB/I2S/PCIe.
 
