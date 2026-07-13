@@ -1,14 +1,13 @@
 # Engineering Bible Validation
 
-- Markdown files total: 158
-- Canonical docs (docs/ + normalized sources): 146
-- Unique AOS IDs: 142
+- Markdown files total: 178
+- Canonical docs: 161
+- Unique AOS IDs: 157
 - Duplicate IDs: 0  OK
-- Broken internal .md links: 0  (mostly cross-refs to bible pages present under different folders; path-normalized links resolve — see note)
+- Broken internal .md links: 10  REVIEW
 - Cyrillic in normative English docs: 0  OK
-- PDF sources: provenance recorded, binaries not redistributed (integrate-not-store policy)
-- Project name: HyperOS references in docs = 0
+- Project name HyperOS in docs: 0
+- Source PDFs: provenance+SHA recorded; binaries not stored (integrate-not-store)
 
-## Known follow-ups (owned, non-blocking)
-- Internal links use bare `AOS-*.md` filenames from the original flat wiki; they resolve by basename within the bible. A link-rewrite pass to relative folder paths is a portal-build concern (see BROKEN-LINKS.csv for the inventory).
-- Task/claim/experiment/risk register CSVs: the Foundation archive shipped these as normative docs (AOS-TASKS.md, registers embedded); CSV extraction for the tracker is task AOS-DOCS in planning.
+## Source of truth
+engineering-bible/docs/** is canonical. knowledge/ is deprecated compat view. Active tasks = GitHub Issues (#25-#43, label demo-brick).
