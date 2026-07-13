@@ -2,7 +2,7 @@
 id: "AOS-HW-019"
 title: "Power Architecture and Ultra-Low-Power Standby"
 status: "Normative planning baseline"
-version: "1.0.0"
+version: "1.1.0"
 baseline_date: "2026-07-13"
 owners: "Agent OS Architecture Council"
 audience: "Engineering, product, and program leadership"
@@ -41,13 +41,21 @@ This document owns the power architecture of the demo brick ([AOS-HW-018](HW-018
 
 ## The Core Problem
 
-A Raspberry Pi CM5 (BCM2712, quad Cortex-A76) idles at roughly 2–3 W and has no phone-grade deep-sleep silicon. Community evidence: idle drops from ~2.7 W to ~2.0 W only with clock-floor tuning; true microwatt sleep is not achievable while a Linux-class OS runs, but nanowatt-class sleep *is* achievable by cutting power to the processor entirely with an external MCU gating the DC-DC enable pin. A 5 Ah pack at 2.5 W gives roughly ten hours of idle — hours, not days. That is the gap this architecture closes.
+Correctly separated into hardware facts and OS-dependent unknowns (correction v1.1: earlier text over-anchored on Linux measurements, which bound a *running Linux* floor, not the silicon):
+
+- **Hardware facts.** The CM5/Pi 5 PMIC natively supports a near-off state (milliwatt class) with wake by power button and **RTC alarm** — this is silicon+PMIC capability, independent of any OS, and it already implements the S3 semantics below without external hardware. Its limitation: wake is a cold boot, not a resume, and its wake sources are only button and RTC.
+- **OS-dependent unknown.** The BCM2712 TRM is not public, so the true *native-OS* active-idle floor (aggressive WFI, core/cluster gating, clock floors, DRAM self-refresh) is **unmeasured, not "bad"**: Linux community figures (~2.0–2.7 W tuned idle) are a Linux floor. Native idle floor is an open experiment with its own claim record; it may be substantially lower.
+- **What no configuration changes.** While the A76 domain is powered and executing an OS, microwatt draw is not achievable; nanowatt/microwatt territory requires the domain off, reachable either via the native PMIC off-state or via external rail gating.
+
+At Linux-like idle, a 5 Ah pack gives ~10 hours; at PMIC-off it gives months but with nothing running. The architecture below fills the space between.
 
 <a id="two-domain"></a>
 
 ## Two-Domain Architecture
 
 The device is split into an always-on island and a switchable high-power domain.
+
+The island's role, precisely: it does **not** invent sleep — S3-class off exists natively via the PMIC. The island adds what the PMIC lacks: rich wake sources (modem ring/SMS, accelerometer tap, BLE), an always-available glance surface, and independent per-rail gating of peripherals (modem, audio, NVMe, second Wi-Fi) while the SoC runs or sleeps.
 
 **Always-on island (microwatts–low milliwatts):**
 - A low-power MCU (nRF5340 or ESP32-C6/-H2 class) that never sleeps below its own µA retention floor.
@@ -143,7 +151,8 @@ Degradation must be explicit rather than accidental. If the island cannot confir
 
 ## Risks and Open Questions
 
-- CM5 suspend-to-RAM (S2) support quality under a native OS is unproven; if weak, S3 (full power-down) carries the standby story alone and wake latency rises.
+- CM5 suspend-to-RAM (S2) support under a native OS is unproven (TRM closed); if absent, S3 (PMIC/island power-down) carries the standby story alone and wake latency rises.
+- Native-OS active-idle floor (S1) is an open measurement, not a known value; the competitive-standby claim is made only from measured S-state evidence.
 - The island adds firmware that must itself be trustworthy and updatable; it is a second security surface.
 - Comms-standby duty cycle trades connectivity for battery; the honest framing must survive a demo where a call is missed.
 - E-ink glance strip adds mechanical and driver work; it is optional to the core standby claim.

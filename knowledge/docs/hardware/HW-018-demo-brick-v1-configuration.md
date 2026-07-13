@@ -80,6 +80,8 @@ The demo brick runs the native Agent OS, not Linux. The CM5 platform is admissib
 | Camera (second: front/wide, AF) | Raspberry Pi Camera Module 3 (Sony IMX708) | Tuned pipeline, phase-detect AF, HDR; carries video calls and quick AF shots while IMX585 carries showcase stills |
 | Camera (big-sensor alternate) | OneInchEye — Sony IMX283 (1", 20 MP), same open ecosystem | Admitted only if IMX585 evidence shows resolution as the binding constraint |
 | Camera (lab reference) | Raspberry Pi HQ Camera (Sony IMX477) | Bench/calibration only |
+
+**Tuning portability rule (recorded).** Camera tuning has two layers: (1) sensor+lens characterization — color matrices per illuminant, lens-shading maps, noise-vs-gain profiles, black levels, defect maps — which is physics and ports to any host; (2) ISP block parameters — coefficients for one ISP's specific processing blocks and 3A statistics — which do not port between ISPs because the blocks compute different things. Consequence: characterization data is captured and versioned separately (per AOS-HW-006 calibration provenance) so that retargeting an ISP (PiSP → VeriSilicon → own pipeline) is a parameter re-fit measured in days-weeks, never a re-measurement campaign.
 | Cellular | Quectel EG25-G on M.2 adapter (per AOS-HW-017); alternate: Waveshare SIM7600G-H HAT with onboard voice codec | A/B resolved at AOS-DEMO-003/004; GNSS provided by the modem; two LTE antennas + GNSS antenna |
 | Cellular identity | Internal removable eUICC card + open-source LPA (lpac) | See [Cellular Identity Without a SIM Tray](#internal-euicc) |
 | Microphones | 4× MEMS array on XMOS XVF3800 voice processor | AEC, beamforming, direction-of-arrival; I2S or USB-audio to CM5 |
