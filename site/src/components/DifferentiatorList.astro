@@ -1,0 +1,21 @@
+---
+import Cite from './Cite.astro';
+import { differentiators } from '../data/content';
+---
+
+<div class="divide-y divide-border rounded-xl border border-border">
+  {
+    differentiators.map((d, i) => (
+      <article class="grid gap-3 p-6 sm:grid-cols-[auto_1fr] sm:gap-6 sm:p-7">
+        <div class="font-mono text-sm text-signal sm:pt-1">{String(i + 1).padStart(2, '0')}</div>
+        <div>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h3 class="text-lg font-semibold tracking-tight">{d.title}</h3>
+            <Cite id={d.cite} />
+          </div>
+          <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{d.body}</p>
+        </div>
+      </article>
+    ))
+  }
+</div>

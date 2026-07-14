@@ -1,0 +1,161 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { ghBlob, gh } from '../lib/utils';
+import { loadDocs, docCategories } from '../lib/corpus';
+import { loadIssues } from '../lib/github';
+
+// Build-time reads. Docs come from the repo working tree (never fails the page).
+// Issues are the ONE network dependency and degrade gracefully to a calm fallback.
+const docs = loadDocs();
+const categories = docCategories(docs);
+const { ok: issuesOk, issues } = await loadIssues(10);
+
+const catLabels: Record<string, string> = {
+  architecture: 'Architecture',
+  product: 'Product',
+  research: 'Research',
+  hardware: 'Hardware',
+  legal: 'Legal',
+  planning: 'Planning',
+  decisions: 'Decisions',
+  general: 'General',
+};
+---
+
+<BaseLayout
+  title="Engineering bible"
+  description="The full Agent OS engineering corpus — architecture, product, research, hardware, legal and planning documents with stable AOS identifiers — plus live work items."
+>
+  <PageHeader
+    eyebrow="Engineering bible"
+    title="The whole corpus, cross-linked."
+    lede={`${docs.length} documents with stable AOS-* identifiers, versioned and evidence-gated. This page is baked at build time from the repository — the marketing site never depends on an API at runtime. Live work items below degrade gracefully if GitHub is unavailable.`}
+  />
+
+  <!-- Categories -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader eyebrow="Volumes" title="By discipline." />
+      <div class="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+        {
+          categories.map((c) => (
+            <a
+              href={gh(`/tree/main/engineering-bible/docs/${c.category}`)}
+              rel="noopener"
+              class="group bg-card p-5 transition-colors hover:bg-accent/30"
+            >
+              <div class="font-mono text-2xl font-semibold text-foreground">{c.count}</div>
+              <div class="mt-1 text-sm font-medium text-signal">{catLabels[c.category] ?? c.category}</div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Document index -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader eyebrow="Index" title="Every document." lede="Sorted by identifier. Each links to its Markdown source on GitHub." />
+      <div class="mt-10 overflow-hidden rounded-xl border border-border">
+        {
+          docs.slice(0, 80).map((d, i) => (
+            <a
+              href={ghBlob(d.path)}
+              rel="noopener"
+              class={
+                'group flex items-center gap-4 px-4 py-3 transition-colors hover:bg-accent/30 sm:px-5 ' +
+                (i > 0 ? 'border-t border-border' : '')
+              }
+            >
+              <span class="w-32 shrink-0 truncate font-mono text-xs text-signal/90">{d.id}</span>
+              <span class="flex-1 truncate text-sm text-foreground">{d.title}</span>
+              <span class="hidden shrink-0 font-mono text-[0.68rem] text-muted-foreground sm:inline">
+                {catLabels[d.category] ?? d.category}
+              </span>
+            </a>
+          ))
+        }
+      </div>
+      {
+        docs.length > 80 && (
+          <p class="mt-4 text-sm text-muted-foreground">
+            Showing 80 of {docs.length}.{' '}
+            <a href={gh('/tree/main/engineering-bible/docs')} rel="noopener" class="text-signal hover:underline">
+              Browse the full tree on GitHub →
+            </a>
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- Live work items -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="Live"
+        title="Recent work items."
+        lede="Fetched at build time from GitHub Issues. If the API is unavailable, this section shows a calm fallback instead of breaking the page."
+      />
+      <div class="mt-10">
+        {
+          issuesOk && issues.length > 0 ? (
+            <div class="overflow-hidden rounded-xl border border-border">
+              {issues.map((issue, i) => (
+                <a
+                  href={issue.url}
+                  rel="noopener"
+                  class={
+                    'group flex items-center gap-4 px-4 py-3.5 transition-colors hover:bg-accent/30 sm:px-5 ' +
+                    (i > 0 ? 'border-t border-border' : '')
+                  }
+                >
+                  <span class="w-12 shrink-0 font-mono text-xs text-muted-foreground">#{issue.number}</span>
+                  <span class="flex-1 truncate text-sm text-foreground">{issue.title}</span>
+                  <span
+                    class={
+                      'shrink-0 rounded-md border px-2 py-0.5 font-mono text-[0.68rem] ' +
+                      (issue.state === 'open'
+                        ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400'
+                        : 'border-border bg-muted/40 text-muted-foreground')
+                    }
+                  >
+                    {issue.state}
+                  </span>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <div class="rounded-xl border border-border bg-card p-6 text-sm text-muted-foreground">
+              Live issues weren’t available at build time. That’s fine — the marketing site never depends on the API.{' '}
+              <a href={gh('/issues')} rel="noopener" class="text-signal hover:underline">
+                View work items on GitHub →
+              </a>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="flex flex-col items-start gap-4 rounded-xl border border-border bg-card p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <div>
+          <h2 class="text-lg font-semibold tracking-tight">Read the source.</h2>
+          <p class="mt-1 text-sm text-muted-foreground">Everything is public Markdown with stable IDs, anchors and cross-links.</p>
+        </div>
+        <a
+          href={gh()}
+          rel="noopener"
+          class="inline-flex h-11 items-center justify-center gap-1.5 rounded-md border border-border bg-background px-5 text-sm font-medium text-foreground hover:bg-accent"
+        >
+          Open the repository →
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

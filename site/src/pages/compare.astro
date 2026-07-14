@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CompareTable from '../components/CompareTable.astro';
+import DifferentiatorList from '../components/DifferentiatorList.astro';
+import SpecLinks from '../components/SpecLinks.astro';
+import CtaBand from '../components/CtaBand.astro';
+---
+
+<BaseLayout
+  title="iOS / Android / Agent OS"
+  description="A research-grade, cited comparison of iOS, Android and Agent OS across twelve dimensions — object model, agent authority, capabilities, global history, offline, privacy and more."
+>
+  <PageHeader
+    eyebrow="Evidence map · AOS-RES-013"
+    title="iOS, Android, and Agent OS — on the record."
+    lede="An evidence map, not a marketing comparison. Every iOS/Android cell can be checked against a vendor security or developer document; every Agent OS cell against an internal specification. Where a claim rests on inference from documented behaviour, it says so."
+  />
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <CompareTable />
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="The wagers"
+        title="What Agent OS does differently."
+        lede="The incumbents converged on typed action contracts and on-device-first AI — Agent OS adopts those. These are the bets it makes that they can't make without rebuilding their foundations."
+      />
+      <div class="mt-12">
+        <DifferentiatorList />
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="rounded-xl border border-border bg-card p-6 sm:p-8">
+        <h2 class="text-xl font-semibold tracking-tight">Where the incumbents are ahead — honestly.</h2>
+        <p class="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+          First-party identity/accounts and end-user developer distribution are mature on iOS and Android and
+          <span class="text-foreground">not yet specified</span> for Agent OS. These are to-be-defined, not designed-and-omitted. Stating that plainly is part of the point.
+        </p>
+      </div>
+      <div class="mt-10">
+        <SpecLinks
+          heading="Primary sources"
+          links={[
+            { label: 'AOS-RES-013 · Full comparison matrix', path: 'engineering-bible/docs/research/AOS-RES-013-os-comparison-matrix.md' },
+            { label: 'AOS-ARCH-009 · Entity graph, history & sync', path: 'engineering-bible/docs/architecture/AOS-ARCH-009.md' },
+            { label: 'AOS-ARCH-010 · Agent runtime & action safety', path: 'engineering-bible/docs/architecture/AOS-ARCH-010.md' },
+            { label: 'ARCH-022 · Capability model', path: 'engineering-bible/docs/architecture/ARCH-022-layer-manifest-and-capabilities.md' },
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import FeatureTiles from '../components/FeatureTiles.astro';
+import ProofStats from '../components/ProofStats.astro';
+import StatusLedger from '../components/StatusLedger.astro';
+import SpecLinks from '../components/SpecLinks.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const tiles = [
+  {
+    title: 'The wedge',
+    body: 'An entity-and-agent OS with inspectable agents and local-first authority — a category difference from iOS/Android app silos, not a feature difference. Value is shifting from the model to access to data and actions, which app-centric systems structurally can’t provide.',
+    cite: 'AOS-RES-013',
+  },
+  {
+    title: 'Two-track de-risking',
+    body: 'The product runs in emulation now; a pre-certified-module “demo brick” carries the OS on real radios years before a custom device. Almost no reverse-engineering on the critical path — a failed hardware route never invalidates the portable architecture.',
+    cite: 'AOS-BRIEF',
+  },
+  {
+    title: 'Business model',
+    body: 'Subscription sells storage and elastic server compute; a mid-range device plus subscription can feel like a flagship, widening the hardware design space. A self-host tier proves offload is a protocol, not a trap.',
+    cite: 'AOS-PROD-013',
+  },
+  {
+    title: 'Honest ceilings',
+    body: 'Camera is “decent,” not flagship, without closed tuning; the demo brick is a demonstration device, not a security product. Claims are evidence-gated, not marketing — every public statement traces to a spec.',
+    cite: 'AOS-BRIEF',
+  },
+];
+---
+
+<BaseLayout
+  title="For investors"
+  description="A phone that owns its stack and de-risks the hard part. The wedge, the two-track strategy, the subscription-compute model, and honest ceilings — with evidence."
+>
+  <PageHeader
+    eyebrow="03 · Back the thesis"
+    title="A phone that owns its stack — and de-risks the hard part."
+    lede="The wedge is an operating system organized around your work, not apps. The strategy separates a fast, low-risk product track (in emulation today) from slow hardware bring-up — so value ships without being hostage to silicon."
+  />
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader eyebrow="The case" title="Four load-bearing bets." />
+      <div class="mt-12">
+        <FeatureTiles tiles={tiles} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="Why now"
+        title="The market converged and stopped differentiating."
+        lede="Feature-based differentiation is exhausted; paradigm-based differentiation is wide open. Fuchsia is alive and open, but Google isn’t aiming it at phones — no competition for the Fuchsia phone, and no help either."
+      />
+      <div class="mt-12">
+        <ProofStats />
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
+        <SectionHeader
+          eyebrow="Diligence"
+          title="What exists today vs planned."
+          lede="This is a research-and-engineering programme. Nothing here claims a shipping product, certification or financial projection — it documents intent, strategy and evidence gates."
+        />
+        <StatusLedger />
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader eyebrow="Read the strategy" title="Source documents." />
+      <div class="mt-10">
+        <SpecLinks
+          links={[
+            { label: 'PROD-013 · Compute subscription & offload', path: 'engineering-bible/docs/product/PROD-013-compute-subscription-and-offload.md' },
+            { label: 'RES-011 · Interim hardware market survey', path: 'engineering-bible/docs/research/RES-011-interim-hardware-market-survey.md' },
+            { label: 'AOS-BRIEF · Executive briefing', path: 'engineering-bible/docs/AOS-BRIEF.md' },
+            { label: 'iOS / Android / Agent OS comparison', href: '/compare' },
+          ]}
+        />
+      </div>
+      <p class="mt-8 max-w-3xl text-xs leading-relaxed text-muted-foreground">
+        Planning ranges only: Wave 0 / first 90 days ≈ USD 28,940–79,080; total listed programme equipment and initial professional-services envelope ≈ USD 44,540–122,080 before payroll, tax, cloud, NRE and certification. Not quotes.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand title="Back the thesis." body="Want the full brief and the data room? Leave your email and we’ll be in touch." />
+</BaseLayout>

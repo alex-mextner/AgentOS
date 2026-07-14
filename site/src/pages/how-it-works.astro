@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import PillarGrid from '../components/PillarGrid.astro';
+import LayerStack from '../components/LayerStack.astro';
+import AppLastDiagram from '../components/AppLastDiagram.astro';
+import FeatureTiles from '../components/FeatureTiles.astro';
+import SpecLinks from '../components/SpecLinks.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const rules = [
+  {
+    title: 'One object, many surfaces',
+    body: 'A person is not five contacts. A project is not a folder plus a chat plus a board plus a calendar — it is one entity, rendered as a card, table, timeline, map or agent context.',
+    cite: 'AOS-ARCH-009',
+  },
+  {
+    title: 'One action model, many callers',
+    body: 'The same typed action can be invoked from a button, a command palette, a script or an agent under explicit authority — with no private backdoor to state.',
+    cite: 'AOS-ARCH-010',
+  },
+  {
+    title: 'Replaceable providers',
+    body: 'Storage, transport, rendering and hardware backends can change while entity and action semantics stay stable. Foreign types stop at adapters and never leak upward.',
+    cite: 'AOS-ARCH-005',
+  },
+  {
+    title: 'Evidence before promises',
+    body: 'Claims, experiments, risks and acceptance gates constrain implementation and every public support statement. No assumption becomes a requirement just because it appeared in a spec.',
+    cite: 'AOS-BRIEF',
+  },
+];
+---
+
+<BaseLayout
+  title="How it works"
+  description="The six pillars of Agent OS and how it is built: a Fuchsia/Zircon fork with portable Rust-first system services above replaceable hardware, connected by FIDL contracts."
+>
+  <PageHeader
+    eyebrow="Build the OS · How it works"
+    title="Portable semantics above replaceable hardware."
+    lede="Agent OS forks the Fuchsia tree — Zircon, DFv2, FIDL, Magma, Starnix — and writes a Rust-first entity-and-agent product layer on top. The kernel stays minimal; everything that makes it a product lives in user space."
+  />
+
+  <!-- The shift -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="The premise"
+        title="Apps become views. The work becomes the system."
+        lede="Today identity, actions and history are fragmented by application. Agent OS keeps one object graph, and lets many views and replaceable providers render it."
+      />
+      <div class="mt-10 max-w-4xl">
+        <AppLastDiagram />
+      </div>
+    </div>
+  </section>
+
+  <!-- Six pillars -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader eyebrow="The vision core" title="Six pillars." />
+      <div class="mt-12">
+        <PillarGrid />
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-start">
+        <SectionHeader
+          eyebrow="Architecture"
+          title="Seven layers, one contract language."
+          lede="Kernel policy stays minimal — isolation, objects, capabilities, IPC, scheduling, memory, interrupts, time. Drivers, compatibility, graphics, product semantics and agents all live in user space, spoken to over FIDL."
+        />
+        <LayerStack />
+      </div>
+    </div>
+  </section>
+
+  <!-- Rules -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader eyebrow="The rules that hold it together" title="Four invariants." />
+      <div class="mt-12">
+        <FeatureTiles tiles={rules} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Specs -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader eyebrow="Go deeper" title="Read the source specs." />
+      <div class="mt-10">
+        <SpecLinks
+          links={[
+            { label: 'ADR-0001 · Fork Fuchsia/Zircon', path: 'engineering-bible/docs/decisions/AOS-ADR-0001.md' },
+            { label: 'Capability model & layer manifests', path: 'engineering-bible/docs/architecture/ARCH-022-layer-manifest-and-capabilities.md' },
+            { label: 'Storage, entity graph, history & sync', path: 'engineering-bible/docs/architecture/AOS-ARCH-009.md' },
+            { label: 'Agent runtime & action safety', path: 'engineering-bible/docs/architecture/AOS-ARCH-010.md' },
+            { label: 'IDL, API & versioning', path: 'engineering-bible/docs/architecture/AOS-ARCH-005.md' },
+            { label: 'Executive briefing', path: 'engineering-bible/docs/AOS-BRIEF.md' },
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

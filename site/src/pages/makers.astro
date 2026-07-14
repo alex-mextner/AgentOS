@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import FeatureTiles from '../components/FeatureTiles.astro';
+import SpecLinks from '../components/SpecLinks.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const tiles = [
+  {
+    title: 'A voice agent you can trust',
+    body: 'Ask it to do things across your whole system. Every action is visible, reversible and logged — and a hardware switch physically cuts the microphone. It can’t hear you when muted, by wiring, not policy.',
+    cite: 'AOS-PROD-015',
+  },
+  {
+    title: 'Instant modes',
+    body: 'Reboot into a typewriter, reader, calculator or remote in seconds. No radios, no feeds, no notifications — focus on one purpose, and stretch the battery for days.',
+    cite: 'ARCH-022',
+  },
+  {
+    title: 'Days of standby',
+    body: 'An always-on low-power island keeps time and watches for wake events while the main computer sleeps fully. Hours become days.',
+    cite: 'AOS-ARCH-013',
+  },
+  {
+    title: 'Privacy you can verify',
+    body: 'Local-first: it works offline, your data lives on the device, and anything sent to a server is a visible, consented choice with a receipt — never a silent default.',
+    cite: 'AOS-PROD-013',
+  },
+];
+---
+
+<BaseLayout
+  title="For makers & early users"
+  description="A calmer phone that works for you. Your projects, notes, people and plans are the interface; a voice agent you can inspect does the busywork; simple distraction-free modes in seconds."
+>
+  <PageHeader
+    eyebrow="04 · Use it first"
+    title="A calmer phone that works for you."
+    lede="Not a grid of apps fighting for attention. Your projects, notes, people and plans are the interface; a voice agent you can actually inspect does the busywork; and the device can drop into simple, distraction-free modes in seconds. For people who create and change things — not the mass market."
+  />
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader eyebrow="What you get" title="Four things you can feel." />
+      <div class="mt-12">
+        <FeatureTiles tiles={tiles} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader eyebrow="How it works under the hood" title="Read the real thing." />
+      <div class="mt-10">
+        <SpecLinks
+          links={[
+            { label: 'How the voice agent works', path: 'engineering-bible/docs/product/PROD-015-voice-agent.md' },
+            { label: 'Instant modes & layered boot', path: 'engineering-bible/docs/architecture/ARCH-021-layered-boot-and-instant-modes.md' },
+            { label: 'What privacy actually means here', path: 'engineering-bible/docs/legal/LEGAL-013-threat-model-and-security.md' },
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

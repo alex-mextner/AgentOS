@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://agentos-bible.vercel.app/sitemap-index.xml

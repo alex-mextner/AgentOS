@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import PillarGrid from '../components/PillarGrid.astro';
+import DifferentiatorList from '../components/DifferentiatorList.astro';
+import CompareTable from '../components/CompareTable.astro';
+import ProofStats from '../components/ProofStats.astro';
+import AudienceGrid from '../components/AudienceGrid.astro';
+import StatusLedger from '../components/StatusLedger.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Button from '../components/Button.astro';
+import { compareDimensions } from '../data/compare';
+
+const teaser = compareDimensions.filter((d) =>
+  ['object-model', 'agent-authority', 'global-history', 'sandbox-caps'].includes(d.key)
+);
+---
+
+<BaseLayout>
+  <Hero />
+
+  <!-- The core shift -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="The core shift"
+        title="First-class work, not first-class apps."
+        lede="The operating system owns durable semantics — identity, links, actions, authority, history and recovery. An app is only one way to render or provide them. Six pillars carry the whole design."
+      />
+      <div class="mt-12">
+        <PillarGrid />
+      </div>
+    </div>
+  </section>
+
+  <!-- Differentiators -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="Versus iOS &amp; Android"
+        title="A category difference, not a feature difference."
+        lede="The incumbents converged and stopped differentiating. Agent OS moves the axes they can't move without rebuilding their foundations."
+      />
+      <div class="mt-12">
+        <DifferentiatorList />
+      </div>
+    </div>
+  </section>
+
+  <!-- Compare teaser -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="Evidence, not slogans"
+        title="Twelve axes, every claim cited."
+        lede="A research-grade comparison — each iOS/Android cell cites a vendor security or developer document; each Agent OS cell cites an internal spec. Four axes shown here."
+      />
+      <div class="mt-10">
+        <CompareTable dimensions={teaser} />
+      </div>
+      <div class="mt-8">
+        <Button href="/compare" variant="outline">See all twelve dimensions</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proof -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="Proof"
+        title="A serious programme, on the record."
+        lede="Honesty as a feature: a cross-linked engineering bible, a real task graph, cited claims, and a two-track strategy that de-risks the hard part."
+      />
+      <div class="mt-12">
+        <ProofStats />
+      </div>
+    </div>
+  </section>
+
+  <!-- Four-audience door -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="Four ways in"
+        title="One operating system. Choose your path."
+        lede="Build the OS, build on it, back the thesis, or use it first. Each door opens on the part of the corpus that speaks to you."
+      />
+      <div class="mt-12">
+        <AudienceGrid />
+      </div>
+    </div>
+  </section>
+
+  <!-- Honest status -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
+        <SectionHeader
+          eyebrow="Works today vs planned"
+          title="What exists now, and what doesn't."
+          lede="Agent OS is at bootstrap. The design is specified end-to-end; the product runs in emulation. We say plainly where the gaps are."
+        />
+        <StatusLedger />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

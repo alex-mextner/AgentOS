@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Cite from '../components/Cite.astro';
+import StatusLedger from '../components/StatusLedger.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { tracks } from '../data/content';
+import { loadTaskGraph } from '../lib/corpus';
+
+// Build-time read of the task graph from data/index.json. Degrades to known totals.
+const graph = loadTaskGraph();
+const maxPhase = Math.max(1, ...graph.phases.map((p) => p.count));
+---
+
+<BaseLayout
+  title="Roadmap"
+  description="Two tracks: the product in emulation now (blocked by nothing), and multi-year hardware bring-up. A 327-item task graph across nine phases."
+>
+  <PageHeader
+    eyebrow="Roadmap"
+    title="Two tracks. One decouples the other."
+    lede="The main strategic decision: run a fast, low-risk product track in emulation, separate from slow hardware bring-up. They converge at the end — the product on top of the real substrate — but neither holds the other hostage."
+  />
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid gap-4 lg:grid-cols-2">
+        {
+          tracks.map((t) => (
+            <article class="flex flex-col rounded-xl border border-border bg-card p-6 sm:p-7">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-sm text-signal">Track {t.id}</span>
+                <span class="font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">{t.tagline}</span>
+              </div>
+              <h2 class="mt-4 text-xl font-semibold tracking-tight">{t.name}</h2>
+              <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{t.body}</p>
+              <ol class="mt-5 space-y-2 border-t border-border pt-5">
+                {t.milestones.map((m) => (
+                  <li class="flex items-center gap-3 text-sm">
+                    <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-signal/70" aria-hidden="true" />
+                    <span class="font-mono text-muted-foreground">{m}</span>
+                  </li>
+                ))}
+              </ol>
+              <p class="mt-5 text-xs leading-relaxed text-muted-foreground">
+                <span class="font-medium text-foreground">Blocked by:</span> {t.blocked}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Task graph -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="The task graph"
+        title={`${graph.total} planned work items.`}
+        lede="Nine phases, each with acceptance criteria, dependencies and linked specifications. Read at build time from the repository — a real plan, not a wishlist."
+      />
+      {
+        graph.phases.length > 0 && (
+          <div class="mt-12 space-y-2.5">
+            {graph.phases.map((p) => (
+              <div class="grid grid-cols-[7.5rem_1fr_2.5rem] items-center gap-3">
+                <span class="font-mono text-xs text-muted-foreground">{p.phase}</span>
+                <div class="h-6 overflow-hidden rounded-md border border-border bg-muted/20">
+                  <div
+                    class="h-full rounded-[3px] bg-signal/30"
+                    style={`width:${Math.max(4, (p.count / maxPhase) * 100)}%`}
+                  />
+                </div>
+                <span class="text-right font-mono text-sm text-foreground">{p.count}</span>
+              </div>
+            ))}
+          </div>
+        )
+      }
+      <p class="mt-6 text-xs text-muted-foreground">
+        Documentation is organised into ten thematic volumes; implementation into Phase 0–8. <Cite id="AOS-PLAN-010" />
+      </p>
+    </div>
+  </section>
+
+  <!-- Status ledger -->
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
+        <SectionHeader eyebrow="Honest status" title="Where the programme stands." />
+        <StatusLedger />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

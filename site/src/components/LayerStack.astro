@@ -1,0 +1,46 @@
+---
+// Layered system map. Status legend mirrors the reuse taxonomy from the engineering
+// bible: fork the tree, take frameworks as-is, port driver knowledge, write the
+// product from scratch. No Pixel-as-device framing — the hardware target is a
+// documented board / demo brick.
+const layers = [
+  { id: 'L6', name: 'Product · shell, entities, agents, history, sync', state: 'from scratch', tone: 'new' },
+  { id: 'L5', name: 'Compatibility · Starnix (Linux/Android userspace)', state: 'as-is', tone: 'asis' },
+  { id: 'L4', name: 'Camera · capture + HDR+ + tuning', state: 'wrap / tune', tone: 'mix' },
+  { id: 'L3', name: 'Telephony · pre-certified module (demo brick)', state: 'as-is', tone: 'asis' },
+  { id: 'L2', name: 'GPU · Magma driver', state: 'port', tone: 'port' },
+  { id: 'L1', name: 'Board bring-up · drivers, power island', state: 'port', tone: 'port' },
+  { id: 'L0', name: 'Fuchsia fork · Zircon, DFv2, FIDL, Magma', state: 'fork', tone: 'fork' },
+];
+
+const tones: Record<string, string> = {
+  new: 'border-signal/50 text-signal',
+  asis: 'border-emerald-500/40 text-emerald-400',
+  mix: 'border-amber-500/40 text-amber-400',
+  port: 'border-violet-500/40 text-violet-400',
+  fork: 'border-border text-muted-foreground',
+};
+---
+
+<div class="overflow-hidden rounded-xl border border-border">
+  {
+    layers.map((l, i) => (
+      <div
+        class={
+          'flex items-center gap-4 px-4 py-3.5 sm:px-5 ' +
+          (i > 0 ? 'border-t border-border ' : '') +
+          (l.tone === 'new' ? 'bg-signal/[0.05]' : 'bg-card')
+        }
+      >
+        <span class="w-8 shrink-0 font-mono text-xs text-muted-foreground">{l.id}</span>
+        <span class="flex-1 text-sm text-foreground">{l.name}</span>
+        <span class={'shrink-0 rounded-md border px-2 py-0.5 font-mono text-[0.68rem] ' + tones[l.tone]}>
+          {l.state}
+        </span>
+      </div>
+    ))
+  }
+</div>
+<p class="mt-3 text-xs leading-relaxed text-muted-foreground">
+  All contracts between layers are FIDL — which is what makes the emulator (Track A) and real hardware (Track B) interchangeable above the contract boundary. Most demo-brick hardware is as-is (pre-certified modules), which is why it ships years before a custom device.
+</p>
