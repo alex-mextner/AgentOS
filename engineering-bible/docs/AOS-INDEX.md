@@ -149,6 +149,8 @@ Use `README.md` for the entry sequence, `BRIEFING.md` for decisions and first ex
 - [AOS-RES-012 — Fuchsia/Zircon-Fork Specification — Engineering Digest](RES-012-fuchsia-spec-lessons.md)
 - [AOS-RES-013 — OS Comparison Matrix — iOS vs Android vs Agent OS](AOS-RES-013-os-comparison-matrix.md)
 - [AOS-RES-014 — System Survey: What Agent OS Takes From Twenty-One Prior Operating Systems and Data Substrates](AOS-RES-014-system-survey.md)
+- [AOS-RES-015 — Shell UI Stack — Options, Feasibility, Recommendation](AOS-RES-015-shell-ui-stack.md)
+- [AOS-RES-016 — Design System & Component Strategy](AOS-RES-016-design-system-and-component-strategy.md)
 - [agent-os-wider-lens — Widening the Lens: Who's Already Digging Our Tunnels](agent-os-wider-lens.md)
 - [agentos-spec-digest-product-architecture — AgentOS Spec Digest — Product Architecture](agentos-spec-digest-product-architecture.md)
 - [ios-vs-android-vs-agent-os — iOS vs Android vs Agent OS](ios-vs-android-vs-agent-os.md)

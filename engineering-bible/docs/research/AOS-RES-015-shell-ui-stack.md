@@ -6,10 +6,18 @@ version: "1.0.0"
 baseline_date: "2026-07-14"
 owners: "Research Lead / Shell & UI Working Group"
 audience: "Engineering, product, and design leadership"
-summary: "A decision-oriented, sourced report on how to build the AgentOS shell and UI stack on a Fuchsia-fork base. It surveys the native Fuchsia UI options (Flatland, Carnelian, abandoned Flutter-on-Fuchsia, Chromium/WebEngine, Starnix), evaluates a Swift/SwiftUI-style path and a React/flexbox path, assesses the Flutter fork (Flock) and the 2026 state of Dart/Flutter, and lands a recommendation. Every external claim is cited inline with a confidence marker, two comparison tables summarise the trade-offs, and items that are unverified or actively refuted are flagged so no one cites them as fact. Verdict: Rust/Carnelian-on-Flatland is the recommended base, with a thin declarative layer plus Yoga (via yoga-rs) for real flexbox, and Swift only as an optional later app-tier."
+summary: "A decision-oriented, sourced report on how to build the AgentOS shell and UI stack on a Fuchsia-fork base. It surveys the native Fuchsia UI options (Flatland, Carnelian, abandoned Flutter-on-Fuchsia, Chromium/WebEngine, Starnix), evaluates a Swift/SwiftUI-style path and a React/flexbox path, assesses the Flutter fork (Flock) and the 2026 state of Dart/Flutter, and lands a recommendation. Every external claim is cited inline with a confidence marker, two comparison tables summarise the trade-offs, and items that are unverified or actively refuted are flagged so no one cites them as fact. Verdict: Rust/Carnelian-on-Flatland is the recommended base, with a thin declarative layer plus a CSS-flexbox layout engine for real flexbox, and Swift only as an optional later app-tier. NOTE: superseded/corrected by AOS-RES-016 — the layout building block is now the pure-Rust taffy (not Yoga/yoga-rs), and the Fuchsia flutter-embedder is dead, not maintained."
 ---
 
 # AgentOS Shell UI Stack — Options, Feasibility, Recommendation
+
+> **Corrected and extended by [AOS-RES-016](AOS-RES-016-design-system-and-component-strategy.md).**
+> Two items in this document are superseded by RES-016 and RES-016 is authoritative
+> where they conflict: (1) the layout building block in the verdict below — the
+> "embed Yoga via `yoga-rs`" step is replaced by the pure-Rust **`taffy`** (MIT, no
+> C++ FFI); (2) the Fuchsia `flutter-embedder` is **dead** (no commits in ~3 years),
+> not a maintained path. Read RES-016 before acting on the Yoga/`yoga-rs` or
+> flutter-embedder guidance here.
 
 > A research-grade evaluation of shell/UI-stack options for the AgentOS Fuchsia
 > fork. Each major claim carries a confidence marker (HIGH / MEDIUM / LOW) and an

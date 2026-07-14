@@ -15,7 +15,7 @@ a9edfa4017facf510a7c94a225c58591e295569b70445780d84920ca9a449ac7  engineering-bi
 7502faa2adc988838ef457e539be31a2544a303b296a9dd1ab120528b95515a0  engineering-bible/diagrams/050-real-device-operation.md
 9cde10f59af98f1e19c9783eb8b9986251ade8db98bc7d9687e1934c1d97ebc1  engineering-bible/diagrams/prior-art-fuchsia-spec/README.md
 9f10f19602c1d4de20fa0e60770834ebdbf7947b7b968d268cf02c541ed14c5d  engineering-bible/docs/AOS-BRIEF.md
-71d2701a242d63ad6c12047dbc7ffd213b0a57273759f852e6bedc66fb5629b5  engineering-bible/docs/AOS-INDEX.md
+a67aa8cd1f64592cc7648cc5d182fe90c76b4725a91f23b7dbcecbfdeb835951  engineering-bible/docs/AOS-INDEX.md
 5b85d80e02849973d116772e95947f20822b2f7e4b151b59ab0a6d4e6976fd9e  engineering-bible/docs/AOS-MANIFEST.md
 cde9e37e1301d5264e028022c3c01d56d95a193a68c94438f235f37fd34756a2  engineering-bible/docs/AOS-README.md
 ebb2708df6b23ae92b2f3cad439477c8c15ed0d73f7b8d539365414776c338a4  engineering-bible/docs/architecture/AOS-ARCH-001.md
@@ -140,6 +140,8 @@ aead2cce927a814c1bd715e082ff5d24197bb415f60ecc447f8fa534095d7b45  engineering-bi
 9922180cb41404d7ae80071d95b980e7960219acd557881a36a3c7d3c9eab813  engineering-bible/docs/research/AOS-RES-010.md
 76e8e7f9c6adb805d376a2882a9804b62a84dc6468d68e1e74dc1a8255e7fa61  engineering-bible/docs/research/AOS-RES-013-os-comparison-matrix.md
 9d3c1da69a84023bc3424783fac49ffd6d89e126f27df0380ec0378ab8167cd5  engineering-bible/docs/research/AOS-RES-014-system-survey.md
+8d8de138b9dfdad6a5a7fdecf73d91467306df6ffd0d97a95faebe57a9f39d35  engineering-bible/docs/research/AOS-RES-015-shell-ui-stack.md
+3dd472068088037db4a3205588f0753fca7abe9b976c0385a698508f22327fce  engineering-bible/docs/research/AOS-RES-016-design-system-and-component-strategy.md
 f4b11920430f5c27658b46364512fc894837aaeeae77dcbf2b51b3bf3d917482  engineering-bible/docs/research/RES-011-interim-hardware-market-survey.md
 ea7a1e2364f252d9c4144395c66e3110ef6a6b943bc2c1ecdc357703932c7c7f  engineering-bible/docs/research/RES-012-fuchsia-spec-lessons.md
 ab9cee8268bf9cde0367a6254d9494bde27a01745b8f728686aee04b69549d09  engineering-bible/docs/research/agent-os-wider-lens.md
