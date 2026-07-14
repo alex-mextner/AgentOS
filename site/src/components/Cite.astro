@@ -1,0 +1,10 @@
+---
+// Document-ID citation chip. The recurring "evidence-gated" motif: every load-bearing
+// claim on the site carries the AOS-* spec id it comes from.
+interface Props {
+  id: string;
+}
+const { id } = Astro.props;
+---
+
+<span class="cite" title={`Grounded in ${id}`}>{id}</span>

@@ -1,0 +1,65 @@
+---
+import { compareDimensions, compareBaseline, type CompareDimension } from '../data/compare';
+
+interface Props {
+  dimensions?: CompareDimension[];
+}
+const { dimensions = compareDimensions } = Astro.props;
+
+// Split "cell text [refs] trailing" so the citation renders as the register chip
+// motif. refs span from the first "[" to the LAST "]" — any trailing marker such as
+// "(gap)" stays in the body rather than leaking into the monospace chip.
+function parts(text: string) {
+  const first = text.indexOf('[');
+  if (first === -1) return { body: text, refs: '' };
+  const last = text.lastIndexOf(']');
+  const refs = text.slice(first, last + 1).trim();
+  const body = (text.slice(0, first) + ' ' + text.slice(last + 1)).trim();
+  return { body, refs };
+}
+---
+
+<div class="overflow-x-auto rounded-xl border border-border">
+  <table class="w-full min-w-[720px] border-collapse text-sm">
+    <thead>
+      <tr class="border-b border-border bg-muted/30 text-left">
+        <th class="w-[22%] px-4 py-3 font-medium text-muted-foreground">Dimension</th>
+        <th class="w-[26%] px-4 py-3 font-medium text-muted-foreground">iOS</th>
+        <th class="w-[26%] px-4 py-3 font-medium text-muted-foreground">Android</th>
+        <th class="w-[26%] px-4 py-3 font-medium text-foreground">
+          <span class="inline-flex items-center gap-1.5">
+            <span class="h-1.5 w-1.5 rounded-full bg-signal"></span>Agent OS
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        dimensions.map((d, i) => {
+          const ag = parts(d.agentos);
+          const ios = parts(d.ios);
+          const and = parts(d.android);
+          return (
+            <tr class={i % 2 ? 'bg-transparent' : 'bg-muted/[0.12]'}>
+              <th scope="row" class="border-t border-border px-4 py-3 text-left align-top font-medium text-foreground">
+                {d.label}
+              </th>
+              <td class="border-t border-border px-4 py-3 align-top text-muted-foreground">
+                {ios.body} {ios.refs && <span class="cite ml-0.5 align-middle">{ios.refs}</span>}
+              </td>
+              <td class="border-t border-border px-4 py-3 align-top text-muted-foreground">
+                {and.body} {and.refs && <span class="cite ml-0.5 align-middle">{and.refs}</span>}
+              </td>
+              <td class="border-t border-border bg-signal/[0.04] px-4 py-3 align-top text-foreground">
+                {ag.body} {ag.refs && <span class="cite ml-0.5 align-middle">{ag.refs}</span>}
+              </td>
+            </tr>
+          );
+        })
+      }
+    </tbody>
+  </table>
+</div>
+<p class="mt-3 font-mono text-xs text-muted-foreground">
+  Source: AOS-RES-013 · baseline {compareBaseline}. iOS/Android cells cite vendor security/developer docs; Agent OS cells cite internal specs.
+</p>

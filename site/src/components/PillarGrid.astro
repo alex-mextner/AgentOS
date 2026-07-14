@@ -1,0 +1,19 @@
+---
+import Cite from './Cite.astro';
+import { pillars } from '../data/content';
+---
+
+<div class="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+  {
+    pillars.map((p) => (
+      <article class="group flex flex-col bg-card p-6 transition-colors hover:bg-accent/30">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs text-signal">{p.n}</span>
+          <Cite id={p.cite} />
+        </div>
+        <h3 class="mt-4 text-lg font-semibold tracking-tight">{p.title}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+      </article>
+    ))
+  }
+</div>

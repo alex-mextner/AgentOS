@@ -1,0 +1,24 @@
+---
+// Entity-graph mark: one central node, linked satellites. The product thesis in a glyph.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  aria-hidden="true"
+>
+  <line x1="12" y1="12" x2="12" y2="3.5" />
+  <line x1="12" y1="12" x2="19.4" y2="16" />
+  <line x1="12" y1="12" x2="4.6" y2="16" />
+  <circle cx="12" cy="12" r="2.6" fill="hsl(var(--signal))" stroke="hsl(var(--signal))" />
+  <circle cx="12" cy="3.5" r="1.7" />
+  <circle cx="19.4" cy="16" r="1.7" />
+  <circle cx="4.6" cy="16" r="1.7" />
+</svg>

@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import FeatureTiles from '../components/FeatureTiles.astro';
+import SpecLinks from '../components/SpecLinks.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const tiles = [
+  {
+    title: 'Entity & action contract',
+    body: 'Register a data source or a typed action over shared entities — person, project, document, event, message. No private state path; everything is contract-first, declared in a transport-neutral IDL that generates Rust bindings.',
+    cite: 'AOS-ARCH-005',
+  },
+  {
+    title: 'Capability-scoped agents',
+    body: 'Agents get exactly the authority you grant — least privilege by construction, revocable, and every effectful action leaves a receipt with an undo path. No ambient UI control.',
+    cite: 'AOS-ARCH-010',
+  },
+  {
+    title: 'Lawful service integration',
+    body: 'Reach services by the highest lawful method: official APIs, regulated interfaces like open banking, interop standards. Never defeat pinning or anti-tamper on someone else’s app.',
+    cite: 'AOS-PROD-014',
+  },
+  {
+    title: 'Native clients, full features',
+    body: 'A native client gets entities, IntentBox actions, history, capabilities, instant-mode participation, offline and agent access — or it isn’t native. A two-floor model runs unmodified apps as guests for breadth.',
+    cite: 'AOS-PROD-014',
+  },
+];
+---
+
+<BaseLayout
+  title="For developers"
+  description="Build on the object graph, not inside a silo. The entity/action contract, capability-scoped agents, typed actions with receipts, and the IDL you build against."
+>
+  <PageHeader
+    eyebrow="02 · Build on it"
+    title="Build on the object graph, not inside a silo."
+    lede="Apps become replaceable providers and views over one typed system. You publish typed actions and data sources; the OS gives them semantic history, capability-scoped access and inspectable agent plans — for free."
+  />
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader eyebrow="The surface you build against" title="Four contracts." />
+      <div class="mt-12">
+        <FeatureTiles tiles={tiles} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="rounded-xl border border-border bg-card p-6 sm:p-8">
+        <div class="eyebrow mb-3 text-signal/90">Interop by design</div>
+        <h2 class="max-w-3xl text-balance text-2xl font-semibold tracking-tight">FIDL internally, MCP externally.</h2>
+        <p class="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+          Platform agent coverage today is opt-in per app — the assistant only sees what a developer bothered to annotate. In Agent OS, coverage is 100% by construction: every action and every byte passes through the entity/capability layer, so there is nothing to annotate. The entity/action registry is exportable as an MCP server, so the external agentic world can work with Agent OS on day one.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader eyebrow="Read the platform" title="Developer specifications." />
+      <div class="mt-10">
+        <SpecLinks
+          links={[
+            { label: 'PROD-014 · Native app clients & integration ladder', path: 'engineering-bible/docs/product/PROD-014-native-app-clients.md' },
+            { label: 'PROD-015 · Voice agent & typed actions', path: 'engineering-bible/docs/product/PROD-015-voice-agent.md' },
+            { label: 'ARCH-022 · Capability model', path: 'engineering-bible/docs/architecture/ARCH-022-layer-manifest-and-capabilities.md' },
+            { label: 'AOS-ARCH-005 · IDL & type system', path: 'engineering-bible/docs/architecture/AOS-ARCH-005.md' },
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Build on it." body="The platform is specified end-to-end. Join the waitlist for the SDK preview and early developer access." />
+</BaseLayout>

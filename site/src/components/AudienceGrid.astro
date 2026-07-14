@@ -1,0 +1,27 @@
+---
+import { audiences } from '../data/content';
+---
+
+<div class="grid gap-4 sm:grid-cols-2">
+  {
+    audiences.map((a) => (
+      <a
+        href={a.href}
+        class="group flex flex-col rounded-xl border border-border bg-card p-6 transition-colors hover:border-signal/50"
+      >
+        <div class="flex items-baseline justify-between">
+          <span class="font-mono text-xs text-muted-foreground">{a.n}</span>
+          <span class="font-mono text-xs uppercase tracking-[0.14em] text-signal/90">{a.role}</span>
+        </div>
+        <h3 class="mt-4 text-lg font-semibold tracking-tight">{a.title}</h3>
+        <p class="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{a.body}</p>
+        <span class="mt-5 inline-flex items-center gap-1 text-sm font-medium text-foreground">
+          {a.cta}
+          <svg viewBox="0 0 24 24" class="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </span>
+      </a>
+    ))
+  }
+</div>

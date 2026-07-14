@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+---
+
+<BaseLayout title="Page not found" description="That page doesn’t exist." noindex={true}>
+  <section class="mx-auto flex max-w-6xl flex-col items-start px-6 py-28 md:py-40">
+    <div class="eyebrow mb-4 text-signal/90">404</div>
+    <h1 class="text-balance text-4xl font-semibold tracking-tight md:text-5xl">This object isn’t in the graph.</h1>
+    <p class="mt-4 max-w-md text-pretty text-muted-foreground">
+      The page you’re after doesn’t exist. Head back to the start, or read how the whole system fits together.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <Button href="/" variant="primary">Back to home</Button>
+      <Button href="/how-it-works" variant="outline">How it works</Button>
+    </div>
+  </section>
+</BaseLayout>

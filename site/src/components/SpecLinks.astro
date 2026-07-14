@@ -1,0 +1,38 @@
+---
+import { ghBlob } from '../lib/utils';
+
+interface Link {
+  label: string;
+  path?: string; // repo-relative markdown path → GitHub blob
+  href?: string; // absolute or site-relative override
+}
+interface Props {
+  links: Link[];
+  heading?: string;
+}
+const { links, heading } = Astro.props;
+---
+
+<div>
+  {heading && <h3 class="eyebrow mb-4">{heading}</h3>}
+  <div class="grid gap-2 sm:grid-cols-2">
+    {
+      links.map((l) => {
+        const href = l.href ?? (l.path ? ghBlob(l.path) : '#');
+        const external = href.startsWith('http');
+        return (
+          <a
+            href={href}
+            rel={external ? 'noopener' : undefined}
+            class="group flex items-center justify-between gap-3 rounded-md border border-border bg-card px-4 py-3 text-sm text-foreground transition-colors hover:border-signal/50"
+          >
+            <span>{l.label}</span>
+            <svg viewBox="0 0 24 24" class="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+        );
+      })
+    }
+  </div>
+</div>

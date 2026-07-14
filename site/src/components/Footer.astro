@@ -1,0 +1,72 @@
+---
+import Logo from './Logo.astro';
+import { gh } from '../lib/utils';
+
+const cols = [
+  {
+    heading: 'Product',
+    links: [
+      { label: 'How it works', href: '/how-it-works' },
+      { label: 'iOS / Android / Agent OS', href: '/compare' },
+      { label: 'Roadmap', href: '/roadmap' },
+    ],
+  },
+  {
+    heading: 'Audiences',
+    links: [
+      { label: 'Developers', href: '/developers' },
+      { label: 'Investors', href: '/investors' },
+      { label: 'Makers', href: '/makers' },
+    ],
+  },
+  {
+    heading: 'Engineering',
+    links: [
+      { label: 'Engineering bible', href: '/engineering' },
+      { label: 'Source on GitHub', href: gh() },
+      { label: 'Task graph', href: gh('/issues') },
+    ],
+  },
+];
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-border">
+  <div class="mx-auto max-w-6xl px-6 py-14">
+    <div class="grid gap-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+      <div class="max-w-xs">
+        <a href="/" class="flex items-center gap-2.5" aria-label="Agent OS home">
+          <Logo class="h-6 w-6" />
+          <span class="text-sm font-semibold tracking-tight">Agent OS</span>
+        </a>
+        <p class="mt-4 text-sm leading-relaxed text-muted-foreground">
+          App-last. Local-first. Agent-native. A Fuchsia/Zircon fork with a Rust-first entity-and-agent product layer.
+        </p>
+      </div>
+      {
+        cols.map((c) => (
+          <div>
+            <h3 class="eyebrow mb-3">{c.heading}</h3>
+            <ul class="space-y-2.5">
+              {c.links.map((l) => (
+                <li>
+                  <a
+                    href={l.href}
+                    class="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    rel={l.href.startsWith('http') ? 'noopener' : undefined}
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+    <div class="mt-12 flex flex-col gap-2 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; {year} Agent OS. A research-and-engineering programme — not a shipping product.</p>
+      <p>Claims are evidence-gated to the engineering bible.</p>
+    </div>
+  </div>
+</footer>

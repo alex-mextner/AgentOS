@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#09090b"/>
+  <g stroke="#1c1c20" stroke-width="1">
+    <path d="M0 90H1200M0 180H1200M0 270H1200M0 360H1200M0 450H1200M0 540H1200"/>
+    <path d="M100 0V630M240 0V630M380 0V630M520 0V630M660 0V630M800 0V630M940 0V630M1080 0V630"/>
+  </g>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <defs>
+    <radialGradient id="glow" cx="0.82" cy="0.2" r="0.7">
+      <stop offset="0" stop-color="#60a5fa" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#60a5fa" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g transform="translate(80,90)">
+    <g stroke="#3f3f46" stroke-width="2">
+      <line x1="0" y1="0" x2="0" y2="-20"/>
+    </g>
+    <circle cx="0" cy="0" r="7" fill="#60a5fa"/>
+  </g>
+  <text x="80" y="150" font-family="Inter, system-ui, sans-serif" font-size="22" letter-spacing="4" fill="#60a5fa">APP-LAST · LOCAL-FIRST · AGENT-NATIVE</text>
+  <text x="76" y="290" font-family="Inter, system-ui, sans-serif" font-size="86" font-weight="700" fill="#fafafa">Your work is</text>
+  <text x="76" y="392" font-family="Inter, system-ui, sans-serif" font-size="86" font-weight="700" fill="#fafafa">the interface.</text>
+  <text x="80" y="470" font-family="Inter, system-ui, sans-serif" font-size="30" fill="#a1a1aa">Not a grid of apps. A Fuchsia/Zircon fork, Rust-first.</text>
+  <text x="80" y="565" font-family="ui-monospace, monospace" font-size="24" font-weight="600" fill="#fafafa">Agent OS</text>
+</svg>

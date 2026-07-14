@@ -1,0 +1,64 @@
+---
+import Button from './Button.astro';
+import AppLastDiagram from './AppLastDiagram.astro';
+import { brand } from '../data/content';
+
+const proof = [
+  'Fuchsia/Zircon fork',
+  'Rust-first product layer',
+  '157-doc engineering bible',
+  'Evidence-gated claims',
+];
+---
+
+<section class="relative overflow-hidden border-b border-border">
+  <!-- Ambient grid, very restrained -->
+  <div
+    class="pointer-events-none absolute inset-0 opacity-[0.35] [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]"
+    aria-hidden="true"
+    style="background-image:linear-gradient(hsl(var(--border))_1px,transparent_1px),linear-gradient(90deg,hsl(var(--border))_1px,transparent_1px);background-size:56px_56px;"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-6xl px-6 pb-16 pt-16 md:pb-24 md:pt-24">
+    <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr]">
+      <div>
+        <div
+          class="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground"
+        >
+          <span class="h-1.5 w-1.5 rounded-full bg-signal"></span>
+          {brand.descriptor}
+        </div>
+
+        <h1 class="mt-6 text-balance text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
+          Your work is the interface.<br />
+          <span class="text-muted-foreground">Not a grid of apps.</span>
+        </h1>
+
+        <p class="mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
+          {brand.lede}
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <Button href="/how-it-works" variant="primary">Read the vision</Button>
+          <Button href="/compare" variant="outline">iOS / Android / Agent OS</Button>
+        </div>
+
+        <ul class="mt-8 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs text-muted-foreground">
+          {
+            proof.map((p) => (
+              <li class="flex items-center gap-1.5">
+                <span class="h-1 w-1 rounded-full bg-signal/70" aria-hidden="true" />
+                {p}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <AppLastDiagram />
+      </div>
+    </div>
+  </div>
+</section>
