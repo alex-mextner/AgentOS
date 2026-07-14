@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import RefDialog from '../components/RefDialog.tsx';
 
 interface Props {
   title?: string;
@@ -86,6 +87,10 @@ const fullTitle = title.includes('Agent OS') ? title : `${title} — Agent OS`;
       <slot />
     </main>
     <Footer />
+
+    <!-- Citation preview dialog. Delegated listener — serves every page's doc-id + [n] refs.
+         client:load so the listener is always live (a null-rendering global island). -->
+    <RefDialog client:load />
 
     <!-- Service worker: offline / instant repeat-load. Progressive enhancement only. -->
     <script is:inline>
