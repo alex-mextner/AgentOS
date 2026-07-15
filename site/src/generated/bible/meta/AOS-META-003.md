@@ -1,0 +1,130 @@
+---
+id: "AOS-META-003"
+title: "Source and Claim Citation Convention"
+status: "Normative foundation"
+version: "1.0.0-foundation"
+baseline_date: "2026-07-13"
+owners: "Documentation Lead"
+audience: "Engineering, product, security, legal, programme, partner, and community readers"
+summary: "Source and Claim Citation Convention: scope, decisions, requirements, evidence, risks, and traceability for the Agent OS programme."
+---
+# Source and Claim Citation Convention
+
+> This document defines the machine-readable conventions that keep specifications, tasks, sources, claims, experiments, and Wiki output consistent.
+
+## Table of Contents
+
+- [Purpose and Scope](#purpose-and-scope)
+- [Normative Position](#normative-position)
+- [Operating Model](#operating-model)
+- [Requirements](#requirements)
+- [Failure and Degradation](#failure-and-degradation)
+- [Evidence and Acceptance](#evidence-and-acceptance)
+- [Implementation Obligations](#implementation-obligations)
+- [Risks and Open Questions](#risks-and-open-questions)
+- [Related Documents](#related-documents)
+- [Planning Reference Anchors](#planning-reference-anchors)
+<a id="purpose-and-scope"></a>
+
+## Purpose and Scope
+
+**Area:** Documentation System.
+
+This document defines the machine-readable conventions that keep specifications, tasks, sources, claims, experiments, and Wiki output consistent.
+
+This document owns the semantics implied by **Source and Claim Citation Convention**. It does not assert that every described subsystem already exists. It defines the target model, constraints, evidence needed to trust an implementation, and the boundary with adjacent documents.
+<a id="normative-position"></a>
+
+## Normative Position
+
+1. Define the boundary, owner, inputs, outputs, failure modes, observability, security authority, lifecycle, and compatibility policy.
+2. Keep implementation facts separate from desired outcomes and unverified assumptions.
+3. Require a reproducible evidence bundle before downstream components depend on the result.
+<a id="operating-model"></a>
+
+## Operating Model
+
+The operating model is contract-first and evidence-driven. A component declares its authority, resources, lifecycle, error model, cancellation and timeout behavior, observability, version, and compatibility promise. Backends are replaceable only when the same conformance suite passes and no forbidden platform type leaks into portable layers.
+
+Implementation proceeds through a reference model or mock, deterministic QEMU evidence where relevant, documentation-first physical hardware, and quality-hardware evidence. Pixel 9 adapters remain quarantined according to [ADR-0004](AOS-ADR-0004.md#decision).
+<a id="requirements"></a>
+
+## Requirements
+
+- **R01.** Define the boundary, owner, inputs, outputs, failure modes, observability, security authority, lifecycle, and compatibility policy.
+- **R02.** Keep implementation facts separate from desired outcomes and unverified assumptions.
+- **R03.** Require a reproducible evidence bundle before downstream components depend on the result.
+- **R04.** Specify normal, partial, denied, timeout, cancellation, restart, upgrade, and permanent-failure behavior.
+- **R05.** Expose structured diagnostics without leaking secrets or vendor-specific implementation details.
+- **R06.** Link material unknowns to a claim and, when testable, an experiment with an owner and gate.
+- **R07.** Update affected documentation and task data when evidence changes the model.
+<a id="failure-and-degradation"></a>
+
+## Failure and Degradation
+
+Degradation must be explicit rather than accidental. The system reports capability absence, reduced quality, unavailable provider, stale data, or unsafe condition through typed states. It must not silently fall back to broader authority, unrestricted legacy execution, unverified firmware, lossy data migration, or irreversible agent action.
+
+Recovery defines what state is retained, reconstructed, re-enrolled, compensated, or intentionally discarded. Unsupported hardware or providers are rejected at binding time where possible.
+<a id="evidence-and-acceptance"></a>
+
+## Evidence and Acceptance
+
+- Reviewed specification.
+- Linked tasks, claims, sources and experiments.
+- Conformance or acceptance evidence.
+- Evidence records target identity, hardware revision, firmware, source commit, toolchain, configuration, seed, timestamps, artifacts, expected result, actual result, and reviewer.
+- Acceptance requires the referenced tasks to meet their own criteria; prose completion is not implementation completion.
+<a id="implementation-obligations"></a>
+
+## Implementation Obligations
+
+| Task | Obligation | Priority | Gate/Milestone | Verification |
+| --- | --- | --- | --- | --- |
+| AOS-DOCS-003 | Normalize source archive into normative specifications | P0 | M0 | architecture and product reviewers sample every source family |
+| AOS-DOCS-004 | Establish source and literature register | P0 | M0 | URL/schema validation and authority/source-scope review |
+| AOS-DOCS-005 | Establish claim verification register | P0 | M0 | review all hardware, camera, cellular, backup, agent, and portability claims |
+| AOS-LEGAL-004 | Implement source and artifact provenance controls | P0 | M0 | scan seeded fixtures and sample imported dependencies/assets |
+<a id="risks-and-open-questions"></a>
+
+## Risks and Open Questions
+
+- Undefined ownership and failure semantics create hidden coupling.
+- Unverified source claims can become architecture accidentally.
+- **Open-question rule:** an unanswered high-impact question becomes a claim/experiment record and cannot be hidden in meeting notes.
+- **Stop rule:** work stops or changes track when legal rights, recovery, debug access, safety, or the required evidence path is unavailable.
+<a id="related-documents"></a>
+
+## Related Documents
+
+- [Product vision](AOS-VSN-001.md#product-thesis)
+- [Portable system architecture](AOS-ARCH-001.md#system-boundary)
+- [Portable device-service contracts](AOS-ARCH-020.md#contract-set)
+- [Hardware portfolio](AOS-HW-001.md#portfolio)
+- [Decision gates](AOS-PLAN-006.md#decision-gates)
+- [Claim register](AOS-RES-003.md#claim-register)
+<a id="planning-reference-anchors"></a>
+
+## Planning Reference Anchors
+
+<a id="claim-discipline"></a>
+
+### Claim Discipline
+
+`AOS-DOCS-003` — Normalize source archive into normative specifications; `AOS-DOCS-005` — Establish claim verification register
+
+<a id="source-record"></a>
+
+### Source Record
+
+`AOS-DOCS-004` — Establish source and literature register; `AOS-LEGAL-004` — Implement source and artifact provenance controls
+
+
+<a id="generated-xref-anchors"></a>
+
+## Generated Cross-Reference Anchors
+
+<a id="citation-rules"></a>
+
+### Citation Rules
+
+This stable anchor is referenced by another canonical document. Its normative content is the nearest applicable section above and the linked task/claim data; future editorial refinement must preserve the anchor.

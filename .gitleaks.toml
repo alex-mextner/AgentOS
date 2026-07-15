@@ -1,0 +1,15 @@
+# Per-repo gitleaks allowlist.
+#
+# site/src/generated/bible/** is a build-generated, verbatim copy of the already-committed
+# engineering-bible/docs corpus (produced by site/scripts/sync-corpus.mjs). It contains no
+# credentials; gitleaks false-positives on prose that mentions security tooling (e.g. a line
+# reading "…secret scanning, provenance/SBOM generation…"). The source docs are the vetted
+# original; the copy is a derived artifact, so it is excluded from scanning here.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Build-generated corpus copy (derived from vetted engineering-bible/docs)"
+paths = [
+  '''generated/bible/.*''',
+]

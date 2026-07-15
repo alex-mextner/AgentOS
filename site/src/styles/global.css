@@ -100,8 +100,54 @@
       px-1.5 py-0.5 font-mono text-[0.68rem] leading-none text-muted-foreground;
   }
 
+  /* Interactive citation chips — link to the in-portal doc / open the preview dialog. */
+  .cite-link,
+  .cite-interactive {
+    @apply cursor-pointer no-underline transition-colors hover:border-signal/60 hover:bg-signal/10 hover:text-signal;
+  }
+
+  /* Inline [n] citation inside rendered doc prose — a compact superscript button. */
+  .ref-cite {
+    @apply cursor-pointer align-super font-mono text-[0.72em] text-signal transition-opacity hover:opacity-70;
+  }
+
+  /* In-portal document body. Tighten the typography plugin to the site's register. */
+  .doc-prose {
+    @apply text-[0.95rem] leading-relaxed text-muted-foreground;
+  }
+  .doc-prose :where(h1, h2, h3, h4) {
+    @apply scroll-mt-24 text-foreground;
+  }
+  .doc-prose :where(a):not(.cite-link) {
+    @apply text-signal underline-offset-2 hover:underline;
+  }
+  .doc-prose :where(code) {
+    @apply rounded bg-muted/60 px-1 py-0.5 text-[0.85em] text-foreground before:content-none after:content-none;
+  }
+  .doc-prose :where(table) {
+    @apply block overflow-x-auto text-sm;
+  }
+  .doc-prose :where(.cite-link) {
+    @apply font-mono text-[0.85em] font-medium text-signal no-underline;
+  }
+
   .section {
     @apply py-20 md:py-28;
+  }
+
+  /* Waitlist email field. The stock shadcn --input border equals --border, which blends
+   * into the raised bg-card of the CTA band — the field reads as "not drawn". Give this
+   * one input clear presence (visible border + inset fill) without touching the island. */
+  #waitlist-email {
+    border-color: hsl(var(--foreground) / 0.22);
+    background-color: hsl(var(--background) / 0.65);
+    box-shadow: inset 0 1px 2px hsl(var(--background) / 0.6);
+  }
+  #waitlist-email:hover {
+    border-color: hsl(var(--foreground) / 0.32);
+  }
+  #waitlist-email:focus-visible {
+    border-color: hsl(var(--signal));
   }
 
   .container-tight {
@@ -110,5 +156,13 @@
 
   .hairline {
     @apply border-t border-border;
+  }
+
+  /* Citation preview dialog motion — respects reduced-motion via the base rule above. */
+  .ref-dialog-overlay {
+    animation: fade-up 0.16s ease-out both;
+  }
+  .ref-dialog-panel {
+    animation: fade-up 0.2s ease-out both;
   }
 }

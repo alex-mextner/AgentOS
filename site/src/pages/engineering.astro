@@ -2,13 +2,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SectionHeader from '../components/SectionHeader.astro';
-import { ghBlob, gh } from '../lib/utils';
-import { loadDocs, docCategories } from '../lib/corpus';
+import { gh } from '../lib/utils';
+import { docCategories } from '../lib/corpus';
+import { listDocs, docHref } from '../lib/bible';
 import { loadIssues } from '../lib/github';
 
-// Build-time reads. Docs come from the repo working tree (never fails the page).
+// Build-time reads. Docs come from the in-site copy of the corpus (self-contained; see
+// scripts/sync-corpus.mjs), so the page renders whether the whole repo or only site/ ships.
 // Issues are the ONE network dependency and degrade gracefully to a calm fallback.
-const docs = loadDocs();
+const docs = listDocs();
 const categories = docCategories(docs);
 const { ok: issuesOk, issues } = await loadIssues(10);
 
@@ -58,13 +60,12 @@ const catLabels: Record<string, string> = {
   <!-- Document index -->
   <section class="section border-b border-border">
     <div class="mx-auto max-w-6xl px-6">
-      <SectionHeader eyebrow="Index" title="Every document." lede="Sorted by identifier. Each links to its Markdown source on GitHub." />
+      <SectionHeader eyebrow="Index" title="Every document." lede="Sorted by identifier. Each opens in the portal — rendered here, not on GitHub." />
       <div class="mt-10 overflow-hidden rounded-xl border border-border">
         {
           docs.slice(0, 80).map((d, i) => (
             <a
-              href={ghBlob(d.path)}
-              rel="noopener"
+              href={docHref(d.id)}
               class={
                 'group flex items-center gap-4 px-4 py-3 transition-colors hover:bg-accent/30 sm:px-5 ' +
                 (i > 0 ? 'border-t border-border' : '')

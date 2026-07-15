@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { listDocs, getDoc, renderDoc, getReferences } from '../../../lib/bible';
+import { ghBlob } from '../../../lib/utils';
+
+export function getStaticPaths() {
+  const seen = new Set<string>();
+  return listDocs()
+    .filter((d) => {
+      if (seen.has(d.id)) return false;
+      seen.add(d.id);
+      return true;
+    })
+    .map((d) => ({ params: { id: d.id } }));
+}
+
+const { id } = Astro.params;
+const doc = getDoc(id!);
+if (!doc) return Astro.redirect('/engineering');
+
+const html = renderDoc(doc.markdown);
+const references = getReferences(doc.meta.id);
+
+const catLabels: Record<string, string> = {
+  architecture: 'Architecture',
+  product: 'Product',
+  research: 'Research',
+  hardware: 'Hardware',
+  legal: 'Legal',
+  planning: 'Planning',
+  decisions: 'Decisions',
+  governance: 'Governance',
+  vision: 'Vision',
+  validation: 'Validation',
+  meta: 'Meta',
+  volumes: 'Volumes',
+  glossary: 'Glossary',
+  templates: 'Templates',
+  general: 'General',
+};
+---
+
+<BaseLayout title={`${doc.meta.id} · ${doc.meta.title}`} description={doc.meta.summary || `${doc.meta.title} — Agent OS engineering bible.`}>
+  <article class="section" data-doc-context={doc.meta.id}>
+    <div class="mx-auto max-w-3xl px-6">
+      <nav class="mb-8 flex items-center gap-2 text-xs text-muted-foreground">
+        <a href="/engineering" class="hover:text-foreground">Engineering bible</a>
+        <span aria-hidden="true">/</span>
+        <span class="font-mono text-signal/90">{catLabels[doc.meta.category] ?? doc.meta.category}</span>
+      </nav>
+
+      <header class="border-b border-border pb-8">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="cite">{doc.meta.id}</span>
+          <span class="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-muted-foreground">{doc.meta.status}</span>
+        </div>
+        <h1 class="mt-4 text-balance text-3xl font-semibold tracking-tight md:text-4xl">{doc.meta.title}</h1>
+        {doc.meta.summary && <p class="mt-4 text-pretty leading-relaxed text-muted-foreground">{doc.meta.summary}</p>}
+        <div class="mt-6 flex flex-wrap gap-2">
+          <a
+            href={ghBlob(doc.meta.path)}
+            rel="noopener"
+            class="inline-flex h-9 items-center gap-1.5 rounded-md border border-border bg-background px-3.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Edit on GitHub →
+          </a>
+        </div>
+      </header>
+
+      <div class="doc-prose prose prose-invert mt-10 max-w-none" set:html={html} />
+    </div>
+  </article>
+
+  {
+    references.length > 0 && (
+      <script type="application/json" id="doc-refs" is:inline set:html={JSON.stringify(references)} />
+    )
+  }
+</BaseLayout>

@@ -93,7 +93,7 @@ export default function WaitlistForm() {
         </p>
       )}
       <p className="mt-2 text-xs text-muted-foreground">
-        No spam. A research programme, not a shipping product — you&rsquo;ll hear from us when there&rsquo;s something real to try.
+        No spam. A research programme — you&rsquo;ll hear from us when there&rsquo;s something real to try.
       </p>
     </form>
   );

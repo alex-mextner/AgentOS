@@ -1,5 +1,11 @@
 ---
-import { compareDimensions, compareBaseline, type CompareDimension } from '../data/compare';
+import { compareDimensions, compareBaseline, compareSource, type CompareDimension } from '../data/compare';
+import { resolveDocId } from '../lib/bible';
+import CiteRefs from './CiteRefs.astro';
+
+// The iOS/Android [n] citations map to the comparison source doc's numbered references.
+// Tagging the table with its source id lets the RefDialog resolve each [n] to a reference.
+const sourceId = resolveDocId(compareSource);
 
 interface Props {
   dimensions?: CompareDimension[];
@@ -20,7 +26,7 @@ function parts(text: string) {
 }
 ---
 
-<div class="overflow-x-auto rounded-xl border border-border">
+<div class="overflow-x-auto rounded-xl border border-border" data-doc-context={sourceId ?? undefined}>
   <table class="w-full min-w-[720px] border-collapse text-sm">
     <thead>
       <tr class="border-b border-border bg-muted/30 text-left">
@@ -46,13 +52,13 @@ function parts(text: string) {
                 {d.label}
               </th>
               <td class="border-t border-border px-4 py-3 align-top text-muted-foreground">
-                {ios.body} {ios.refs && <span class="cite ml-0.5 align-middle">{ios.refs}</span>}
+                {ios.body} {ios.refs && <CiteRefs refs={ios.refs} />}
               </td>
               <td class="border-t border-border px-4 py-3 align-top text-muted-foreground">
-                {and.body} {and.refs && <span class="cite ml-0.5 align-middle">{and.refs}</span>}
+                {and.body} {and.refs && <CiteRefs refs={and.refs} />}
               </td>
               <td class="border-t border-border bg-signal/[0.04] px-4 py-3 align-top text-foreground">
-                {ag.body} {ag.refs && <span class="cite ml-0.5 align-middle">{ag.refs}</span>}
+                {ag.body} {ag.refs && <CiteRefs refs={ag.refs} />}
               </td>
             </tr>
           );

@@ -1,0 +1,99 @@
+---
+// Flagship section: AUTH / IDENTITY — the "Global Account".
+// Positioning per product owner: identity is a system-wide primitive, not a
+// per-app afterthought. Grounded in AOS-PROD-014 (native app clients / service
+// identity) and AOS-ARCH-012 (privacy / data custody).
+import Cite from './Cite.astro';
+
+const mechanism = [
+  {
+    title: 'Global end-to-end login',
+    body: 'Log into an app once and the matching website recognizes you — the same identity spans native and web, not two separate accounts.',
+  },
+  {
+    title: 'Local-first personal storage',
+    body: 'Your data is end-to-end encrypted and lives with you. You share individual "sectors" selectively; vendors never hold the store, only the handles you grant.',
+  },
+  {
+    title: 'Vendors get a UUID, nothing more',
+    body: 'A vendor sees an opaque per-user identifier and the specific access you allow — not your name, inbox, or profile. Custody stays on your side.',
+  },
+  {
+    title: 'Universal payments, built in',
+    body: 'One system-wide way to pay every app. No per-vendor card entry, no re-authorizing a checkout you already trust.',
+  },
+  {
+    title: 'A notification hub, not OTP email',
+    body: 'An OS-level hub replaces OTP email and SMS: granular, revocable, rich-content, with trust tiers — every subscription visible in one place.',
+  },
+  {
+    title: 'Global nicknames',
+    body: 'Pseudonymous, un-squattable identifiers. You are reachable and consistent across the system without handing anyone your real identity.',
+  },
+];
+
+const vsApple = [
+  ['Open', 'No paid developer account gates adoption — any vendor can integrate.'],
+  ['Web + native', 'Spans the browser and native apps, not just one vendor’s ecosystem.'],
+  ['Custody inverts', 'Local-first and GDPR-native: your data stays with you, not routed through the vendor’s account.'],
+  ['One consent surface', 'See and revoke every grant and notification subscription in a single system-wide place.'],
+  ['Anti-phishing', 'Credentials never touch a vendor’s servers, so they can’t be stolen from one.'],
+  ['Pseudonymous by design', 'Identity is opaque by default, not an afterthought bolted onto a real-name account.'],
+];
+---
+
+<section id="global-account" class="section border-b border-border scroll-mt-24">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="max-w-2xl">
+      <div class="eyebrow mb-3">Identity · Global Account</div>
+      <h2 class="text-balance text-3xl font-semibold tracking-tight md:text-4xl">
+        One account for everything. Your data stays yours.
+      </h2>
+      <p class="mt-4 text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
+        Agent OS treats identity as a system-wide primitive, not a per-app afterthought. One Global Account
+        carries your login, payments and data everywhere — across native apps <em>and</em> websites — while
+        your personal data physically stays with you, not vendors. A vendor gets only an opaque UUID and the
+        specific access you grant. <Cite id="AOS-PROD-014" />
+      </p>
+    </div>
+
+    <!-- Owner epigraph — the section's signature line. -->
+    <figure class="mt-10 border-l-2 border-signal/60 pl-5 sm:pl-6">
+      <blockquote class="text-balance text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+        “iCloud as it should be.”
+      </blockquote>
+      <figcaption class="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
+        “Apple made a unified way to pay and authorize — that’s exactly right — but to adopt it you have to
+        buy a developer account.”
+      </figcaption>
+    </figure>
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        mechanism.map((m) => (
+          <article class="flex flex-col rounded-xl border border-border bg-card p-6">
+            <h3 class="text-base font-semibold tracking-tight">{m.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{m.body}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 rounded-xl border border-border bg-card p-6 sm:p-8">
+      <h3 class="text-lg font-semibold tracking-tight">Deeper than Sign in with Apple.</h3>
+      <p class="mt-2 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+        The same instinct Apple had — a unified way to pay and authorize — taken to its conclusion, without the gate.
+      </p>
+      <dl class="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+        {
+          vsApple.map(([term, def]) => (
+            <div class="grid grid-cols-[auto_1fr] gap-3">
+              <dt class="font-mono text-xs uppercase tracking-[0.14em] text-signal">{term}</dt>
+              <dd class="text-sm leading-relaxed text-muted-foreground">{def}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>

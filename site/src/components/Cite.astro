@@ -1,10 +1,21 @@
 ---
 // Document-ID citation chip. The recurring "evidence-gated" motif: every load-bearing
-// claim on the site carries the AOS-* spec id it comes from.
+// claim on the site carries the AOS-* spec id it comes from. The chip is interactive —
+// it links to the in-portal document and opens a preview dialog (RefDialog) on click.
+import { resolveDocId, docHref } from '../lib/bible';
 interface Props {
   id: string;
 }
 const { id } = Astro.props;
+const canonical = resolveDocId(id);
 ---
 
-<span class="cite" title={`Grounded in ${id}`}>{id}</span>
+{
+  canonical ? (
+    <a class="cite cite-link" href={docHref(canonical)} data-doc-id={canonical} title={`Preview ${id}`}>
+      {id}
+    </a>
+  ) : (
+    <span class="cite" title={`Grounded in ${id}`}>{id}</span>
+  )
+}

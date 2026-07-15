@@ -89,13 +89,13 @@ export const compareDimensions: CompareDimension[] = [
     label: 'Identity / accounts',
     ios: 'Apple ID + Sign in with Apple + iCloud passkeys [10][11]',
     android: 'Google account + Credential Manager + passkeys [24][25]',
-    agentos: 'No first-party account model yet; delegated service identity [AOS-PROD-014] (gap)',
+    agentos: 'Global Account: one system-wide identity across web + native; local-first data, opaque per-vendor UUID, built-in payments [AOS-PROD-014]',
   },
   {
     key: 'distribution',
     label: 'Developer distribution',
     ios: 'App Store + notarization; EU alt-marketplaces under DMA [12][13]',
     android: 'Play + sideload; 2026 developer verification mandate [23]',
-    agentos: 'No end-user distribution model specified yet [AOS-PROD-014] (gap)',
+    agentos: 'No App Store: context-composed micro-apps; tree-shaken capabilities; no API lock-in [AOS-ARCH-011][AOS-PROD-014]',
   },
 ];

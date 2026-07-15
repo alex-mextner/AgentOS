@@ -215,8 +215,8 @@ export const statusRows = [
   { item: 'FEMU bootstrap + first isolated process', state: 'next' },
   { item: 'Entity Store + first agents + history', state: 'planned' },
   { item: 'Real-device bring-up (Track B)', state: 'planned' },
-  { item: 'First-party identity / accounts', state: 'gap' },
-  { item: 'End-user developer distribution', state: 'gap' },
+  { item: 'Global Account — system-wide identity, payments & data', state: 'designed' },
+  { item: 'Micro-app distribution — no App Store', state: 'designed' },
 ] as const;
 
 export const navLinks = [

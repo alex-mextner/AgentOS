@@ -6,7 +6,7 @@ const badge: Record<string, { label: string; cls: string }> = {
   decided: { label: 'Decided', cls: 'border-signal/40 bg-signal/10 text-signal' },
   next: { label: 'Next', cls: 'border-amber-500/40 bg-amber-500/10 text-amber-400' },
   planned: { label: 'Planned', cls: 'border-border bg-muted/40 text-muted-foreground' },
-  gap: { label: 'Open gap', cls: 'border-red-500/40 bg-red-500/10 text-red-400' },
+  designed: { label: 'Designed', cls: 'border-signal/40 bg-signal/10 text-signal' },
 };
 ---
 
@@ -24,5 +24,6 @@ const badge: Record<string, { label: string; cls: string }> = {
   }
 </div>
 <p class="mt-3 text-xs leading-relaxed text-muted-foreground">
-  Honest framing: identity/accounts and end-user developer distribution are genuine open gaps, stated plainly rather than papered over.
+  Identity and distribution are <span class="text-foreground">designed, not deferred</span>: a system-wide Global Account and an App-Store-free micro-app model.
+  <a href="/how-it-works#global-account" class="text-signal hover:underline">See how they work →</a>
 </p>

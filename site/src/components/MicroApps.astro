@@ -1,0 +1,86 @@
+---
+// Flagship section: DISTRIBUTION — micro-apps, no App Store.
+// Positioning per product owner: no App Store and no apps in the usual sense.
+// The system composes capabilities from third-party micro-apps by context.
+// Grounded in AOS-ARCH-011 (two-floor app model / interop) and AOS-PROD-014.
+import Cite from './Cite.astro';
+
+const how = [
+  {
+    title: 'Apps decompose into parts',
+    body: 'Formats, documents, API protocols, detachable widgets and cards, and the glue between them. Packing capabilities into a monolith is not allowed — the parts stay decoupled.',
+  },
+  {
+    title: 'Discovery is automatic',
+    body: 'The system finds, installs and runs the exact modules a task needs, driven by context and triggers. You express what you want to do; it assembles the capability.',
+  },
+  {
+    title: 'No browser, no tab graveyard',
+    body: 'Network documents render in the task space they belong to, not in a pile of forgotten tabs. There is no separate browser to escape into.',
+  },
+  {
+    title: 'Shared by capability, not brand',
+    body: 'A system-wide default handles each interface class. You don’t write to Telegram — you write to Sveta, and the system routes it.',
+  },
+];
+
+const differentiators = [
+  ['Tree-shaking', 'Only the functions you actually use are pulled in — faster than shipping a whole app to run one feature.'],
+  ['Better discovery', 'The system connects modules as they’re needed; vendors reach people through contextual suggestions, not a store funnel.'],
+  ['No API lock-in', 'Proprietary-only APIs are forbidden. A dead vendor’s modules keep working — capability outlives the company.'],
+  ['No forced feature-death', 'Ship one missing function on its own, monetized through the platform, instead of bundling and abandoning.'],
+  ['Centralized and distributed', 'Strict system-wide laws replace “monarchy in the kernel, anarchy outside.” Third parties build freely inside firm rules.'],
+];
+---
+
+<section id="micro-apps" class="section border-b border-border scroll-mt-24">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="max-w-2xl">
+      <div class="eyebrow mb-3">Distribution · Micro-apps</div>
+      <h2 class="text-balance text-3xl font-semibold tracking-tight md:text-4xl">
+        No App Store. No apps in the usual sense.
+      </h2>
+      <p class="mt-4 text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
+        Instead of installing named, icon’d monoliths, you express what you want to do and the system assembles
+        the exact capabilities from third-party micro-apps — microservices, widgets and cards. The OS itself is
+        built from them. <Cite id="AOS-ARCH-011" />
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2">
+      {
+        how.map((h) => (
+          <article class="flex flex-col rounded-xl border border-border bg-card p-6">
+            <h3 class="text-base font-semibold tracking-tight">{h.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{h.body}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 divide-y divide-border rounded-xl border border-border">
+      {
+        differentiators.map(([term, def], i) => (
+          <article class="grid gap-3 p-6 sm:grid-cols-[auto_1fr] sm:gap-6 sm:p-7">
+            <div class="font-mono text-sm text-signal sm:pt-0.5">{String(i + 1).padStart(2, '0')}</div>
+            <div>
+              <h3 class="text-base font-semibold tracking-tight">{term}</h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{def}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="mt-8 flex flex-col gap-4 rounded-xl border border-border bg-card p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+      <p class="max-w-xl text-sm leading-relaxed text-muted-foreground">
+        Micro-apps can be faceless-safe precisely because the
+        <a href="#global-account" class="text-signal hover:underline">Global Account</a>
+        holds identity, payments and data centrally.
+      </p>
+      <p class="shrink-0 text-xs text-muted-foreground">
+        Prior art: Apple App Clips · VK Mini Apps · WeChat modules
+      </p>
+    </div>
+  </div>
+</section>

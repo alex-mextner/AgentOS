@@ -5,6 +5,9 @@
   "private": true,
   "description": "AgentOS marketing site — static Astro app, shadcn design language.",
   "scripts": {
+    "sync-corpus": "node scripts/sync-corpus.mjs",
+    "prebuild": "node scripts/sync-corpus.mjs",
+    "predev": "node scripts/sync-corpus.mjs",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
@@ -19,6 +22,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
+    "marked": "^14.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^2.6.0"
