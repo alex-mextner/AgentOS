@@ -11,27 +11,53 @@
 <title>Agent OS</title>
 <link rel="stylesheet" href="/style.css">
 <link rel="stylesheet" href="/atlas.css">
+<link rel="stylesheet" href="/nav.css">
 <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
 <script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/+esm';window.mermaid=mermaid;mermaid.initialize({startOnLoad:false,theme:'dark',securityLevel:'loose'});</script>
 <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@1.0.3/dist/frappe-gantt.umd.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#app">Skip to content</a>
 <div class="shell">
-<header class="top"><a class="brand" href="#home"><span class="brandmark"></span><span>Agent OS</span></a><nav class="nav"><a href="#build">Build OS</a><a href="#developers">Developers</a><a href="#investors">Investors</a><a href="#users">Users</a><a href="#wiki">Bible</a><a href="#tasks">Tasks</a><a href="#gantt">Roadmap</a><a href="#compare">Compare</a><a href="#procurement">Procurement</a><a href="#claims">Claims</a><a href="#risks">Risks</a><a href="#decisions">Decisions</a><a href="#glossary">Glossary</a><a href="#contacts">Contacts</a></nav><div class="top-actions"><a class="btn small ghost" id="repo-link" href="https://github.com/alex-mextner/AgentOS"><span class="label">GitHub</span> ↗</a></div></header>
+<header class="site-header">
+  <div class="nav-shell">
+    <a class="site-brand" href="/" data-route="" data-label="Home" aria-label="Agent OS home"><span class="brandmark"></span><span class="brand-copy"><span>Agent OS</span><small>Engineering Bible</small></span></a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a class="nav-link" href="/build" data-route="build" data-label="Build OS">Build</a>
+      <a class="nav-link" href="/wiki" data-route="wiki" data-label="Bible">Bible</a>
+      <a class="nav-link" href="/tasks" data-route="tasks" data-label="Tasks">Tasks</a>
+      <a class="nav-link" href="/roadmap" data-route="roadmap" data-label="Roadmap">Roadmap</a>
+      <div class="nav-group"><button class="nav-trigger" type="button" aria-expanded="false">Explore <span aria-hidden="true">⌄</span></button><div class="nav-popover">
+        <a href="/compare" data-route="compare" data-label="Compare"><strong>Compare</strong><span>Agent OS, iOS and Android</span></a>
+        <a href="/devices" data-route="devices" data-label="Devices"><strong>Devices</strong><span>Hardware tracks and Shark</span></a>
+        <a href="/landscape" data-route="landscape" data-label="Landscape"><strong>OS landscape</strong><span>Prior art and adjacent systems</span></a>
+        <a href="/procurement" data-route="procurement" data-label="Procurement"><strong>Procurement</strong><span>Hardware waves and budgets</span></a>
+      </div></div>
+      <div class="nav-group"><button class="nav-trigger" type="button" aria-expanded="false">Evidence <span aria-hidden="true">⌄</span></button><div class="nav-popover">
+        <a href="/claims" data-route="claims" data-label="Claims"><strong>Claims</strong><span>What the project asserts</span></a>
+        <a href="/experiments" data-route="experiments" data-label="Experiments"><strong>Experiments</strong><span>Validation and evidence</span></a>
+        <a href="/risks" data-route="risks" data-label="Risks"><strong>Risks</strong><span>Known technical uncertainty</span></a>
+        <a href="/decisions" data-route="decisions" data-label="Decisions"><strong>Decisions</strong><span>Architecture decision records</span></a>
+      </div></div>
+      <div class="nav-group"><button class="nav-trigger" type="button" aria-expanded="false">More <span aria-hidden="true">⌄</span></button><div class="nav-popover">
+        <a href="/developers" data-route="developers" data-label="Developers"><strong>Developers</strong><span>Implementation entry points</span></a>
+        <a href="/investors" data-route="investors" data-label="Investors"><strong>Investors</strong><span>Programme and opportunity</span></a>
+        <a href="/users" data-route="users" data-label="Users"><strong>Users</strong><span>Product-facing view</span></a>
+        <a href="/contacts" data-route="contacts" data-label="Contacts"><strong>Contacts</strong><span>Project channels</span></a>
+        <a href="/glossary" data-route="glossary" data-label="Glossary"><strong>Glossary</strong><span>Canonical terminology</span></a>
+        <a href="/api" data-route="api" data-label="API"><strong>API</strong><span>Datasets and interfaces</span></a>
+      </div></div>
+    </nav>
+    <span class="current-section" aria-live="polite">Home</span>
+    <div class="nav-actions"><a class="btn small ghost repo-button" id="repo-link" href="https://github.com/alex-mextner/AgentOS">GitHub ↗</a><button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+    <nav class="mobile-strip" aria-label="Mobile navigation"><div class="mobile-strip-scroll">
+      <a href="/build" data-route="build" data-label="Build OS">Build</a><a href="/wiki" data-route="wiki" data-label="Bible">Bible</a><a href="/tasks" data-route="tasks" data-label="Tasks">Tasks</a><a href="/roadmap" data-route="roadmap" data-label="Roadmap">Roadmap</a><a href="/compare" data-route="compare" data-label="Compare">Compare</a><a href="/devices" data-route="devices" data-label="Devices">Devices</a><a href="/landscape" data-route="landscape" data-label="Landscape">Landscape</a><a href="/procurement" data-route="procurement" data-label="Procurement">Procurement</a><a href="/claims" data-route="claims" data-label="Claims">Claims</a><a href="/experiments" data-route="experiments" data-label="Experiments">Experiments</a><a href="/risks" data-route="risks" data-label="Risks">Risks</a><a href="/decisions" data-route="decisions" data-label="Decisions">Decisions</a><a href="/glossary" data-route="glossary" data-label="Glossary">Glossary</a><a href="/contacts" data-route="contacts" data-label="Contacts">Contacts</a>
+    </div><span class="mobile-fade" aria-hidden="true"></span></nav>
+  </div>
+</header>
 <main class="main" id="app"><div class="status">Loading Agent OS workspace…</div></main>
 </div>
 <div class="modal" id="modal"><div class="modal-card"><button class="btn small" style="float:right" onclick="closeModal()">Close</button><div id="modal-body"></div></div></div>
-<script src="/core.js"></script>
-<script src="/landing.js"></script>
-<script src="/audiences.js"></script>
-<script src="/registers.js"></script>
-<script src="/landscape.js"></script>
-<script src="/devices.js"></script>
-<script src="/wiki.js"></script>
-<script src="/tasks.js"></script>
-<script src="/gantt.js"></script>
-<script src="/procurement.js"></script>
-<script src="/contacts.js"></script>
-<script src="/api.js"></script>
+<script src="/core.js"></script><script src="/landing.js"></script><script src="/audiences.js"></script><script src="/registers.js"></script><script src="/landscape.js"></script><script src="/devices.js"></script><script src="/wiki.js"></script><script src="/tasks.js"></script><script src="/gantt.js"></script><script src="/procurement.js"></script><script src="/contacts.js"></script><script src="/api.js"></script><script src="/nav.js"></script>
 </body>
 </html>
