@@ -4,6 +4,8 @@ const app=document.querySelector('#app'),modal=document.querySelector('#modal'),
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const split=s=>String(s||'').split(/[;\n]/).map(x=>x.trim()).filter(Boolean);const taskIdFromIssue=x=>(String(x.title).match(/\[(AOS-[A-Z0-9-]+)\]/)||[])[1]||'';
 const gh=path=>`https://github.com/${REPO}${path||''}`;const raw=path=>`https://raw.githubusercontent.com/${REPO}/main/${path}`;
+const cleanRouteAliases={roadmap:'gantt',bible:'wiki',vision:'home'};
+function routeParts(){if(location.hash)return location.hash.slice(1).split('/').map(decodeURIComponent);const path=location.pathname.replace(/^\/+|\/+$/g,'');if(!path)return['home'];const parts=path.split('/').map(decodeURIComponent);parts[0]=cleanRouteAliases[parts[0]]||parts[0];return parts}
 async function resolveRepo(){const x=await fetch('https://api.github.com/repos/'+REPO);if(!x.ok)throw Error('Repository unavailable');document.querySelector('#repo-link').href=gh('')}
 async function loadTasks(){const idx=await fetch(raw('data/index.json'),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('task index '+r.status);return r.json()});const parts=await Promise.all(idx.shards.map(s=>fetch(raw(s.file.replace(/^\//,'')),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(`${s.file} ${r.status}`);return r.json()})));TASKS=parts.flatMap(x=>x.tasks);return idx}
 async function loadIssues(){let out=[];for(let p=1;p<=5;p++){const r=await fetch(`https://api.github.com/repos/${REPO}/issues?state=all&per_page=100&page=${p}`);if(!r.ok)break;const x=(await r.json()).filter(i=>!i.pull_request);out.push(...x);if(x.length<100)break}ISSUES=out}
