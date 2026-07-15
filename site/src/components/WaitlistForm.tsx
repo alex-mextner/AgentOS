@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, Check, Loader2 } from 'lucide-react';
 
-// Email capture. No backend is wired yet — this validates and stores locally, then
-// confirms. It never throws and never blocks the page. Swap the submit handler for a
-// real endpoint (Formspree / a Vercel function) when one exists. See follow-ups.
+// Email capture. POSTs to the on-demand `/api/waitlist` endpoint, which forwards the
+// address to the owner-configured capture service (WAITLIST_WEBHOOK_URL) or logs it.
+// The form only shows success once the endpoint acknowledges the signup; a network or
+// server error is surfaced honestly instead of a fake confirmation.
 export default function WaitlistForm() {
   const [email, setEmail] = useState('');
-  const [done, setDone] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'done'>('idle');
   const [error, setError] = useState('');
 
-  function onSubmit(e: { preventDefault: () => void }) {
+  async function onSubmit(e: { preventDefault: () => void }) {
     e.preventDefault();
     const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     if (!valid) {
@@ -17,15 +18,28 @@ export default function WaitlistForm() {
       return;
     }
     setError('');
+    setStatus('submitting');
     try {
-      const list = JSON.parse(localStorage.getItem('aos-waitlist') || '[]');
-      list.push({ email, at: new Date().toISOString() });
-      localStorage.setItem('aos-waitlist', JSON.stringify(list));
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !data.ok) {
+        setError(data.error || 'Something went wrong. Try again shortly.');
+        setStatus('idle');
+        return;
+      }
+      setStatus('done');
     } catch {
-      /* storage unavailable — still confirm to the user */
+      setError('Network error. Check your connection and try again.');
+      setStatus('idle');
     }
-    setDone(true);
   }
+
+  const done = status === 'done';
+  const submitting = status === 'submitting';
 
   if (done) {
     return (
@@ -50,16 +64,27 @@ export default function WaitlistForm() {
           placeholder="you@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={submitting}
           aria-invalid={!!error}
           aria-describedby={error ? 'waitlist-error' : undefined}
-          className="h-11 flex-1 rounded-md border border-input bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
+          className="h-11 flex-1 rounded-md border border-input bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-60"
         />
         <button
           type="submit"
-          className="inline-flex h-11 items-center justify-center gap-1.5 rounded-md bg-signal px-4 text-sm font-medium text-signal-foreground transition-opacity hover:opacity-90"
+          disabled={submitting}
+          className="inline-flex h-11 items-center justify-center gap-1.5 rounded-md bg-signal px-4 text-sm font-medium text-signal-foreground transition-opacity hover:opacity-90 disabled:opacity-70"
         >
-          Join the waitlist
-          <ArrowRight size={15} aria-hidden />
+          {submitting ? (
+            <>
+              Joining
+              <Loader2 size={15} className="animate-spin" aria-hidden />
+            </>
+          ) : (
+            <>
+              Join the waitlist
+              <ArrowRight size={15} aria-hidden />
+            </>
+          )}
         </button>
       </div>
       {error && (

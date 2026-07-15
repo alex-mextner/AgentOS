@@ -14,7 +14,7 @@ interface Props {
 const {
   title = 'Agent OS — Your work is the interface',
   description = 'Agent OS is an app-last, local-first, agent-native mobile OS built on a Fuchsia/Zircon fork. Documents, tasks, projects and people are first-class system objects — not data trapped inside apps.',
-  ogImage = '/og.svg',
+  ogImage = '/og.png',
   noindex = false,
 } = Astro.props;
 
@@ -53,6 +53,9 @@ const fullTitle = title.includes('Agent OS') ? title : `${title} — Agent OS`;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL(ogImage, Astro.site ?? 'https://agentos-bible.vercel.app').href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Agent OS — your work is the interface, not a grid of apps" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />

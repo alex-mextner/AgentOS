@@ -2,20 +2,21 @@
 id: "AOS-HW-008"
 title: "Custom Device and ODM Readiness"
 status: "Normative planning baseline"
-version: "1.0.0"
-baseline_date: "2026-07-13"
+version: "1.1.0"
+baseline_date: "2026-07-15"
 owners: "Agent OS Architecture Council"
 audience: "Engineering, product, security, legal, and program leadership"
-summary: "Architecture, evidence, commercial package, contracts, and prototype stages required before a future ODM or contract-manufactured device."
+summary: "Architecture, product identity, evidence, commercial package, contracts, and prototype stages required before a future ODM or contract-manufactured device."
 ---
 
 # Custom Device and ODM Readiness
 
-> Architecture, evidence, commercial package, contracts, and prototype stages required before a future ODM or contract-manufactured device.
+> Architecture, product identity, evidence, commercial package, contracts, and prototype stages required before a future ODM or contract-manufactured device.
 
 ## Table of Contents
 
 - [Contract Device Role](#contract-device-role)
+- [Product Identity](#product-identity)
 - [Readiness Prerequisites](#readiness-prerequisites)
 - [Platform Options](#platform-options)
 - [Vendor Request Package](#vendor-package)
@@ -31,6 +32,20 @@ summary: "Architecture, evidence, commercial package, contracts, and prototype s
 
 A contract-manufactured device is a future packaging and supply-chain target for the portable Agent OS architecture. It is not used to avoid learning the hardware contracts: the project first proves them on public development targets so that an ODM engagement purchases integration and productization rather than an opaque replacement OS.
 
+<a id="product-identity"></a>
+
+## Product Identity
+
+The future Agent OS phone is provisionally branded **Shark**.
+
+- **Product name:** Shark
+- **Slogan:** **Safe ocean**
+- **Primary mark:** a shark fin
+
+The fin must remain recognizable as a compact silhouette at system-icon, boot-mark, enclosure-badge, packaging, and monochrome manufacturing-mark sizes. Final artwork, geometry, trademark clearance, regional screening, and usage rules remain subject to the legal and industrial-design gates; however, ODM briefs and concept work must use this identity consistently unless a later recorded naming decision supersedes it.
+
+The product meaning is safety and freedom inside a large, navigable digital environment: the system protects the user without turning the device into a closed or restrictive appliance. Marketing claims derived from **Safe ocean** must remain evidence-backed and must not imply absolute security, waterproofing, or safety certification unless the corresponding requirements and tests have passed.
+
 <a id="readiness-prerequisites"></a>
 
 ## Readiness Prerequisites
@@ -44,6 +59,7 @@ Before requesting quotations, Agent OS must have:
 - security root, key ceremony, manufacturing, update, and recovery specifications;
 - source, firmware, redistribution, vulnerability, and support contract requirements;
 - initial industrial-design, repairability, waterproofing, RF, antenna, and certification requirements;
+- a Shark identity package covering the fin mark, enclosure placement, boot presentation, packaging, accessibility, monochrome reproduction, and manufacturing tolerances;
 - realistic volume, region, schedule, target BOM, and NRE range.
 
 <a id="platform-options"></a>
@@ -56,7 +72,7 @@ Candidate directions include a Qualcomm QCM/QCS mobile or IoT platform with vend
 
 ## Vendor Request Package
 
-The request for information contains target markets, volume bands, form factor, display/camera/battery/radio requirements, OS architecture, boot and security model, driver ownership, source-license expectations, firmware redistribution, update support period, vulnerability SLA, certification responsibilities, manufacturing test, calibration, repair parts, tooling ownership, NRE, per-unit cost, lead time, and exit/transition rights.
+The request for information contains target markets, volume bands, form factor, display/camera/battery/radio requirements, OS architecture, boot and security model, driver ownership, source-license expectations, firmware redistribution, update support period, vulnerability SLA, certification responsibilities, manufacturing test, calibration, repair parts, tooling ownership, NRE, per-unit cost, lead time, exit/transition rights, and the Shark product-identity package with the **Safe ocean** slogan and fin-mark reproduction constraints.
 
 <a id="contract-controls"></a>
 
@@ -92,6 +108,7 @@ The project should negotiate a publishable community board subset, redacted inte
 - At least three vendor routes are commercially compared.
 - Contract terms cover source, firmware, updates, vulnerabilities, supply, and exit.
 - Factory provisioning and certification responsibility are unambiguous.
+- Shark, **Safe ocean**, and the fin mark appear consistently in the product brief, industrial-design brief, boot-branding specification, and vendor package, with unresolved legal status visibly recorded.
 
 <a id="planning-reference-anchors"></a>
 
@@ -194,3 +211,9 @@ For planning, conformance, and task cross-references, **Partner Scorecard** deno
 ### Replaceability
 
 For planning, conformance, and task cross-references, **Replaceability** denotes the part of this specification governed primarily by [Platform Options](#platform-options). Implementations using this label MUST apply the requirements, failure behavior, evidence obligations, and portability or security boundaries of that section together with any narrower task acceptance criteria.
+
+<a id="shark-product-identity"></a>
+
+### Shark Product Identity
+
+For planning, conformance, and task cross-references, **Shark Product Identity** denotes the part of this specification governed primarily by [Product Identity](#product-identity). Implementations using this label MUST preserve the provisional product name, slogan, mark, legal qualifiers, and evidence boundaries defined there until a superseding recorded decision is accepted.
