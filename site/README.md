@@ -6,8 +6,11 @@ was down or rate-limited.
 
 ## What it is
 
-- **100% static / prerendered.** Every marketing page is baked at build time. There is
-  **zero runtime API dependency** — the site fully renders even if GitHub is offline.
+- **Static / prerendered pages.** Every marketing page is baked at build time and renders
+  with **no runtime API dependency** — the site is fully readable even if GitHub or Kit is
+  offline. The one exception is the on-demand `POST /api/waitlist` route (see
+  [Waitlist capture](#waitlist-capture)), which runs server-side only when a visitor submits
+  the form.
 - **Design language:** shadcn/ui — neutral zinc scale, Inter (self-hosted via
   `@fontsource-variable/inter`), 1px borders, `0.5rem` radius, dark-first, one restrained
   azure accent (`--signal`). Light + dark supported (dark default). Tailwind v3.
@@ -62,10 +65,30 @@ Set `site` in `astro.config.mjs` to the production domain (currently
 URLs, Open Graph images, and the sitemap resolve correctly. Change it if this deploys to a
 different domain.
 
+## Waitlist capture
+
+The form (`WaitlistForm.tsx`) POSTs to the on-demand `src/pages/api/waitlist.ts` route, which
+persists via the first configured destination (checked in this order):
+
+1. **Kit** (kit.com) — set `KIT_API_KEY`. Optionally set `KIT_WAITLIST_TAG_ID` to tag
+   signups (so waitlist entries are filterable in Kit). The route creates the subscriber and
+   only reports success when Kit returns an **active** subscriber. Kit's create endpoint does
+   not reactivate a previously cancelled/bounced address, so those get an error rather than a
+   false confirmation. Tagging is best-effort (a tag outage is logged but does not lose the
+   captured email).
+2. **Generic webhook** — set `WAITLIST_WEBHOOK_URL` (Formspree / Basin / Zapier / any JSON POST).
+
+If neither env var is set the route logs the signup and returns `{ ok: true, stored: false }`;
+the client treats `stored !== true` as a failure and does **not** show a false confirmation.
+Set these in the Vercel project's Environment Variables, not in the repo.
+
+**Known follow-ups (deferred, not blocking):** the endpoint is unauthenticated and has no
+rate limiting — abuse/quota protection needs a shared store (e.g. Upstash/Vercel KV); there
+is no `site/` CI check or endpoint unit tests yet. Tracked in
+[#62](https://github.com/alex-mextner/AgentOS/issues/62).
+
 ## Follow-ups (not done)
 
-- Waitlist form is client-only (localStorage) — wire a real endpoint (Formspree / a Vercel
-  function) for actual capture.
 - OG image is a hand-built SVG (`public/og.svg`); a per-page generated OG image would be nicer.
 - Full wiki/registers migration (tasks board, gantt, doc reader) from the old portal is not
   ported — the Engineering page links out to GitHub for the live/deep content.
