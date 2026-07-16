@@ -69,6 +69,6 @@ Usability tests must demonstrate that ordinary users can predict whether a messa
 ## Related documents
 
 - [Agent Mesh architecture](../architecture/ARCH-024-agent-mesh-connectivity.md)
-- [LoRa hardware track](../hardware/HW-018-lora-mesh-hardware.md)
+- [LoRa hardware track](../hardware/HW-021-lora-mesh-hardware.md)
 - [Personal data authority](AOS-PROD-009.md)
 - [Global history](AOS-PROD-002.md)
