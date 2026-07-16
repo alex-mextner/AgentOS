@@ -53,7 +53,7 @@ A micro-app is a small declarative composition of data queries, typed actions, s
 Agent Mesh provides transport-neutral direct, peer-to-peer and delay-tolerant delivery. LoRa is one constrained transport below a stable signed envelope, identity, policy and receipt model; it is not a separate messenger.
 
 - [Architecture specification](engineering-bible/docs/architecture/ARCH-024-agent-mesh-connectivity.md)
-- [LoRa hardware track](engineering-bible/docs/hardware/HW-018-lora-mesh-hardware.md)
+- [LoRa hardware track](engineering-bible/docs/hardware/HW-021-lora-mesh-hardware.md)
 - [GitHub epic #63](https://github.com/alex-mextner/AgentOS/issues/63)
 - [Portal page](https://agentos-bible.vercel.app/mesh)
 
@@ -93,7 +93,7 @@ The current repository policy uses Apache-2.0 for original software and automati
 - [Product Vision](engineering-bible/docs/vision/AOS-VSN-001.md)
 - [Entity graph, history, sync and bundles](engineering-bible/docs/architecture/AOS-ARCH-009.md)
 - [Agent runtime and action safety](engineering-bible/docs/architecture/AOS-ARCH-010.md)
-- [Roadmap and execution plan](engineering-bible/docs/planning/PLAN-017-mesh-and-microapps.md)
+- [Roadmap and execution plan](engineering-bible/docs/planning/PLAN-019-mesh-and-microapps.md)
 
 ## Contribution model
 
