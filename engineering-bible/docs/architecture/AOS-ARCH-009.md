@@ -1,161 +1,184 @@
 ---
 id: "AOS-ARCH-009"
-title: "Storage, Entity Graph, History, and Sync"
+title: "Storage, Entity Graph, History, Sync, and Bundle State"
 status: "Normative foundation"
-version: "1.0.0-foundation"
-baseline_date: "2026-07-13"
+version: "1.1.0"
+baseline_date: "2026-07-16"
 owners: "Architecture Council"
 audience: "Engineering, product, security, legal, programme, partner, and community readers"
-summary: "Storage, Entity Graph, History, and Sync: scope, decisions, requirements, evidence, risks, and traceability for the Agent OS programme."
+summary: "Durable entities, semantic history, CRDT and transactional state, micro-app instances, encrypted sync, and delay-tolerant Agent Mesh bundle state."
 ---
-# Storage, Entity Graph, History, and Sync
+# Storage, Entity Graph, History, Sync, and Bundle State
 
-> This specification defines a native Agent OS contract. Android, Linux, Fuchsia and other systems may inform the design, but do not become ambient native ABI dependencies.
+## Purpose and scope
 
-## Table of Contents
+This document defines how Agent OS stores durable entities, relationships, micro-app instances, semantic events, materialized views, snapshots, encrypted sync state and delay-tolerant delivery bundles.
 
-- [Purpose and Scope](#purpose-and-scope)
-- [Normative Position](#normative-position)
-- [Operating Model](#operating-model)
-- [Requirements](#requirements)
-- [Failure and Degradation](#failure-and-degradation)
-- [Evidence and Acceptance](#evidence-and-acceptance)
-- [Implementation Obligations](#implementation-obligations)
-- [Risks and Open Questions](#risks-and-open-questions)
-- [Related Documents](#related-documents)
-- [Planning Reference Anchors](#planning-reference-anchors)
-<a id="purpose-and-scope"></a>
+The storage model is independent of application ownership and network availability. Local state remains valid when providers, cloud services, peers or radios are absent.
 
-## Purpose and Scope
+## Normative position
 
-**Area:** System Architecture.
+1. Separate immutable semantic events, materialized state, snapshots, mergeable documents, transactional state machines, encrypted delivery bundles and ephemeral caches.
+2. Every entity and relationship records schema, provenance, authority, retention and synchronization policy.
+3. CRDTs are selected per data family; transactional or externally authoritative state is not forced into conflict-free merging.
+4. A micro-app instance is durable state attached to entities, package version, provider bindings, capabilities and surface placements — not private widget storage.
+5. Agent Mesh bundles have stable identity, content hash, sender/recipient identity, expiry, custody, retry, route policy and delivery receipts.
+6. Pending, committed, relay-custody, delivered, expired, rejected and compensated states remain semantically distinct.
 
-This specification defines a native Agent OS contract. Android, Linux, Fuchsia and other systems may inform the design, but do not become ambient native ABI dependencies.
+## Data families
 
-This document owns the semantics implied by **Storage, Entity Graph, History, and Sync**. It does not assert that every described subsystem already exists. It defines the target model, constraints, evidence needed to trust an implementation, and the boundary with adjacent documents.
-<a id="normative-position"></a>
+### Entities and relationships
 
-## Normative Position
+People, projects, documents, tasks, events, places, messages, devices, credentials, payments, micro-apps and agent plans use typed schemas and stable IDs. Providers may contribute assertions or views but do not become the sole authority for the entity.
 
-1. Separate immutable semantic events, materialized state, snapshots, mergeable documents, transactional state machines, and ephemeral caches.
-2. Every entity and relationship records provenance, authority, schema, retention, and synchronization policy.
-3. CRDTs are selected per data type, not applied universally.
-<a id="operating-model"></a>
+### Semantic events
 
-## Operating Model
+Effectful changes append an event with actor, authority, inputs, destination, result, time and provenance. External effects store receipts rather than pretending they can be replayed as ordinary reducers.
 
-The operating model is contract-first and evidence-driven. A component declares its authority, resources, lifecycle, error model, cancellation and timeout behavior, observability, version, and compatibility promise. Backends are replaceable only when the same conformance suite passes and no forbidden platform type leaks into portable layers.
+### Materialized views and snapshots
 
-Implementation proceeds through a reference model or mock, deterministic QEMU evidence where relevant, documentation-first physical hardware, and quality-hardware evidence. Pixel 9 adapters remain quarantined according to [ADR-0004](AOS-ADR-0004.md#decision).
-<a id="requirements"></a>
+Views are rebuildable projections over canonical entities and events. Snapshots accelerate recovery but cannot erase required provenance or history semantics.
 
-## Requirements
+### Micro-app instance state
 
-- **R01.** Separate immutable semantic events, materialized state, snapshots, mergeable documents, transactional state machines, and ephemeral caches.
-- **R02.** Every entity and relationship records provenance, authority, schema, retention, and synchronization policy.
-- **R03.** CRDTs are selected per data type, not applied universally.
-- **R04.** Specify normal, partial, denied, timeout, cancellation, restart, upgrade, and permanent-failure behavior.
-- **R05.** Expose structured diagnostics without leaking secrets or vendor-specific implementation details.
-- **R06.** Link material unknowns to a claim and, when testable, an experiment with an owner and gate.
-- **R07.** Update affected documentation and task data when evidence changes the model.
-<a id="failure-and-degradation"></a>
+A `MicroAppInstance` binds:
 
-## Failure and Degradation
+- immutable package hash and version;
+- entity/project scope;
+- provider substitutions and schema versions;
+- authority grants and expiry;
+- durable local or CRDT state;
+- surface placements;
+- update, migration and rollback history.
 
-Degradation must be explicit rather than accidental. The system reports capability absence, reduced quality, unavailable provider, stale data, or unsafe condition through typed states. It must not silently fall back to broader authority, unrestricted legacy execution, unverified firmware, lossy data migration, or irreversible agent action.
+Secrets are capability references, not manifest or state values. Removing a provider must leave user-owned state readable and exportable.
 
-Recovery defines what state is retained, reconstructed, re-enrolled, compensated, or intentionally discarded. Unsupported hardware or providers are rejected at binding time where possible.
-<a id="evidence-and-acceptance"></a>
+### Agent Mesh bundle store
 
-## Evidence and Acceptance
+The bundle store persists encrypted `MeshEnvelope` objects independently of UI or radio processes. It supports:
 
-- Crash/replay and migration tests.
-- Secret-exclusion and retention red-team.
-- Offline concurrent-edit experiments on selected schemas.
-- Evidence records target identity, hardware revision, firmware, source commit, toolchain, configuration, seed, timestamps, artifacts, expected result, actual result, and reviewer.
-- Acceptance requires the referenced tasks to meet their own criteria; prose completion is not implementation completion.
-<a id="implementation-obligations"></a>
+- deduplication by stable ID and content hash;
+- expiry and deletion policy;
+- custody acknowledgements;
+- bounded retry and encounter scheduling;
+- route and transport history;
+- relay quotas and storage pressure handling;
+- restart, suspend and shutdown recovery;
+- compact CRDT/entity operations where their schema explicitly permits it.
 
-## Implementation Obligations
+A relay stores opaque ciphertext and minimum routing metadata. Relay custody is not recipient delivery.
 
-| Task | Obligation | Priority | Gate/Milestone | Verification |
-| --- | --- | --- | --- | --- |
-| AOS-PLAT-032 | Implement durable object/filesystem service v0 | P0 | M4 | crash/power-cut model, corruption, rollback, quota, concurrent transactions and migration tests |
-| AOS-PROD-001 | Define entity and relationship schema v0 | P0 | M2 | schema review using person, document, activity, device, place, task, media and provider examples |
-| AOS-PROD-002 | Implement provenance and entity-resolution model | P0 | M3 | duplicate/conflicting contacts, imported documents, provider deletion and malicious assertion scenarios |
-| AOS-PROD-003 | Implement entity graph store and query service | P0 | M4 | authorization, schema migration, corruption/recovery, query bounds and performance tests |
-| AOS-PROD-020 | Implement append-only semantic event log | P0 | M4 | tamper, ordering, crash, schema evolution, deletion/redaction and quota tests |
-| AOS-PROD-021 | Implement materialized views, snapshots, and deterministic replay | P0 | M4 | full rebuild, snapshot+tail, reducer upgrade, corrupt event and external-effect non-replay tests |
-| AOS-PROD-030 | Assign consistency model to each data family | P0 | M4 | EXP-061 with concurrent offline edits, permissions, payments/actions, deletion and provider-authoritative data |
-| AOS-PROD-031 | Implement encrypted peer/cloud sync v0 | P1 | M8 | partition/reorder/duplicate/corrupt/revoked-device/quota/key-rotation and metadata-privacy tests |
-| AOS-PROD-061 | Implement encrypted backup bundle and verified restore | P0 | M8 | corrupt/truncate/wrong key/unknown schema/dedup/privacy/large data and scheduled drill tests |
-<a id="risks-and-open-questions"></a>
+## Synchronization model
 
-## Risks and Open Questions
+The system may synchronize through direct local links, cloud providers, Agent Mesh transports or imported/exported bundles. Every path uses the same object identity, schema and authorization semantics.
 
-- Raw input logging captures secrets.
-- Global history can become a surveillance database.
-- Conflict-free merging cannot preserve transactional invariants automatically.
-- **Open-question rule:** an unanswered high-impact question becomes a claim/experiment record and cannot be hidden in meeting notes.
-- **Stop rule:** work stops or changes track when legal rights, recovery, debug access, safety, or the required evidence path is unavailable.
-<a id="related-documents"></a>
+Large objects may be announced by ID, version, size and hash over a constrained path, then transferred through Wi-Fi or another high-throughput provider at a later encounter. The constrained transport never needs to embed the entire object.
 
-## Related Documents
+Provider selection and route changes are visible. Silent fallback to a broader destination, weaker encryption or lossy merge is forbidden.
 
-- [Product vision](AOS-VSN-001.md#product-thesis)
-- [Portable system architecture](AOS-ARCH-001.md#system-boundary)
-- [Portable device-service contracts](AOS-ARCH-020.md#contract-set)
-- [Hardware portfolio](AOS-HW-001.md#portfolio)
-- [Decision gates](AOS-PLAN-006.md#decision-gates)
-- [Claim register](AOS-RES-003.md#claim-register)
-<a id="planning-reference-anchors"></a>
+## Consistency classes
 
-## Planning Reference Anchors
+Each schema declares one of:
+
+- immutable/content-addressed;
+- append-only semantic events;
+- CRDT mergeable;
+- single-authority with cached replicas;
+- transactional multi-object state;
+- external-effect receipt;
+- ephemeral/reconstructable;
+- encrypted delay-tolerant bundle.
+
+The class determines merge, deletion, retention, backup, replay and sync behavior.
+
+## Failure and recovery
+
+The system must expose typed states for stale data, missing provider, partial replica, unresolved conflict, corrupted snapshot, exhausted quota, delayed route, relay custody, expired bundle, revoked identity and failed migration.
+
+Crash or power loss must not duplicate an external effect, lose an accepted durable job, convert a pending action into delivered state or combine bytes from incompatible versions.
+
+## Security and privacy
+
+- encryption keys are separated by data class and destination;
+- metadata is minimized and retention-bound;
+- secure/raw input is excluded from ordinary semantic history;
+- micro-app private bindings are not included in shared packages;
+- relay nodes cannot inspect payload content;
+- revoked identities and devices lose future sync and bundle authority;
+- export and deletion produce verifiable scope and result records.
+
+## Implementation obligations
+
+| Task | Obligation | Gate | Verification |
+| --- | --- | --- | --- |
+| AOS-PLAT-032 | Durable object/filesystem service | M4 | power-cut, corruption, quota and migration tests |
+| AOS-PROD-001 | Entity and relationship schemas | M2 | cross-domain schema review |
+| AOS-PROD-002 | Provenance and entity resolution | M3 | conflicting/imported/provider-deleted assertions |
+| AOS-PROD-003 | Entity graph store and query service | M4 | authorization, bounds and recovery tests |
+| AOS-PROD-020 | Append-only semantic event log | M4 | tamper, ordering, crash and redaction tests |
+| AOS-PROD-021 | Materialized views and deterministic replay | M4 | full rebuild and reducer migration |
+| AOS-PROD-030 | Consistency model per data family | M4 | concurrent offline and transactional cases |
+| AOS-PROD-031 | Encrypted peer/cloud sync | M8 | partition, reorder, duplicate, revocation and metadata tests |
+| AOS-MESH-003 | Encrypted bundle store, expiry and deduplication | M4 | crash, power-loss, replay and quota evidence |
+| AOS-MESH-007 | Custody, routing and duplicate suppression | M5 | malicious relay, loop and flood tests |
+| AOS-MICROAPP-004 | Provider binding and durable instance state | M4 | provider loss, stale state and substitution tests |
+| AOS-MICROAPP-008 | Versioning, sharing and rollback | M5 | migration, revocation and private-binding exclusion |
+
+## Acceptance evidence
+
+- crash/replay, corruption and migration campaigns;
+- concurrent offline edits over selected CRDT schemas;
+- external-effect non-replay tests;
+- bundle encounter simulations with duplicate, delay, expiry and malicious relays;
+- provider loss and micro-app rollback tests;
+- secret exclusion, metadata retention and deletion review;
+- measured storage, query, sync, copy-count and recovery performance.
+
+## Related documents
+
+- [Product Vision](../vision/AOS-VSN-001.md)
+- [Agent Runtime and Action Safety](AOS-ARCH-010.md)
+- [Agent Mesh](ARCH-024-agent-mesh-connectivity.md)
+- [Micro-App Runtime](ARCH-026-micro-app-runtime.md)
+- [Text-to-Micro-App Builder](../product/PROD-018-text-to-micro-app-builder.md)
+- [Execution Plan](../planning/PLAN-017-mesh-and-microapps.md)
 
 <a id="backup-classes"></a>
+## Backup classes anchor
 
-### Backup Classes
-
-`AOS-PROD-061` — Implement encrypted backup bundle and verified restore
+Backup scope and restore behavior follow the declared data family and authority model.
 
 <a id="consistency-models"></a>
+## Consistency models anchor
 
-### Consistency Models
-
-`AOS-PROD-030` — Assign consistency model to each data family
+Every schema declares its merge, transaction, authority and conflict behavior.
 
 <a id="entity-model"></a>
+## Entity model anchor
 
-### Entity Model
-
-`AOS-PROD-001` — Define entity and relationship schema v0; `AOS-PROD-003` — Implement entity graph store and query service; `AOS-PROD-003` — Implement entity graph store and query service
+Entities and typed relationships are the canonical product substrate.
 
 <a id="event-log"></a>
+## Event log anchor
 
-### Event Log
-
-`AOS-PROD-020` — Implement append-only semantic event log
+Semantic events and external-effect receipts remain distinct and auditable.
 
 <a id="materialized-state"></a>
+## Materialized state anchor
 
-### Materialized State
-
-`AOS-PROD-021` — Implement materialized views, snapshots, and deterministic replay
+Materialized views are rebuildable from canonical state and events.
 
 <a id="provenance"></a>
+## Provenance anchor
 
-### Provenance
-
-`AOS-PROD-002` — Implement provenance and entity-resolution model
+Every imported, provider-supplied, generated or agent-created assertion carries source and authority.
 
 <a id="storage-engine"></a>
+## Storage engine anchor
 
-### Storage Engine
-
-`AOS-PLAT-032` — Implement durable object/filesystem service v0; `AOS-PROD-003` — Implement entity graph store and query service; `AOS-PROD-003` — Implement entity graph store and query service
+The storage service enforces durability, isolation, quotas and recovery across all declared data families.
 
 <a id="sync-model"></a>
+## Sync model anchor
 
-### Sync Model
-
-`AOS-PROD-031` — Implement encrypted peer/cloud sync v0
+Direct, cloud, Agent Mesh and offline bundle exchange share one identity and schema model.
