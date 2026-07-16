@@ -1,0 +1,46 @@
+name: Check Agent OS site
+
+on:
+  pull_request:
+    paths:
+      - 'site/**'
+      - 'engineering-bible/docs/**'
+      - '.github/workflows/site-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'engineering-bible/docs/**'
+      - '.github/workflows/site-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+      - name: Assert flagship routes exist
+        run: |
+          test -f dist/index.html
+          test -f dist/engineering/index.html
+          test -f dist/mesh/index.html
+          test -f dist/micro-apps/index.html
+      - name: Assert canonical documents are indexed
+        run: |
+          grep -q 'AOS-ARCH-024' src/data/bible-index.json
+          grep -q 'AOS-PROD-018' src/data/bible-index.json
+          grep -q 'AOS-ARCH-026' src/data/bible-index.json
+          grep -q 'AOS-PLAN-017' src/data/bible-index.json
