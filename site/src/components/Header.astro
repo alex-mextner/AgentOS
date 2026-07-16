@@ -1,5 +1,5 @@
 ---
-import { navLinks } from '../data/content';
+import { primaryNav } from '../data/navigation';
 import ThemeToggle from './ThemeToggle.tsx';
 import MobileNav from './MobileNav.tsx';
 import Logo from './Logo.astro';
@@ -18,7 +18,7 @@ const current = Astro.url.pathname;
 
     <nav class="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex" aria-label="Primary">
       {
-        navLinks.map((link) => {
+        primaryNav.map((link) => {
           const active = current === link.href || (link.href !== '/' && current.startsWith(link.href));
           return (
             <a
@@ -38,12 +38,12 @@ const current = Astro.url.pathname;
       }
     </nav>
 
-    <MobileNav client:load links={navLinks} current={current} />
+    <MobileNav client:load links={primaryNav} current={current} />
 
     <div class="hidden shrink-0 items-center gap-2 md:flex">
       <a
         href="https://github.com/alex-mextner/AgentOS"
-        class="text-sm text-muted-foreground transition-colors hover:text-foreground lg:inline-flex"
+        class="hidden text-sm text-muted-foreground transition-colors hover:text-foreground lg:inline-flex"
         rel="noopener"
       >
         GitHub
