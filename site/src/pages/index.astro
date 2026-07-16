@@ -14,7 +14,7 @@ import AgentMeshTeaser from '../components/AgentMeshTeaser.astro';
 import { compareDimensions } from '../data/compare';
 
 const teaser = compareDimensions.filter((dimension) =>
-  ['object-model', 'agent-authority', 'global-history', 'sandbox-caps'].includes(dimension.key)
+  ['object-model', 'interface-composition', 'peer-connectivity', 'agent-authority'].includes(dimension.key)
 );
 ---
 
@@ -40,7 +40,7 @@ const teaser = compareDimensions.filter((dimension) =>
       <SectionHeader
         eyebrow="Versus iOS & Android"
         title="A category difference, not a feature difference."
-        lede="Agent OS changes the object, action, interface and authority models rather than adding another assistant or widget layer over application silos."
+        lede="Agent OS changes the object, interface, delivery and authority models rather than adding another assistant or widget layer over application silos."
       />
       <div class="mt-12"><DifferentiatorList /></div>
     </div>
@@ -50,11 +50,11 @@ const teaser = compareDimensions.filter((dimension) =>
     <div class="mx-auto max-w-6xl px-6">
       <SectionHeader
         eyebrow="Evidence, not slogans"
-        title="Twelve axes, every claim cited."
-        lede="Each iOS and Android cell cites a vendor security or developer source; each Agent OS target cites a canonical specification. Four axes are shown here."
+        title="Fourteen axes, every claim cited."
+        lede="Each iOS and Android cell cites a vendor security or developer source; each Agent OS target cites a canonical specification. Four structural axes are shown here."
       />
       <div class="mt-10"><CompareTable dimensions={teaser} /></div>
-      <div class="mt-8"><Button href="/compare" variant="outline">See all twelve dimensions</Button></div>
+      <div class="mt-8"><Button href="/compare" variant="outline">See all fourteen dimensions</Button></div>
     </div>
   </section>
 
