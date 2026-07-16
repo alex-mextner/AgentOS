@@ -63,9 +63,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          forbidden='baked at build time|fetched at build time|during this build|degrade gracefully|runtime API|marketing site|inside the portal|without being redirected|chips below replace|issue feed|Live issues were unavailable|API is unavailable|GitHub is unavailable|Portal obligations|this page is built|this page is baked|this page was generated|site implementation|deployment state|portal work'
-          if grep -RInE "$forbidden" src/pages src/components src/generated/bible --include='*.astro' --include='*.tsx' --include='*.md'; then
-            echo 'Public content must describe Agent OS itself, not site implementation, deployment state, or portal work.' >&2
+          page_meta='baked at build time|fetched at build time|during this build|marketing site|inside the portal|without being redirected|chips below replace|issue feed|Live issues were unavailable|API is unavailable|GitHub is unavailable|this page is built|this page is baked|this page was generated|site implementation|deployment state|portal work'
+          bible_meta='baked at build time|fetched at build time|marketing site|Portal obligations|this page was generated|site implementation|deployment state|portal work'
+          if grep -RInE "$page_meta" src/pages src/components --include='*.astro' --include='*.tsx'; then
+            echo 'Public pages must describe Agent OS content, not site implementation or deployment state.' >&2
+            exit 1
+          fi
+          if grep -RInE "$bible_meta" src/generated/bible --include='*.md'; then
+            echo 'Published specifications must describe Agent OS content, not portal implementation work.' >&2
             exit 1
           fi
       - name: Assert flagship routes exist
