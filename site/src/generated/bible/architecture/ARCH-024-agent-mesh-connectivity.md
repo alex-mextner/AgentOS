@@ -82,6 +82,6 @@ A provider is conformant only after simulator and field tests cover duplicate pa
 - [Power, thermal and background execution](AOS-ARCH-014.md)
 - [Security architecture and threat model](AOS-ARCH-012.md)
 - [Off-grid peer experience](../product/PROD-017-off-grid-peer-experience.md)
-- [LoRa hardware track](../hardware/HW-018-lora-mesh-hardware.md)
+- [LoRa hardware track](../hardware/HW-021-lora-mesh-hardware.md)
 - [Radio compliance](../legal/LEGAL-015-regional-radio-compliance.md)
 - [Mesh and DTN prior art](../research/RES-017-mesh-dtn-prior-art.md)
