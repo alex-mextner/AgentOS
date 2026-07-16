@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import EngineeringIndex from '../components/EngineeringIndex.tsx';
-import { gh } from '../lib/utils';
 import { listDocs } from '../lib/bible';
 import { loadIssues } from '../lib/github';
 
@@ -28,80 +27,59 @@ const catLabels: Record<string, string> = {
 
 <BaseLayout
   title="Engineering bible"
-  description="The full Agent OS engineering corpus — architecture, product, research, hardware, legal and planning documents with stable identifiers and in-portal cross-links."
+  description="Agent OS specifications across product vision, architecture, security, hardware, research, legal, governance and execution planning."
 >
   <PageHeader
     eyebrow="Engineering bible"
-    title="The whole corpus, inside the portal."
-    lede={`${docs.length} documents with stable identifiers, versioned and evidence-gated. Filter by discipline, search the complete index and open every document without being redirected away from the portal.`}
+    title="The Agent OS engineering corpus."
+    lede={`${docs.length} versioned specifications with stable identifiers, explicit status, evidence requirements and cross-references across the system.`}
   />
 
   <section class="section border-b border-border">
     <div class="mx-auto max-w-6xl px-6">
       <div class="mb-8 max-w-2xl">
-        <div class="eyebrow mb-3">Documents</div>
-        <h2 class="text-balance text-3xl font-semibold tracking-tight md:text-4xl">Filter the corpus.</h2>
+        <div class="eyebrow mb-3">Specifications</div>
+        <h2 class="text-balance text-3xl font-semibold tracking-tight md:text-4xl">Explore by discipline.</h2>
         <p class="mt-4 text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
-          The chips below replace the old Volumes cards. Swipe horizontally on mobile; selecting a discipline filters the document list directly on this page.
+          Product vision, architecture, hardware, research, legal controls, governance, decisions and execution plans form one cross-linked body of work.
         </p>
       </div>
       <EngineeringIndex client:load docs={docs} labels={catLabels} />
     </div>
   </section>
 
-  <section class="section border-b border-border">
-    <div class="mx-auto max-w-6xl px-6">
-      <SectionHeader
-        eyebrow="Live work"
-        title="Recent GitHub issues."
-        lede="Mutable execution records stay in GitHub; specifications and evidence open in the portal. The issue feed is fetched at build time and never blocks this page."
-      />
-      <div class="mt-10">
-        {
-          issuesOk && issues.length > 0 ? (
-            <div class="overflow-hidden rounded-xl border border-border">
-              {issues.map((issue, i) => (
-                <a
-                  href={issue.url}
-                  rel="noopener"
-                  class={
-                    'group flex items-center gap-4 px-4 py-3.5 transition-colors hover:bg-accent/30 sm:px-5 ' +
-                    (i > 0 ? 'border-t border-border' : '')
-                  }
-                >
-                  <span class="w-12 shrink-0 font-mono text-xs text-muted-foreground">#{issue.number}</span>
-                  <span class="flex-1 truncate text-sm text-foreground">{issue.title}</span>
-                  <span class={
-                    'shrink-0 rounded-md border px-2 py-0.5 font-mono text-[0.68rem] ' +
-                    (issue.state === 'open'
-                      ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400'
-                      : 'border-border bg-muted/40 text-muted-foreground')
-                  }>{issue.state}</span>
-                </a>
-              ))}
-            </div>
-          ) : (
-            <div class="rounded-xl border border-border bg-card p-6 text-sm text-muted-foreground">
-              Live issues were unavailable during this build. The document corpus remains fully usable.{' '}
-              <a href={gh('/issues')} rel="noopener" class="text-signal hover:underline">Open GitHub Issues →</a>
-            </div>
-          )
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="mx-auto max-w-6xl px-6">
-      <div class="flex flex-col items-start gap-4 rounded-xl border border-border bg-card p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-        <div>
-          <h2 class="text-lg font-semibold tracking-tight">Source and contributions.</h2>
-          <p class="mt-1 text-sm text-muted-foreground">Reading and navigation stay here. GitHub is used deliberately for editing, review history and pull requests.</p>
+  {
+    issuesOk && issues.length > 0 && (
+      <section class="section">
+        <div class="mx-auto max-w-6xl px-6">
+          <SectionHeader
+            eyebrow="Execution"
+            title="Current engineering work."
+            lede="Active work items connect implementation, experiments, decisions and acceptance evidence to the specifications they advance."
+          />
+          <div class="mt-10 overflow-hidden rounded-xl border border-border">
+            {issues.map((issue, i) => (
+              <a
+                href={issue.url}
+                rel="noopener"
+                class={
+                  'group flex items-center gap-4 px-4 py-3.5 transition-colors hover:bg-accent/30 sm:px-5 ' +
+                  (i > 0 ? 'border-t border-border' : '')
+                }
+              >
+                <span class="w-12 shrink-0 font-mono text-xs text-muted-foreground">#{issue.number}</span>
+                <span class="flex-1 truncate text-sm text-foreground">{issue.title}</span>
+                <span class={
+                  'shrink-0 rounded-md border px-2 py-0.5 font-mono text-[0.68rem] ' +
+                  (issue.state === 'open'
+                    ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400'
+                    : 'border-border bg-muted/40 text-muted-foreground')
+                }>{issue.state}</span>
+              </a>
+            ))}
+          </div>
         </div>
-        <a href={gh('/tree/main/engineering-bible/docs')} rel="noopener" class="inline-flex h-11 items-center justify-center gap-1.5 rounded-md border border-border bg-background px-5 text-sm font-medium text-foreground hover:bg-accent">
-          Edit the source →
-        </a>
-      </div>
-    </div>
-  </section>
+      </section>
+    )
+  }
 </BaseLayout>
