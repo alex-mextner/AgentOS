@@ -2,114 +2,110 @@
 id: "AOS-VSN-001"
 title: "Product Vision"
 status: "Normative foundation"
-version: "1.0.0-foundation"
-baseline_date: "2026-07-13"
+version: "1.1.0"
+baseline_date: "2026-07-16"
 owners: "Product and Architecture Council"
 audience: "Engineering, product, security, legal, programme, partner, and community readers"
-summary: "Product Vision: scope, decisions, requirements, evidence, risks, and traceability for the Agent OS programme."
+summary: "APP-LAST product thesis: durable entities, shared actions, semantic history, generated micro-apps, local authority, Agent Mesh peer connectivity, and inspectable agents."
 ---
 # Product Vision
 
-> This specification defines the product thesis, intended user value, measurable evidence, and boundaries that prevent a vision statement from becoming an unverifiable platform promise.
+## Product thesis
 
-## Table of Contents
+Agent OS is **APP-LAST**: people work with durable entities and outcomes rather than navigating application silos. Documents, tasks, projects, people, places, events, messages, devices, payments, credentials, micro-apps and agent plans have stable identity, typed relationships, provenance, authority, actions and history.
 
-- [Purpose and Scope](#purpose-and-scope)
-- [Normative Position](#normative-position)
-- [Operating Model](#operating-model)
-- [Requirements](#requirements)
-- [Failure and Degradation](#failure-and-degradation)
-- [Evidence and Acceptance](#evidence-and-acceptance)
-- [Implementation Obligations](#implementation-obligations)
-- [Risks and Open Questions](#risks-and-open-questions)
-- [Related Documents](#related-documents)
-- [Planning Reference Anchors](#planning-reference-anchors)
-<a id="purpose-and-scope"></a>
+Applications are replaceable providers, editors, transports and views. They do not privately own the user’s conceptual world.
 
-## Purpose and Scope
+## The system model
 
-**Area:** Product Strategy.
+### Durable entities
 
-This specification defines the product thesis, intended user value, measurable evidence, and boundaries that prevent a vision statement from becoming an unverifiable platform promise.
+A project remains one object when rendered as a document, board, timeline, map, conversation, dashboard, micro-app or agent context. Transclusion preserves origin and authority instead of copying opaque app state.
 
-This document owns the semantics implied by **Product Vision**. It does not assert that every described subsystem already exists. It defines the target model, constraints, evidence needed to trust an implementation, and the boundary with adjacent documents.
-<a id="normative-position"></a>
+### Shared typed actions
 
-## Normative Position
+Meaningful operations use one typed contract across graphical controls, command line, scripts, automation, micro-apps and agents. Authority, confirmation, destination, cost, result and undo or compensation rules remain the same regardless of caller.
 
-1. Define the boundary, owner, inputs, outputs, failure modes, observability, security authority, lifecycle, and compatibility policy.
-2. Keep implementation facts separate from desired outcomes and unverified assumptions.
-3. Require a reproducible evidence bundle before downstream components depend on the result.
-<a id="operating-model"></a>
+### Semantic history
 
-## Operating Model
+The system records meaningful state transitions, sources, external effects and execution receipts. History supports search, explanation, replay, recovery and safe undo. Irreversible effects remain visibly irreversible rather than being disguised as ordinary state changes.
 
-The operating model is contract-first and evidence-driven. A component declares its authority, resources, lifecycle, error model, cancellation and timeout behavior, observability, version, and compatibility promise. Backends are replaceable only when the same conformance suite passes and no forbidden platform type leaks into portable layers.
+### Local authority
 
-Implementation proceeds through a reference model or mock, deterministic QEMU evidence where relevant, documentation-first physical hardware, and quality-hardware evidence. Pixel 9 adapters remain quarantined according to [ADR-0004](AOS-ADR-0004.md#decision).
-<a id="requirements"></a>
+User-controlled devices hold authoritative personal state and policy. Remote services, AI models, gateways and integrations receive bounded, inspectable inputs and capabilities. Offline operation is a correctness requirement; cloud and remote compute are optional accelerators or transports.
 
-## Requirements
+### Text-to-micro-app composition
 
-- **R01.** Define the boundary, owner, inputs, outputs, failure modes, observability, security authority, lifecycle, and compatibility policy.
-- **R02.** Keep implementation facts separate from desired outcomes and unverified assumptions.
-- **R03.** Require a reproducible evidence bundle before downstream components depend on the result.
-- **R04.** Specify normal, partial, denied, timeout, cancellation, restart, upgrade, and permanent-failure behavior.
-- **R05.** Expose structured diagnostics without leaking secrets or vendor-specific implementation details.
-- **R06.** Link material unknowns to a claim and, when testable, an experiment with an owner and gate.
-- **R07.** Update affected documentation and task data when evidence changes the model.
-<a id="failure-and-degradation"></a>
+A user may describe a missing interface in natural language, assemble it through Shortcut-style blocks or edit declarative source. Agent OS produces an inspectable micro-app manifest over trusted components, providers and typed actions.
 
-## Failure and Degradation
+The same micro-app instance may render inside an AI response, document, project, notification, lock screen, widget, watch, vehicle, command result or focused full-screen mode. It is not limited to a home-screen card and does not create disconnected copies of state.
 
-Degradation must be explicit rather than accidental. The system reports capability absence, reduced quality, unavailable provider, stale data, or unsafe condition through typed states. It must not silently fall back to broader authority, unrestricted legacy execution, unverified firmware, lossy data migration, or irreversible agent action.
+### Agent Mesh
 
-Recovery defines what state is retained, reconstructed, re-enrolled, compensated, or intentionally discarded. Unsupported hardware or providers are rejected at binding time where possible.
-<a id="evidence-and-acceptance"></a>
+Peer-to-peer and off-grid delivery are system capabilities. A person, group, project or device is addressed directly; the system selects local IP, Wi-Fi Direct, Bluetooth, LoRa, a gateway, the Internet or delayed store-and-forward according to privacy, region, deadline, energy, trust, cost and payload size.
 
-## Evidence and Acceptance
+LoRa is one constrained transport beneath a stable encrypted envelope and receipt model. It is not a separate messenger or identity silo.
 
-- Reviewed specification.
-- Linked tasks, claims, sources and experiments.
-- Conformance or acceptance evidence.
-- Evidence records target identity, hardware revision, firmware, source commit, toolchain, configuration, seed, timestamps, artifacts, expected result, actual result, and reviewer.
-- Acceptance requires the referenced tasks to meet their own criteria; prose completion is not implementation completion.
-<a id="implementation-obligations"></a>
+### Inspectable agents
 
-## Implementation Obligations
+Agents create explicit plans, request scoped capabilities, show data and provider use, support preview/shadow/dry-run modes, respect budgets and leave receipts. Agent-generated micro-apps and route choices are untrusted proposals until validation and authority review succeed.
 
-No current task row references this document directly. Before implementation begins, create an owned task or explicitly mark the document as informational.
-<a id="risks-and-open-questions"></a>
+## Product invariants
 
-## Risks and Open Questions
+1. **No private app truth.** A provider cannot make essential entity or action semantics available only inside its own UI.
+2. **No hidden authority.** If a micro-app, agent or transport lacks a capability, it cannot perform the operation.
+3. **No silent transport or provider downgrade.** Missing, stale, delayed, substituted and denied states are explicit.
+4. **No interface monopoly.** Existing data and actions may be recomposed into user-controlled views under declared policy.
+5. **No false completion.** Pending, relay custody, accepted, committed, delivered, expired and compensated are different states.
+6. **No network dependency for correctness.** Core entity, action, history and micro-app semantics remain valid offline.
+7. **No untraceable effect.** Effectful operations produce receipts and an undo or compensation path where possible.
+8. **No platform leakage into portable semantics.** Hardware, radio and legacy platform details terminate in providers and adapters.
 
-- Undefined ownership and failure semantics create hidden coupling.
-- Unverified source claims can become architecture accidentally.
-- **Open-question rule:** an unanswered high-impact question becomes a claim/experiment record and cannot be hidden in meeting notes.
-- **Stop rule:** work stops or changes track when legal rights, recovery, debug access, safety, or the required evidence path is unavailable.
-<a id="related-documents"></a>
+## Representative experience
 
-## Related Documents
+A user asks:
 
-- [Product vision](AOS-VSN-001.md#product-thesis)
-- [Portable system architecture](AOS-ARCH-001.md#system-boundary)
-- [Portable device-service contracts](AOS-ARCH-020.md#contract-set)
-- [Hardware portfolio](AOS-HW-001.md#portfolio)
-- [Decision gates](AOS-PLAN-006.md#decision-gates)
-- [Claim register](AOS-RES-003.md#claim-register)
-<a id="planning-reference-anchors"></a>
+> Show today’s UV index, account for my skin profile, warn me before risk becomes high, and place sunscreen and outdoor-time actions beside it.
 
-## Planning Reference Anchors
+Agent OS:
 
-No additional task-specific anchors are required in this baseline.
+1. finds a weather provider and local health profile;
+2. keeps the health profile local;
+3. proposes a micro-app manifest and surfaces;
+4. previews requested reads and reminder/calendar actions;
+5. asks for any missing authority;
+6. installs one versioned instance;
+7. renders it as an AI card, document block, lock-screen metric or full focused view;
+8. records every external effect in semantic history.
 
+The same product model lets a project update or emergency message travel through Agent Mesh without the sender selecting a messaging brand or radio.
 
-<a id="generated-xref-anchors"></a>
+## Architecture direction
 
-## Generated Cross-Reference Anchors
+The product layer depends on owned entity, action, history, micro-app, agent and delivery contracts. Lower platform and hardware services are isolated behind versioned interfaces and conformance tests. Performance-sensitive data paths use shared buffers and handles rather than generic payload copying.
+
+## Evidence and release gates
+
+A capability is described as implemented only when:
+
+- its specification and stable IDs exist;
+- linked tasks, risks, sources, claims and experiments are reconciled;
+- conformance and failure-path tests pass;
+- authority, privacy, accessibility, recovery and performance evidence exists;
+- target hardware, provider and version are identified;
+- public wording distinguishes current implementation from target design.
+
+## Related documents
+
+- [Storage, entity graph, history and sync](../architecture/AOS-ARCH-009.md)
+- [Agent runtime and action safety](../architecture/AOS-ARCH-010.md)
+- [Agent Mesh](../architecture/ARCH-024-agent-mesh-connectivity.md)
+- [Micro-App Runtime](../architecture/ARCH-026-micro-app-runtime.md)
+- [Actions, Integrations, and Widgets](../product/AOS-PROD-003.md)
+- [Text-to-Micro-App Builder](../product/PROD-018-text-to-micro-app-builder.md)
+- [Execution plan](../planning/PLAN-017-mesh-and-microapps.md)
 
 <a id="product-thesis"></a>
+## Stable product-thesis anchor
 
-### Product Thesis
-
-This stable anchor is referenced by another canonical document. Its normative content is the nearest applicable section above and the linked task/claim data; future editorial refinement must preserve the anchor.
+This section and the invariants above are the normative product thesis referenced throughout the Engineering Bible.
