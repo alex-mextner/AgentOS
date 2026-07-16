@@ -17,6 +17,33 @@ permissions:
   contents: read
 
 jobs:
+  document-id:
+    name: Document ID ${{ matrix.id }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        id:
+          - AOS-ARCH-024
+          - AOS-PROD-017
+          - AOS-HW-018
+          - AOS-LEGAL-015
+          - AOS-RES-017
+          - AOS-PROD-018
+          - AOS-ARCH-026
+          - AOS-PLAN-017
+    steps:
+      - uses: actions/checkout@v4
+      - name: Require exactly one canonical document
+        shell: bash
+        env:
+          DOC_ID: ${{ matrix.id }}
+        run: |
+          set -euo pipefail
+          mapfile -t matches < <(grep -RIl --include='*.md' -E '^id:[[:space:]]*"?'"$DOC_ID"'"?[[:space:]]*$' engineering-bible/docs || true)
+          printf '%s\n' "${matches[@]}"
+          test "${#matches[@]}" -eq 1
+
   site:
     runs-on: ubuntu-latest
     defaults:
@@ -34,10 +61,12 @@ jobs:
       - run: npm run build
       - name: Assert flagship routes exist
         run: |
-          test -f dist/index.html
-          test -f dist/engineering/index.html
-          test -f dist/mesh/index.html
-          test -f dist/micro-apps/index.html
+          output='.vercel/output/static'
+          test -d "$output" || output='dist'
+          test -f "$output/index.html"
+          test -f "$output/engineering/index.html"
+          test -f "$output/mesh/index.html"
+          test -f "$output/micro-apps/index.html"
       - name: Assert canonical documents are indexed
         run: |
           grep -q 'AOS-ARCH-024' src/data/bible-index.json
