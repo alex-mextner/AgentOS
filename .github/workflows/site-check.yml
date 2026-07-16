@@ -59,6 +59,15 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run build
+      - name: Reject transient implementation meta-copy
+        shell: bash
+        run: |
+          set -euo pipefail
+          forbidden='baked at build time|fetched at build time|during this build|degrade gracefully|runtime API|marketing site|inside the portal|without being redirected|chips below replace|issue feed|Live issues were unavailable|API is unavailable|GitHub is unavailable'
+          if grep -RInE "$forbidden" src/pages src/components --include='*.astro' --include='*.tsx'; then
+            echo 'Public pages must describe Agent OS content, not site implementation or deployment state.' >&2
+            exit 1
+          fi
       - name: Assert flagship routes exist
         run: |
           output='.vercel/output/static'
