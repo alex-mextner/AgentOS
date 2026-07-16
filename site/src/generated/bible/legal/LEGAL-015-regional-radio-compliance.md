@@ -47,6 +47,6 @@ Disable transmit or remove a market/profile when region cannot be established sa
 ## Related documents
 
 - [Agent Mesh architecture](../architecture/ARCH-024-agent-mesh-connectivity.md)
-- [LoRa hardware track](../hardware/HW-018-lora-mesh-hardware.md)
+- [LoRa hardware track](../hardware/HW-021-lora-mesh-hardware.md)
 - [Regulatory certification](LEGAL-004.md)
 - [Data, AI and privacy](LEGAL-010.md)
