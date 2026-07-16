@@ -7,45 +7,48 @@ import Logo from './Logo.astro';
 const current = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-md">
-  <div class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-6">
-    <a href="/" class="flex items-center gap-2.5 shrink-0" aria-label="Agent OS home">
-      <Logo class="h-6 w-6" />
-      <span class="text-sm font-semibold tracking-tight">Agent OS</span>
-    </a>
+<header class="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur-xl">
+  <div class="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4 sm:px-6">
+    <div class="hidden shrink-0 items-center gap-2.5 md:flex">
+      <a href="/" class="flex items-center gap-2.5" aria-label="Agent OS home">
+        <Logo class="h-6 w-6" />
+        <span class="text-sm font-semibold tracking-tight">Agent OS</span>
+      </a>
+    </div>
 
-    <nav class="hidden items-center gap-1 md:flex" aria-label="Primary">
+    <nav class="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex" aria-label="Primary">
       {
-        navLinks.map((l) => {
-          const active = current === l.href || (l.href !== '/' && current.startsWith(l.href));
+        navLinks.map((link) => {
+          const active = current === link.href || (link.href !== '/' && current.startsWith(link.href));
           return (
             <a
-              href={l.href}
+              href={link.href}
               aria-current={active ? 'page' : undefined}
               class={
-                'rounded-md px-3 py-1.5 text-sm transition-colors ' +
+                'shrink-0 rounded-full px-3 py-1.5 text-sm transition-colors ' +
                 (active
-                  ? 'text-foreground'
-                  : 'text-muted-foreground hover:text-foreground')
+                  ? 'bg-accent text-foreground'
+                  : 'text-muted-foreground hover:bg-accent/60 hover:text-foreground')
               }
             >
-              {l.label}
+              {link.label}
             </a>
           );
         })
       }
     </nav>
 
-    <div class="flex items-center gap-2">
+    <MobileNav client:load links={navLinks} current={current} />
+
+    <div class="hidden shrink-0 items-center gap-2 md:flex">
       <a
         href="https://github.com/alex-mextner/AgentOS"
-        class="hidden text-sm text-muted-foreground transition-colors hover:text-foreground sm:inline-flex"
+        class="text-sm text-muted-foreground transition-colors hover:text-foreground lg:inline-flex"
         rel="noopener"
       >
         GitHub
       </a>
       <ThemeToggle client:load />
-      <MobileNav client:load links={navLinks} current={current} />
     </div>
   </div>
 </header>
