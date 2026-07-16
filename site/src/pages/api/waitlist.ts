@@ -1,9 +1,11 @@
 import type { APIRoute } from 'astro';
+import { rateLimit, clientId } from '../../lib/rate-limit';
 
 // Waitlist capture endpoint (on-demand — the only non-prerendered route on the site).
 //
-// Runtime path: browser POSTs JSON `{ email }` here from WaitlistForm.tsx. We validate
-// the address, then persist it via the first configured destination:
+// Runtime path: browser POSTs JSON `{ email }` here from WaitlistForm.tsx. We reject bots
+// (honeypot + per-IP rate limit), validate the address, then persist it via the first
+// configured destination:
 //   1. Kit (kit.com) — set `KIT_API_KEY`; optionally `KIT_WAITLIST_TAG_ID` to tag signups.
 //   2. Generic webhook — set `WAITLIST_WEBHOOK_URL` (Formspree / Basin / Zapier / etc.).
 // If NEITHER is configured we do not pretend to store anything: we log the signup to the
@@ -42,18 +44,30 @@ function json(body: unknown, status: number): Response {
   });
 }
 
-async function readEmail(request: Request): Promise<string | null> {
+interface Payload {
+  email: string | null;
+  /** Hidden honeypot field; non-empty means a bot filled a field a human never sees. */
+  honeypot: string;
+}
+
+function asString(value: unknown): string {
+  return typeof value === 'string' ? value : '';
+}
+
+// The honeypot uses a non-semantic field name (`contact_hp`) so browsers and password
+// managers don't autofill it for a real user — an autofilled trap would discard a genuine
+// signup. Real users never touch a field they cannot see; only bots populate it.
+async function readPayload(request: Request): Promise<Payload> {
   try {
     const contentType = request.headers.get('content-type') ?? '';
     if (contentType.includes('application/json')) {
-      const data = (await request.json()) as { email?: unknown };
-      return typeof data.email === 'string' ? data.email : null;
+      const data = (await request.json()) as { email?: unknown; contact_hp?: unknown };
+      return { email: asString(data.email) || null, honeypot: asString(data.contact_hp) };
     }
     const form = await request.formData();
-    const value = form.get('email');
-    return typeof value === 'string' ? value : null;
+    return { email: asString(form.get('email')) || null, honeypot: asString(form.get('contact_hp')) };
   } catch {
-    return null;
+    return { email: null, honeypot: '' };
   }
 }
 
@@ -90,32 +104,45 @@ async function tagSubscriber(apiKey: string, tagId: string, subscriberId: number
   }
 }
 
-// Create/refresh the subscriber in Kit, then optionally tag it. Returns true if the
-// subscriber was persisted (Kit upserts by email, so a repeat signup is idempotent).
+interface KitSubscriber {
+  id?: number;
+  state?: string;
+}
+
+async function postKit(apiKey: string, path: string, email: string): Promise<KitSubscriber | null> {
+  const res = await fetch(`${KIT_API}${path}`, {
+    method: 'POST',
+    headers: kitHeaders(apiKey),
+    body: JSON.stringify({ email_address: email }),
+    signal: AbortSignal.timeout(SUBSCRIBE_TIMEOUT_MS),
+  });
+  if (!res.ok) {
+    console.warn(`[waitlist] kit ${path} failed: HTTP ${res.status}`);
+    return null;
+  }
+  const data = (await res.json().catch(() => ({}))) as { subscriber?: KitSubscriber };
+  return data.subscriber ?? null;
+}
+
+// Direct create: single opt-in. A 2xx alone is not proof of an active signup — Kit does NOT
+// reactivate an existing cancelled/bounced/complained address via this upsert (it returns 200
+// with the stale state), and a body without an id means the upsert did not land as expected.
+async function subscribeDirect(apiKey: string, email: string): Promise<KitSubscriber | null> {
+  const sub = await postKit(apiKey, '/subscribers', email);
+  if (!sub?.id || sub.state !== 'active') {
+    console.warn(`[waitlist] kit did not confirm ${maskEmail(email)}: id=${sub?.id} state=${sub?.state}`);
+    return null;
+  }
+  return sub;
+}
+
+// Persist the subscriber in Kit, then best-effort tag it. Returns true on success.
+// (Double opt-in is a Kit account/form setting, not wired here: Kit's form-subscribe API
+// requires a pre-existing subscriber, so it cannot cleanly drive DOI for fresh signups.)
 async function subscribeViaKit(apiKey: string, email: string): Promise<boolean> {
   try {
-    const res = await fetch(`${KIT_API}/subscribers`, {
-      method: 'POST',
-      headers: kitHeaders(apiKey),
-      body: JSON.stringify({ email_address: email }),
-      signal: AbortSignal.timeout(SUBSCRIBE_TIMEOUT_MS),
-    });
-    if (!res.ok) {
-      console.warn(`[waitlist] kit subscribe failed: HTTP ${res.status}`);
-      return false;
-    }
-    const data = (await res.json().catch(() => ({}))) as {
-      subscriber?: { id?: number; state?: string };
-    };
-    const sub = data.subscriber;
-    // A 2xx alone is not proof of an active signup. Require a subscriber id and an active
-    // state: Kit does NOT reactivate an existing cancelled/bounced/complained address via
-    // this upsert (it returns 200 with the stale state), and a body without an id means the
-    // upsert did not land the way we expect. In either case we must not report `stored`.
-    if (!sub?.id || sub.state !== 'active') {
-      console.warn(`[waitlist] kit did not confirm ${maskEmail(email)}: id=${sub?.id} state=${sub?.state}`);
-      return false;
-    }
+    const sub = await subscribeDirect(apiKey, email);
+    if (!sub?.id) return false;
     const tagId = env('KIT_WAITLIST_TAG_ID');
     if (tagId) await tagSubscriber(apiKey, tagId, sub.id);
     return true;
@@ -126,11 +153,26 @@ async function subscribeViaKit(apiKey: string, email: string): Promise<boolean> 
 }
 
 export const POST: APIRoute = async ({ request }) => {
-  const raw = await readEmail(request);
-  const email = raw?.trim().toLowerCase() ?? '';
+  const { email: raw, honeypot } = await readPayload(request);
 
+  // Honeypot: a real user never fills a hidden field. Report success but do nothing — do not
+  // hit Kit, do not reveal the trap. (Bots are not users, so the fake `stored` is fine here.)
+  if (honeypot.trim() !== '') {
+    return json({ ok: true, stored: true }, 200);
+  }
+
+  const email = raw?.trim().toLowerCase() ?? '';
   if (!email || !EMAIL_RE.test(email) || email.length > 254) {
     return json({ ok: false, error: 'Enter a valid email address.' }, 400);
+  }
+
+  // Throttle abuse before touching any upstream (protects the account and its API quota).
+  const limit = await rateLimit(clientId(request));
+  if (!limit.allowed) {
+    return new Response(JSON.stringify({ ok: false, error: 'Too many requests. Please slow down.' }), {
+      status: 429,
+      headers: { 'content-type': 'application/json', 'retry-after': String(limit.retryAfterSec) },
+    });
   }
 
   const kitApiKey = env('KIT_API_KEY');

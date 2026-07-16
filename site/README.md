@@ -71,20 +71,37 @@ The form (`WaitlistForm.tsx`) POSTs to the on-demand `src/pages/api/waitlist.ts`
 persists via the first configured destination (checked in this order):
 
 1. **Kit** (kit.com) — set `KIT_API_KEY`. Optionally set `KIT_WAITLIST_TAG_ID` to tag
-   signups (so waitlist entries are filterable in Kit). The route creates the subscriber and
-   only reports success when Kit returns an **active** subscriber. Kit's create endpoint does
-   not reactivate a previously cancelled/bounced address, so those get an error rather than a
-   false confirmation. Tagging is best-effort (a tag outage is logged but does not lose the
-   captured email).
+   signups (so waitlist entries are filterable in Kit). By default the route creates the
+   subscriber directly (single opt-in) and only reports success when Kit returns an **active**
+   subscriber — Kit's create endpoint does not reactivate a previously cancelled/bounced
+   address, so those get an error rather than a false confirmation. Tagging is best-effort (a
+   tag outage is logged but does not lose the captured email).
+   - **Double opt-in:** enable it in Kit's own settings (account/form confirmation email). It
+     is not wired into this route on purpose — Kit's form-subscribe API requires a
+     pre-existing subscriber, so it cannot cleanly drive a fresh-signup confirmation flow.
 2. **Generic webhook** — set `WAITLIST_WEBHOOK_URL` (Formspree / Basin / Zapier / any JSON POST).
 
 If neither env var is set the route logs the signup and returns `{ ok: true, stored: false }`;
 the client treats `stored !== true` as a failure and does **not** show a false confirmation.
 Set these in the Vercel project's Environment Variables, not in the repo.
 
-**Known follow-ups (deferred, not blocking):** the endpoint is unauthenticated and has no
-rate limiting — abuse/quota protection needs a shared store (e.g. Upstash/Vercel KV); there
-is no `site/` CI check or endpoint unit tests yet. Tracked in
+### Abuse protection
+
+- **Honeypot** — the form carries a hidden `contact_hp` field; a filled value is treated as a bot
+  (silent success, no upstream call).
+- **Rate limiting** — per-IP fixed window (default 5 req / 60s → `429` with `Retry-After`). It
+  uses **Upstash Redis REST** when `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` are
+  set (correct across serverless instances); otherwise it falls back to a best-effort
+  in-memory window per warm instance. Provision an Upstash (or Vercel KV) database and set
+  those two env vars to get durable, cross-instance limiting.
+
+### Tests & CI
+
+`npm test` (Vitest) covers the endpoint contract (validation, honeypot, Kit active/inactive/
+malformed responses, tagging failure, webhook precedence, no-backend
+`stored:false`, rate-limit `429`) and the client's `stored`-gating. `.github/workflows/
+site-validate.yml` runs `npm ci && npm run check && npm test && npm run build` on `site/**`
+changes. Remaining hardening tracked in
 [#62](https://github.com/alex-mextner/AgentOS/issues/62).
 
 ## Follow-ups (not done)

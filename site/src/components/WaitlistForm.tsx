@@ -8,6 +8,7 @@ import { ArrowRight, Check, Loader2 } from 'lucide-react';
 // instead of a fake confirmation.
 export default function WaitlistForm() {
   const [email, setEmail] = useState('');
+  const [trap, setTrap] = useState(''); // honeypot — stays empty for real users
   const [status, setStatus] = useState<'idle' | 'submitting' | 'done'>('idle');
   const [error, setError] = useState('');
 
@@ -30,7 +31,7 @@ export default function WaitlistForm() {
       const res = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, contact_hp: trap }),
         signal: controller.signal,
       });
       const data = (await res.json().catch(() => ({}))) as {
@@ -68,6 +69,20 @@ export default function WaitlistForm() {
 
   return (
     <form onSubmit={onSubmit} className="w-full max-w-md" noValidate>
+      {/* Honeypot: hidden from users (and assistive tech), tempting to naive bots. The
+          non-semantic name avoids autofill discarding a real signup. */}
+      <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="waitlist-contact-hp">Leave this field empty</label>
+        <input
+          id="waitlist-contact-hp"
+          type="text"
+          name="contact_hp"
+          tabIndex={-1}
+          autoComplete="off"
+          value={trap}
+          onChange={(e) => setTrap(e.target.value)}
+        />
+      </div>
       <div className="flex flex-col gap-2 sm:flex-row">
         <label htmlFor="waitlist-email" className="sr-only">
           Email address
