@@ -1,162 +1,195 @@
 ---
 id: "AOS-ARCH-010"
-title: "Agent Runtime and Action Safety"
+title: "Agent Runtime, Micro-App Generation, and Action Safety"
 status: "Normative foundation"
-version: "1.0.0-foundation"
-baseline_date: "2026-07-13"
+version: "1.1.0"
+baseline_date: "2026-07-16"
 owners: "Architecture Council"
 audience: "Engineering, product, security, legal, programme, partner, and community readers"
-summary: "Agent Runtime and Action Safety: scope, decisions, requirements, evidence, risks, and traceability for the Agent OS programme."
+summary: "Agent planning, capability grants, text-to-micro-app generation, provider and route selection, effect receipts, budgets, confirmation and bounded autonomy."
 ---
-# Agent Runtime and Action Safety
+# Agent Runtime, Micro-App Generation, and Action Safety
 
-> This specification defines a native Agent OS contract. Android, Linux, Fuchsia and other systems may inform the design, but do not become ambient native ABI dependencies.
+## Purpose and scope
 
-## Table of Contents
+This document defines how agents observe, plan, propose interfaces, invoke typed actions and select delivery providers without receiving ambient authority over UI, data, radios or external services.
 
-- [Purpose and Scope](#purpose-and-scope)
-- [Normative Position](#normative-position)
-- [Operating Model](#operating-model)
-- [Requirements](#requirements)
-- [Failure and Degradation](#failure-and-degradation)
-- [Evidence and Acceptance](#evidence-and-acceptance)
-- [Implementation Obligations](#implementation-obligations)
-- [Risks and Open Questions](#risks-and-open-questions)
-- [Related Documents](#related-documents)
-- [Planning Reference Anchors](#planning-reference-anchors)
-<a id="purpose-and-scope"></a>
+Agents may generate declarative micro-app manifests and propose Agent Mesh routes. They do not receive permission to execute arbitrary generated code, broaden capabilities, alter radio compliance or claim delivery without receipt evidence.
 
-## Purpose and Scope
+## Normative position
 
-**Area:** System Architecture.
+1. Agents operate through typed query and action providers with explicit capability grants, never ambient UI control or unrestricted process authority.
+2. Trust tiers progress from observation to proposal, reversible execution, confirmed sensitive execution and bounded autonomy.
+3. Every effect records planner, model, input references, provider, authority, destination, cost, result and compensation or irreversibility.
+4. Generated micro-apps are untrusted declarative proposals until schema validation, static policy checks, preview and authority review succeed.
+5. Transport or provider selection is an inspectable policy decision. The agent may recommend a route but cannot bypass user, security, region, energy, data-class or airtime policy.
+6. Pending, provider accepted, relay custody, committed, delivered, expired and compensated are distinct result states.
 
-This specification defines a native Agent OS contract. Android, Linux, Fuchsia and other systems may inform the design, but do not become ambient native ABI dependencies.
+## Trust ladder
 
-This document owns the semantics implied by **Agent Runtime and Action Safety**. It does not assert that every described subsystem already exists. It defines the target model, constraints, evidence needed to trust an implementation, and the boundary with adjacent documents.
-<a id="normative-position"></a>
+| Tier | Agent authority | Examples |
+| --- | --- | --- |
+| 0 — Observe | Read explicitly granted fields; no external effect | Summarise a project, inspect UV data, estimate a route |
+| 1 — Propose | Produce plan, micro-app manifest, provider/route options and authority diff | Draft a UV micro-app; propose direct versus delayed delivery |
+| 2 — Reversible execute | Invoke actions with reliable undo/rollback under budget | Create a reminder, install a private micro-app version |
+| 3 — Confirmed sensitive | Execute after explicit confirmation tied to exact destination/effect | Share health summary, send an emergency bundle, pay a fee |
+| 4 — Bounded autonomy | Repeated execution inside narrow policy, quotas and expiry | Maintain a project brief, relay approved mesh data, manage safe reminders |
 
-## Normative Position
+A higher tier does not grant unrelated capabilities. Authority is task-, data-, destination-, provider-, time- and budget-scoped.
 
-1. Agents operate through typed action providers and explicit capability grants, never ambient UI control.
-2. Trust tiers progress from observation to proposal, reversible execution, confirmed sensitive execution, and bounded autonomy.
-3. Every effect records planner, model, inputs, authority, cost, destination, result, and compensation or irreversibility.
-<a id="operating-model"></a>
+## Agent planning record
 
-## Operating Model
+An executable plan contains:
 
-The operating model is contract-first and evidence-driven. A component declares its authority, resources, lifecycle, error model, cancellation and timeout behavior, observability, version, and compatibility promise. Backends are replaceable only when the same conformance suite passes and no forbidden platform type leaks into portable layers.
+- user objective and unresolved ambiguity;
+- inputs and provenance;
+- providers and substitutions;
+- requested capabilities and data fields;
+- steps, dependencies, cancellation and timeout;
+- expected local and external effects;
+- network/Agent Mesh route policy;
+- cost, energy, airtime and background-wake budgets;
+- confirmation points;
+- receipt and compensation expectations.
 
-Implementation proceeds through a reference model or mock, deterministic QEMU evidence where relevant, documentation-first physical hardware, and quality-hardware evidence. Pixel 9 adapters remain quarantined according to [ADR-0004](AOS-ADR-0004.md#decision).
-<a id="requirements"></a>
+The user can inspect the plan before approval. Hidden chain-of-thought is neither required nor treated as evidence; the plan contains the decision-relevant structured rationale.
 
-## Requirements
+## Micro-app generation
 
-- **R01.** Agents operate through typed action providers and explicit capability grants, never ambient UI control.
-- **R02.** Trust tiers progress from observation to proposal, reversible execution, confirmed sensitive execution, and bounded autonomy.
-- **R03.** Every effect records planner, model, inputs, authority, cost, destination, result, and compensation or irreversibility.
-- **R04.** Specify normal, partial, denied, timeout, cancellation, restart, upgrade, and permanent-failure behavior.
-- **R05.** Expose structured diagnostics without leaking secrets or vendor-specific implementation details.
-- **R06.** Link material unknowns to a claim and, when testable, an experiment with an owner and gate.
-- **R07.** Update affected documentation and task data when evidence changes the model.
-<a id="failure-and-degradation"></a>
+Agents may generate or edit:
 
-## Failure and Degradation
+- declarative manifest;
+- trusted component graph;
+- provider bindings;
+- typed action wiring;
+- fixtures and examples;
+- surface variants;
+- explanation and authority diff.
 
-Degradation must be explicit rather than accidental. The system reports capability absence, reduced quality, unavailable provider, stale data, or unsafe condition through typed states. It must not silently fall back to broader authority, unrestricted legacy execution, unverified firmware, lossy data migration, or irreversible agent action.
+They may not generate unrestricted executable code into the portable micro-app runtime. Unknown custom components or providers require a separate signed package installation and review flow.
 
-Recovery defines what state is retained, reconstructed, re-enrolled, compensated, or intentionally discarded. Unsupported hardware or providers are rejected at binding time where possible.
-<a id="evidence-and-acceptance"></a>
+Natural-language, block and source forms must round-trip without changing requested authority or effect semantics. Any change to destination, data scope, spend, network use, sharing, background operation or provider identity reopens review.
 
-## Evidence and Acceptance
+## Provider and route selection
 
-- Privilege-amplification property tests.
-- Shadow-mode comparison with user behavior.
-- Adversarial destination, budget, confirmation, and rollback tests.
-- Evidence records target identity, hardware revision, firmware, source commit, toolchain, configuration, seed, timestamps, artifacts, expected result, actual result, and reviewer.
-- Acceptance requires the referenced tasks to meet their own criteria; prose completion is not implementation completion.
-<a id="implementation-obligations"></a>
+The policy engine ranks providers and transports by:
 
-## Implementation Obligations
+- recipient/entity identity and trust;
+- declared outcome and deadline;
+- privacy and data classification;
+- local/offline preference;
+- region and certification rules;
+- payload size and fidelity;
+- monetary, energy, airtime and latency budget;
+- delivery evidence available;
+- user/project defaults;
+- provider health, provenance and revocation state.
 
-| Task | Obligation | Priority | Gate/Milestone | Verification |
-| --- | --- | --- | --- | --- |
-| AOS-CORE-034 | Implement jobs, quotas, and resource accounting | P0 | M2 | exhaust each resource, nested domains, concurrent charge/release, process death and accounting reconciliation |
-| AOS-PROD-010 | Define portable action schema and effect taxonomy | P0 | M2 | model ten local/external/system actions and adversarial/missing-provider cases |
-| AOS-PROD-012 | Implement action executor, receipts, and compensation | P0 | M4 | duplicate, timeout, crash, cancellation, partial external effect, malicious result and compensation tests |
-| AOS-PROD-013 | Implement provider selection and routing policy | P1 | M4 | account/recipient/destination/cost/privacy ambiguity, outage and malicious-ranking tests |
-| AOS-PROD-051 | Implement IntentBox draft and confirmation flow | P1 | M8 | ambiguous recipient/account/amount/destination and inaccessible/offline provider tests |
-| AOS-PROD-090 | Evaluate IntentBox interpretation and confirmation safety | P0 | M8 | EXP-071 including time pressure, accessibility needs and adversarial provider labels |
-| AOS-PROD-100 | Implement and evaluate agent shadow mode | P1 | M8 | EXP-073 across local/external/sensitive workflows and withheld adversarial cases |
-| AOS-PROD-101 | Implement agent budgets, approval, receipts, and bounded autonomy | P1 | M9 | malicious/looping/costly/data-exfiltrating agent, revocation, offline and provider-compromise tests |
-| AOS-SEC-070 | Red-team agent capability, data, budget, and effect containment | P0 | M8 | EXP-074 with hidden cases and compromised provider/agent scenarios |
-| AOS-SEC-112 | Evaluate agent shadow mode and dangerous false-action rates | P0 | M8 | Run the relevant document, schema, conformance, build, experiment, or hardware checks; independently review boundary compliance and acceptance criteria. |
-<a id="risks-and-open-questions"></a>
+An agent cannot silently turn “send to Daniel” into a public broadcast, substitute a provider with broader data collection, downgrade encryption, or use an illegal radio profile.
 
-## Risks and Open Questions
+## Action execution and receipts
 
-- Prompt injection can redirect authority.
-- Provider descriptions can misstate external effects.
-- Receipts without enforcement become cosmetic audit logs.
-- **Open-question rule:** an unanswered high-impact question becomes a claim/experiment record and cannot be hidden in meeting notes.
-- **Stop rule:** work stops or changes track when legal rights, recovery, debug access, safety, or the required evidence path is unavailable.
-<a id="related-documents"></a>
+The action executor owns idempotency, deduplication, cancellation, retries, partial external effects and compensation. A receipt records what was requested, what actually happened and what remains pending.
 
-## Related Documents
+For delayed Agent Mesh delivery, receipts distinguish local queue acceptance, relay custody and recipient delivery. For micro-app installation, receipts distinguish manifest validation, provider binding, grant approval, instance creation and external actions triggered later.
 
-- [Product vision](AOS-VSN-001.md#product-thesis)
-- [Portable system architecture](AOS-ARCH-001.md#system-boundary)
-- [Portable device-service contracts](AOS-ARCH-020.md#contract-set)
-- [Hardware portfolio](AOS-HW-001.md#portfolio)
-- [Decision gates](AOS-PLAN-006.md#decision-gates)
-- [Claim register](AOS-RES-003.md#claim-register)
-<a id="planning-reference-anchors"></a>
+## Failure and degradation
 
-## Planning Reference Anchors
+Typed failures include ambiguity, missing provider, stale data, denied capability, quota exhaustion, unsafe destination, revoked signer, invalid manifest, prompt injection, route unavailable, region denial, delayed delivery, expired bundle, action timeout, partial effect and compensation failure.
+
+The agent must stop, narrow scope, ask for clarification or return a bounded negative result. It must not improvise broader access, silently select a weaker route or hide uncertainty behind confident prose.
+
+## Resource and safety budgets
+
+Agents and generated micro-apps receive explicit limits for:
+
+- CPU, memory and storage;
+- local model and remote compute use;
+- network bytes, destinations and data classes;
+- Agent Mesh airtime, relay storage and hop count;
+- sensor access and sampling;
+- background wake frequency and duration;
+- monetary spend and external side effects;
+- number and rate of actions;
+- plan lifetime and autonomous authority.
+
+Budgets are charged to durable jobs and survive process restart. Exceeding a budget pauses or denies work and records why.
+
+## Implementation obligations
+
+| Task | Obligation | Gate | Verification |
+| --- | --- | --- | --- |
+| AOS-CORE-034 | Jobs, quotas and resource accounting | M2 | exhaustion, nested domains and reconciliation |
+| AOS-PROD-010 | Portable action and effect taxonomy | M2 | local, external, delayed and irreversible action corpus |
+| AOS-PROD-012 | Executor, receipts and compensation | M4 | duplicate, crash, timeout and partial effect tests |
+| AOS-PROD-013 | Provider and route policy | M4 | ambiguity, outage, privacy, malicious ranking and region cases |
+| AOS-PROD-051 | Draft, preview and confirmation flow | M8 | recipient, destination, amount and provider ambiguity |
+| AOS-MICROAPP-002 | Text/block/source round-trip | M3 | semantic and authority equivalence |
+| AOS-MICROAPP-005 | Authority diff and preview | M4 | prompt injection and capability escalation |
+| AOS-MICROAPP-007 | Text-to-micro-app planner | M5 | unsafe plan, unknown component and provider attacks |
+| AOS-MESH-007 | Routing, custody, quotas and deduplication | M5 | malicious relay, loop, flood and route substitution |
+| AOS-MESH-008 | Emergency profile and abuse controls | M5 | controlled drills and false-priority tests |
+| AOS-PROD-100 | Agent shadow mode | M8 | comparison against user decisions and withheld cases |
+| AOS-PROD-101 | Budgets, approval and bounded autonomy | M9 | looping, costly, exfiltrating and revoked agents |
+| AOS-SEC-070 | Agent/provider containment red team | M8 | compromised agent, provider and route scenarios |
+
+## Evidence and acceptance
+
+- privilege-amplification property tests;
+- prompt-injection and malicious-provider suites;
+- shadow-mode comparison with user decisions;
+- micro-app generation and authority round-trip tests;
+- delayed delivery and misleading-receipt tests;
+- adversarial destination, budget, confirmation and rollback tests;
+- accessibility and time-pressure evaluation;
+- receipt completeness and enforcement audit.
+
+## Related documents
+
+- [Product Vision](../vision/AOS-VSN-001.md)
+- [Storage, Entity Graph, History and Sync](AOS-ARCH-009.md)
+- [Agent Mesh](ARCH-024-agent-mesh-connectivity.md)
+- [Micro-App Runtime](ARCH-026-micro-app-runtime.md)
+- [Actions, Integrations and Micro-Apps](../product/AOS-PROD-003.md)
+- [Text-to-Micro-App Builder](../product/PROD-018-text-to-micro-app-builder.md)
+- [Execution Plan](../planning/PLAN-017-mesh-and-microapps.md)
 
 <a id="action-lifecycle"></a>
+## Action lifecycle anchor
 
-### Action Lifecycle
-
-`AOS-PROD-010` — Define portable action schema and effect taxonomy; `AOS-PROD-012` — Implement action executor, receipts, and compensation
+Every effect moves through proposal, validation, authorization, execution, receipt and compensation/closure states.
 
 <a id="agent-budgets"></a>
+## Agent budgets anchor
 
-### Agent Budgets
-
-`AOS-CORE-034` — Implement jobs, quotas, and resource accounting
+Autonomy is bounded by durable resource, data, effect, route, cost and time budgets.
 
 <a id="defense-in-depth"></a>
+## Defense in depth anchor
 
-### Defense In Depth
-
-`AOS-PROD-101` — Implement agent budgets, approval, receipts, and bounded autonomy; `AOS-PROD-101` — Implement agent budgets, approval, receipts, and bounded autonomy; `AOS-SEC-070` — Red-team agent capability, data, budget, and effect containment; `AOS-SEC-070` — Red-team agent capability, data, budget, and effect containment
+Schema validation, capabilities, sandboxing, provider provenance, preview, receipts and red-team evidence remain independent controls.
 
 <a id="evaluation"></a>
+## Evaluation anchor
 
-### Evaluation
-
-`AOS-PROD-100` — Implement and evaluate agent shadow mode; `AOS-PROD-100` — Implement and evaluate agent shadow mode
+Shadow mode, usability, accessibility and adversarial evaluation precede bounded autonomy.
 
 <a id="policy-engine"></a>
+## Policy engine anchor
 
-### Policy Engine
-
-`AOS-PROD-013` — Implement provider selection and routing policy
+Provider and route selection preserve identity, privacy, region, cost, energy and delivery semantics.
 
 <a id="proposal-and-confirmation"></a>
+## Proposal and confirmation anchor
 
-### Proposal And Confirmation
-
-`AOS-PROD-051` — Implement IntentBox draft and confirmation flow; `AOS-PROD-090` — Evaluate IntentBox interpretation and confirmation safety
+Confirmation is tied to the exact interpreted action, destination, provider, data and effect.
 
 <a id="resource-budgets"></a>
+## Resource budgets anchor
 
-### Resource Budgets
-
-`AOS-PROD-101` — Implement agent budgets, approval, receipts, and bounded autonomy; `AOS-PROD-101` — Implement agent budgets, approval, receipts, and bounded autonomy; `AOS-SEC-070` — Red-team agent capability, data, budget, and effect containment; `AOS-SEC-070` — Red-team agent capability, data, budget, and effect containment
+Resource use is explicit, durable, observable and revocable.
 
 <a id="trust-ladder"></a>
+## Trust ladder anchor
 
-### Trust Ladder
-
-`AOS-PROD-100` — Implement and evaluate agent shadow mode; `AOS-PROD-100` — Implement and evaluate agent shadow mode; `AOS-SEC-112` — Evaluate agent shadow mode and dangerous false-action rates
+Trust tiers increase effect authority only within the granted scope.
