@@ -1,0 +1,90 @@
+name: Check Agent OS site
+
+on:
+  pull_request:
+    paths:
+      - 'site/**'
+      - 'engineering-bible/docs/**'
+      - '.github/workflows/site-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'engineering-bible/docs/**'
+      - '.github/workflows/site-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  document-id:
+    name: Document ID ${{ matrix.id }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        id:
+          - AOS-ARCH-024
+          - AOS-PROD-017
+          - AOS-HW-021
+          - AOS-LEGAL-015
+          - AOS-RES-017
+          - AOS-PROD-018
+          - AOS-ARCH-026
+          - AOS-PLAN-019
+    steps:
+      - uses: actions/checkout@v4
+      - name: Require exactly one canonical document
+        shell: bash
+        env:
+          DOC_ID: ${{ matrix.id }}
+        run: |
+          set -euo pipefail
+          mapfile -t matches < <(grep -RIl --include='*.md' -E '^id:[[:space:]]*"?'"$DOC_ID"'"?[[:space:]]*$' engineering-bible/docs || true)
+          printf '%s\n' "${matches[@]}"
+          test "${#matches[@]}" -eq 1
+
+  site:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+      - name: Reject transient implementation meta-copy
+        shell: bash
+        run: |
+          set -euo pipefail
+          page_meta='baked at build time|fetched at build time|during this build|marketing site|inside the portal|without being redirected|chips below replace|issue feed|Live issues were unavailable|API is unavailable|GitHub is unavailable|this page is built|this page is baked|this page was generated|site implementation|deployment state|portal work'
+          bible_meta='baked at build time|fetched at build time|marketing site|Portal obligations|this page was generated|site implementation|deployment state|portal work'
+          if grep -RInE "$page_meta" src/pages src/components --include='*.astro' --include='*.tsx'; then
+            echo 'Public pages must describe Agent OS content, not site implementation or deployment state.' >&2
+            exit 1
+          fi
+          if grep -RInE "$bible_meta" src/generated/bible --include='*.md'; then
+            echo 'Published specifications must describe Agent OS content, not portal implementation work.' >&2
+            exit 1
+          fi
+      - name: Assert flagship routes exist
+        run: |
+          output='.vercel/output/static'
+          test -d "$output" || output='dist'
+          test -f "$output/index.html"
+          test -f "$output/engineering/index.html"
+          test -f "$output/mesh/index.html"
+          test -f "$output/micro-apps/index.html"
+      - name: Assert canonical documents are indexed
+        run: |
+          grep -q 'AOS-ARCH-024' src/data/bible-index.json
+          grep -q 'AOS-HW-021' src/data/bible-index.json
+          grep -q 'AOS-PROD-018' src/data/bible-index.json
+          grep -q 'AOS-ARCH-026' src/data/bible-index.json
+          grep -q 'AOS-PLAN-019' src/data/bible-index.json

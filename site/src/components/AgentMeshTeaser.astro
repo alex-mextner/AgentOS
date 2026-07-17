@@ -1,0 +1,47 @@
+---
+import Cite from './Cite.astro';
+import Button from './Button.astro';
+
+const paths = [
+  ['Direct', 'Local IP or Wi-Fi Direct for large, fast payloads.'],
+  ['Nearby', 'BLE for discovery, consent and small exchanges.'],
+  ['Off-grid', 'LoRa for short messages, coordinates, receipts and hashes.'],
+  ['Delayed', 'Encrypted store-and-forward through devices and fixed relays.'],
+  ['Gateway', 'Optional Internet, LoRaWAN or satellite bridge without content authority.'],
+];
+---
+
+<section id="agent-mesh" class="section border-b border-border scroll-mt-24">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+      <div>
+        <div class="eyebrow mb-3">Agent Mesh · Peer-to-peer</div>
+        <h2 class="text-balance text-3xl font-semibold tracking-tight md:text-4xl">
+          Connectivity is a system policy, not a messaging-app choice.
+        </h2>
+        <p class="mt-4 text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
+          Address a person, project or device. Agent OS chooses direct Wi-Fi, Bluetooth, LoRa, an optional gateway or delayed physical carriage from deadline, privacy, region, energy and trust. <Cite id="AOS-ARCH-024" />
+        </p>
+        <div class="mt-7">
+          <Button href="/mesh" variant="outline">Explore Agent Mesh</Button>
+        </div>
+      </div>
+
+      <div class="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-blue-500/5 via-violet-500/10 to-teal-500/5 p-6 sm:p-8">
+        <div class="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-violet-500/10 blur-3xl"></div>
+        <div class="relative grid gap-3">
+          {paths.map(([name, body], i) => (
+            <div class="grid grid-cols-[2rem_6rem_1fr] items-center gap-3 rounded-xl border border-border bg-background/70 p-4 backdrop-blur">
+              <span class="grid h-8 w-8 place-items-center rounded-full bg-signal/10 font-mono text-xs text-signal">{i + 1}</span>
+              <strong class="text-sm">{name}</strong>
+              <span class="text-xs leading-relaxed text-muted-foreground sm:text-sm">{body}</span>
+            </div>
+          ))}
+        </div>
+        <p class="relative mt-5 text-xs leading-relaxed text-muted-foreground">
+          One encrypted envelope and receipt model survives changes in transport and connectivity. LoRa is only one provider below it.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

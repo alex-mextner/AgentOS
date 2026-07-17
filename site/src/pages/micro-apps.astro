@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import MicroAppBuilderDiagram from '../components/MicroAppBuilderDiagram.astro';
+import Cite from '../components/Cite.astro';
+
+const surfaces = [
+  ['AI response', 'An answer can contain a live calculator, approval form, chart, CI control, poll or travel-recovery card — not a dead screenshot.'],
+  ['Document / project', 'Embed the same instance as a live block beside the task, evidence and people it belongs to.'],
+  ['Home / lock / ambient', 'Show one glanceable metric and safe actions without pretending the whole workflow fits in a tiny rectangle.'],
+  ['Notification', 'Deliver structured state with actions, provenance and expiry instead of a string that launches an app.'],
+  ['Watch / car / e-ink', 'Adapt to modality, privacy and interaction constraints through a declared SurfaceContract.'],
+  ['Focused mode', 'Expand the same micro-app into a complete single-purpose screen when the task deserves full attention.'],
+];
+
+const examples = [
+  ['UV day', 'Current and hourly UV, personal risk threshold, safe-until time, sunscreen reminder and outdoor-calendar actions.'],
+  ['Project overnight brief', 'Tasks, commits, messages, decisions and blockers condensed into an interactive morning card.'],
+  ['Medication and supply', 'Schedule, remaining doses, refill, travel time zone and a local-only health policy.'],
+  ['Meeting follow-through', 'Attendees, promises, linked documents and one-tap creation of owned follow-up tasks.'],
+  ['CI and release', 'Build status, failing checks, evidence, rerun, rollback and release approval inside a developer answer.'],
+  ['Commute now', 'Calendar, weather, traffic, battery and transport preference become one “leave now” surface.'],
+  ['Energy orchestrator', 'Tariff, solar, battery and controllable loads with transparent automation and spend limits.'],
+  ['Agent Mesh inbox', 'Pending, relayed, delivered and expired bundles with route, custody and retry actions.'],
+  ['Pet care', 'Medication, feeding, symptoms, appointments and shared caretaker actions on the pet entity.'],
+  ['Travel disruption', 'Evidence, replacement routes, refund eligibility, booking actions and a shareable trip card.'],
+  ['Camera exposure', 'Light, lens and sensor data with safe setting proposals and explainable trade-offs.'],
+  ['Person communication', 'Address a person; route through the appropriate provider or mesh path by urgency and privacy.'],
+];
+---
+
+<BaseLayout
+  title="Micro-app builder"
+  description="Agent OS turns natural-language intent, Shortcuts-like blocks and declarative source into safe interactive micro-apps that render across AI responses, documents, notifications, widgets, wearables and focused modes."
+>
+  <PageHeader
+    eyebrow="Micro-apps · Text-to-interface"
+    title="Ask for the missing interface. Then inspect what will run."
+    lede="A micro-app is a small composition of data, typed actions, state, layout and policy. Describe it in text, edit it as visual blocks or source, preview the authority it requests, and reuse one instance across every relevant surface."
+  />
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <MicroAppBuilderDiagram />
+      <p class="mx-auto mt-5 max-w-3xl text-center text-sm leading-relaxed text-muted-foreground">
+        The builder does not generate arbitrary code and hope it is safe. It produces a validated, signed manifest over trusted components, providers and typed actions. <Cite id="AOS-PROD-018" />
+      </p>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="The UV example"
+        title="Data already exists. The interface should not be forbidden."
+        lede="iOS or Android may expose UV data somewhere but still prevent the exact personal view and action combination you need. Agent OS lets the user compose the missing interface without creating another app silo."
+      />
+      <div class="mt-10 grid overflow-hidden rounded-2xl border border-border bg-card lg:grid-cols-[1fr_1.1fr]">
+        <div class="border-b border-border p-6 lg:border-b-0 lg:border-r sm:p-8">
+          <div class="font-mono text-xs text-signal">NATURAL-LANGUAGE REQUEST</div>
+          <blockquote class="mt-5 border-l-2 border-signal pl-5 text-xl font-medium leading-relaxed text-foreground">
+            Show today’s UV index, explain the risk for my skin profile, notify me before it becomes high, and place sunscreen and outdoor-time actions next to it.
+          </blockquote>
+          <div class="mt-8 space-y-3 text-sm text-muted-foreground">
+            <p><strong class="text-foreground">Local-only:</strong> the skin profile never leaves the device.</p>
+            <p><strong class="text-foreground">Network provider:</strong> receives only place and requested weather fields.</p>
+            <p><strong class="text-foreground">External effect:</strong> reminder creation stays in preview until approved.</p>
+          </div>
+        </div>
+        <div class="bg-gradient-to-br from-blue-500/5 via-violet-500/10 to-teal-500/5 p-6 sm:p-8">
+          <div class="flex items-start justify-between gap-5">
+            <div><div class="font-mono text-xs text-muted-foreground">BELGRADE · UPDATED 08:10</div><div class="mt-3 text-6xl font-semibold tracking-tighter">6.8</div><div class="mt-1 text-sm font-medium text-amber-400">High UV</div></div>
+            <div class="rounded-xl border border-border bg-background/60 px-4 py-3 text-right"><div class="text-xs text-muted-foreground">Safe until</div><div class="mt-1 text-xl font-semibold">11:20</div></div>
+          </div>
+          <div class="mt-8 flex h-28 items-end gap-2" aria-label="Hourly UV preview">
+            {[2,3,4,6,8,9,8,6,4,2].map((v, i) => <div class="flex flex-1 flex-col items-center gap-2"><div class="w-full rounded-t-md bg-gradient-to-t from-blue-500 to-violet-400" style={`height:${v * 10}px`}></div><span class="font-mono text-[.6rem] text-muted-foreground">{8+i}</span></div>)}
+          </div>
+          <div class="mt-7 grid gap-2 sm:grid-cols-2">
+            <button class="rounded-lg bg-foreground px-4 py-3 text-sm font-medium text-background">Remind me about sunscreen</button>
+            <button class="rounded-lg border border-border bg-background/40 px-4 py-3 text-sm font-medium">Move outdoor time</button>
+          </div>
+          <p class="mt-4 text-xs leading-relaxed text-muted-foreground">One instance can also render as a lock-screen metric, document block, AI response card or watch glance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="Beyond widgets"
+        title="One micro-app, many surfaces."
+        lede="A surface is a context-dependent view, not a separate copy. State, authority, provenance and semantic history remain attached to the same micro-app instance."
+      />
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {surfaces.map(([title, body], i) => (
+          <article class="rounded-xl border border-border bg-card p-6">
+            <div class="font-mono text-xs text-signal">SURFACE {String(i + 1).padStart(2, '0')}</div>
+            <h3 class="mt-5 text-lg font-semibold tracking-tight">{title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="Case library"
+        title="Useful interfaces that should not require twelve installed apps."
+        lede="Each example declares providers, authority, stale and offline behaviour, accessibility semantics and reproducible test fixtures."
+      />
+      <div class="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+        {examples.map(([title, body]) => (
+          <article class="bg-card p-6">
+            <h3 class="font-semibold tracking-tight">{title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[.8fr_1.2fr]">
+      <SectionHeader
+        eyebrow="Safety by construction"
+        title="Generated does not mean unrestricted."
+        lede="The output remains inspectable and bounded because generation targets a declarative runtime rather than arbitrary app code."
+      />
+      <div class="divide-y divide-border overflow-hidden rounded-xl border border-border bg-card">
+        {[
+          ['Preview', 'Live data may be read only through declared providers; external writes stay simulated until approved.'],
+          ['Authority diff', 'New data fields, destinations, actions, spend, background wake or sharing are listed before activation.'],
+          ['Quotas', 'CPU, memory, storage, rendering, sensors, network and action rates are enforced per instance.'],
+          ['Receipts', 'Every effectful action records inputs, provider, authority, result, cost and undo or compensation path.'],
+          ['Reproducibility', 'Packages are immutable by hash, signed, versioned and bundled with fixtures and migrations.'],
+          ['Graceful failure', 'Missing providers, stale data and offline mode become explicit states rather than hidden fallback or disappearance.'],
+        ].map(([title, body]) => <div class="grid gap-2 p-5 sm:grid-cols-[9rem_1fr]"><strong class="font-mono text-sm text-signal">{title}</strong><span class="text-sm leading-relaxed text-muted-foreground">{body}</span></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader eyebrow="Specifications" title="Builder, runtime, providers and execution plan." />
+      <div class="mt-10 grid gap-3 sm:grid-cols-2">
+        {[
+          ['AOS-PROD-018', 'Text-to-Micro-App and Widget Builder'],
+          ['AOS-ARCH-026', 'Micro-App Runtime and Surface Contracts'],
+          ['AOS-PROD-003', 'Actions, integrations and widget foundations'],
+          ['AOS-PROD-011', 'Provider interoperability and action routing'],
+          ['AOS-ARCH-010', 'Agent planning and action safety'],
+          ['AOS-PLAN-019', 'AOS-MICROAPP-* execution work items'],
+        ].map(([id, label]) => (
+          <a href={`/bible/id/${id}`} class="flex items-center justify-between gap-4 rounded-xl border border-border bg-card px-5 py-4 transition-colors hover:bg-accent/30">
+            <span><span class="font-mono text-xs text-signal">{id}</span><strong class="mt-1 block text-sm">{label}</strong></span><span aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

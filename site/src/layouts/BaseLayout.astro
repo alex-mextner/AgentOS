@@ -13,7 +13,7 @@ interface Props {
 
 const {
   title = 'Agent OS — Your work is the interface',
-  description = 'Agent OS is an app-last, local-first, agent-native mobile OS built on a Fuchsia/Zircon fork. Documents, tasks, projects and people are first-class system objects — not data trapped inside apps.',
+  description = 'Agent OS is an APP-LAST, local-first, agent-native mobile operating system with durable entities, text-to-micro-app composition, semantic history, explicit capabilities and Agent Mesh peer-to-peer connectivity.',
   ogImage = '/og.png',
   noindex = false,
 } = Astro.props;
@@ -32,7 +32,6 @@ const fullTitle = title.includes('Agent OS') ? title : `${title} — Agent OS`;
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
 
-    <!-- No-flash theme: dark by default, respect stored preference. Runs before paint. -->
     <script is:inline>
       (function () {
         try {
@@ -46,7 +45,6 @@ const fullTitle = title.includes('Agent OS') ? title : `${title} — Agent OS`;
     <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Agent OS" />
     <meta property="og:title" content={fullTitle} />
@@ -55,9 +53,8 @@ const fullTitle = title.includes('Agent OS') ? title : `${title} — Agent OS`;
     <meta property="og:image" content={new URL(ogImage, Astro.site ?? 'https://agentos-bible.vercel.app').href} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Agent OS — your work is the interface, not a grid of apps" />
+    <meta property="og:image:alt" content="Agent OS — APP-LAST entities, micro-apps and peer connectivity" />
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
@@ -86,16 +83,9 @@ const fullTitle = title.includes('Agent OS') ? title : `${title} — Agent OS`;
       >Skip to content</a
     >
     <Header />
-    <main id="main" class="flex-1">
-      <slot />
-    </main>
+    <main id="main" class="flex-1"><slot /></main>
     <Footer />
-
-    <!-- Citation preview dialog. Delegated listener — serves every page's doc-id + [n] refs.
-         client:load so the listener is always live (a null-rendering global island). -->
     <RefDialog client:load />
-
-    <!-- Service worker: offline / instant repeat-load. Progressive enhancement only. -->
     <script is:inline>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {

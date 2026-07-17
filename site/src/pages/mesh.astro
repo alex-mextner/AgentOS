@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import AgentMeshDiagram from '../components/AgentMeshDiagram.astro';
+import Cite from '../components/Cite.astro';
+
+const cases = [
+  ['Hiking and remote travel', 'Short messages, coordinates, group presence and emergency bundles continue when cellular service disappears.'],
+  ['Blackout or disaster', 'Phones, fixed solar relays and optional gateways carry encrypted bundles across disconnected neighbourhoods.'],
+  ['Project handoff', 'Tasks, compact CRDT operations, manifests and agent-plan updates move between teams without uploading the whole workspace.'],
+  ['Large-object rendezvous', 'LoRa announces an object ID and hash; the document or photo transfers later over Wi-Fi or another high-speed path.'],
+  ['Local community network', 'A village, festival, farm, vessel, campus or construction site can operate its own bounded relay fabric.'],
+  ['Gateway without surrender', 'A home or vehicle node bridges Internet, LoRaWAN or satellite while remaining an untrusted carrier of encrypted Agent Mesh payloads.'],
+];
+
+const status = [
+  ['Direct', 'The recipient device accepted the envelope itself.'],
+  ['Pending', 'No suitable route exists yet; expiry and next retry remain visible.'],
+  ['Relay custody', 'A permitted relay holds an encrypted copy but cannot read it.'],
+  ['Delivered', 'The requested receipt condition has been satisfied.'],
+  ['Expired', 'The delivery deadline passed and retained copies are removed by policy.'],
+  ['Rejected', 'Identity, region, quota, authority or recipient policy denied the route.'],
+];
+---
+
+<BaseLayout
+  title="Agent Mesh"
+  description="Agent Mesh is Agent OS transport-neutral peer-to-peer and delay-tolerant connectivity across local IP, Wi-Fi Direct, Bluetooth, LoRa, gateways and store-and-forward relays."
+>
+  <PageHeader
+    eyebrow="Agent Mesh · Off-grid connectivity"
+    title="Address people and projects — not radios."
+    lede="One signed, encrypted envelope can travel directly, over local IP, through Bluetooth or LoRa relays, via a gateway, or physically with another device. Agent OS chooses the route from deadline, privacy, region, energy, trust and payload size."
+  />
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <AgentMeshDiagram />
+      <p class="mx-auto mt-5 max-w-3xl text-center text-sm leading-relaxed text-muted-foreground">
+        LoRa is one constrained transport below the system model — not a separate messenger, identity database or app silo. <Cite id="AOS-ARCH-024" />
+      </p>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="What it enables"
+        title="Connectivity that survives infrastructure gaps."
+        lede="The same delivery and receipt semantics apply whether peers are metres apart, encounter each other hours later, or reach an optional gateway."
+      />
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {cases.map(([title, body], i) => (
+          <article class="rounded-xl border border-border bg-card p-6">
+            <div class="font-mono text-xs text-signal">{String(i + 1).padStart(2, '0')}</div>
+            <h3 class="mt-5 text-lg font-semibold tracking-tight">{title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[.9fr_1.1fr]">
+      <SectionHeader
+        eyebrow="Honest delivery"
+        title="“Sent” is not one state."
+        lede="Custody, discovery and final delivery are different facts. Agent OS makes delay and uncertainty inspectable instead of hiding them behind a spinner or optimistic checkmark."
+      />
+      <div class="overflow-hidden rounded-xl border border-border">
+        {status.map(([name, body], i) => (
+          <div class={'grid gap-2 bg-card px-5 py-4 sm:grid-cols-[9rem_1fr] ' + (i ? 'border-t border-border' : '')}>
+            <strong class="font-mono text-sm text-signal">{name}</strong>
+            <span class="text-sm leading-relaxed text-muted-foreground">{body}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-b border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader
+        eyebrow="LoRa hardware path"
+        title="Prove the system before integrating a radio."
+        lede="The first vertical slice uses a documented Meshtastic-compatible node over BLE or USB. A native SX1262-class accessory and low-power connectivity island come only after measured evidence."
+      />
+      <div class="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-4">
+        {[
+          ['01', 'Compatibility node', 'Meshtastic over BLE/USB for immediate field evidence.'],
+          ['02', 'Phone accessory', 'Recoverable MCU + radio module with measured wake and power behaviour.'],
+          ['03', 'Fixed relays', 'Solar, roof, vehicle and indoor store-and-forward nodes.'],
+          ['04', 'Future integration', 'Separate low-power radio island after antenna and certification gates.'],
+        ].map(([n, title, body]) => (
+          <article class="bg-card p-6">
+            <div class="font-mono text-xs text-signal">{n}</div>
+            <h3 class="mt-5 font-semibold">{title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mx-auto max-w-6xl px-6">
+      <SectionHeader eyebrow="Specifications" title="Architecture, product, hardware, research and compliance." />
+      <div class="mt-10 grid gap-3 sm:grid-cols-2">
+        {[
+          ['AOS-ARCH-024', 'Transport-neutral Agent Mesh architecture'],
+          ['AOS-PROD-017', 'Off-grid peer-to-peer experience'],
+          ['AOS-HW-021', 'LoRa and low-power mesh hardware track'],
+          ['AOS-RES-017', 'Meshtastic, Reticulum, DTN and mesh prior art'],
+          ['AOS-LEGAL-015', 'Regional radio and mesh compliance'],
+          ['AOS-PLAN-019', 'Execution plan and AOS-MESH-* work items'],
+        ].map(([id, label]) => (
+          <a href={`/bible/id/${id}`} class="flex items-center justify-between gap-4 rounded-xl border border-border bg-card px-5 py-4 transition-colors hover:bg-accent/30">
+            <span><span class="font-mono text-xs text-signal">{id}</span><strong class="mt-1 block text-sm">{label}</strong></span>
+            <span aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

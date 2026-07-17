@@ -1,141 +1,142 @@
 ---
 id: "AOS-PROD-003"
-title: "Actions, Integrations, and Widgets"
+title: "Actions, Integrations, Widgets, and Micro-Apps"
 status: "Normative foundation"
-version: "1.0.0-foundation"
-baseline_date: "2026-07-13"
+version: "1.1.0"
+baseline_date: "2026-07-16"
 owners: "Product Architecture"
 audience: "Engineering, product, security, legal, programme, partner, and community readers"
-summary: "Actions, Integrations, and Widgets: scope, decisions, requirements, evidence, risks, and traceability for the Agent OS programme."
+summary: "Typed actions, provider integrations, declarative surfaces, and cross-surface micro-apps for the APP-LAST product model."
 ---
-# Actions, Integrations, and Widgets
+# Actions, Integrations, Widgets, and Micro-Apps
 
-> This specification defines a user-facing capability in terms of entities, actions, history, consent, recovery, accessibility, and provider contracts.
+## Purpose
 
-## Table of Contents
+This specification defines how Agent OS exposes data, actions and interactive surfaces without making a monolithic application the unit of distribution or authority.
 
-- [Purpose and Scope](#purpose-and-scope)
-- [Normative Position](#normative-position)
-- [Operating Model](#operating-model)
-- [Requirements](#requirements)
-- [Failure and Degradation](#failure-and-degradation)
-- [Evidence and Acceptance](#evidence-and-acceptance)
-- [Implementation Obligations](#implementation-obligations)
-- [Risks and Open Questions](#risks-and-open-questions)
-- [Related Documents](#related-documents)
-- [Planning Reference Anchors](#planning-reference-anchors)
-<a id="purpose-and-scope"></a>
+A **widget** is one possible rendering surface. A **micro-app** is the durable, versioned composition of data queries, typed actions, state, layout, triggers and policy behind that rendering. The same instance may appear in an AI response, document, project, notification, home/lock surface, wearable, vehicle, command result or focused mode.
 
-## Purpose and Scope
+## Normative position
 
-**Area:** Product System.
+1. Visible objects are stable entities with provenance, schemas, authority, actions and semantic history.
+2. Providers publish typed data and actions; they do not require users to enter a private app UI for essential operations.
+3. Micro-apps compose declared providers, trusted components and action contracts rather than arbitrary code or copied app state.
+4. Natural-language, Shortcut-style block and declarative-source editors are equivalent views of one manifest.
+5. Every installation or update exposes provider substitutions, data-flow changes and capability differences before activation.
+6. AI-generated micro-apps are untrusted proposals until schema validation, static policy checks, preview and authority review succeed.
 
-This specification defines a user-facing capability in terms of entities, actions, history, consent, recovery, accessibility, and provider contracts.
+## Object model
 
-This document owns the semantics implied by **Actions, Integrations, and Widgets**. It does not assert that every described subsystem already exists. It defines the target model, constraints, evidence needed to trust an implementation, and the boundary with adjacent documents.
-<a id="normative-position"></a>
+- `DataProvider` exposes typed read/query contracts, provenance, freshness and offline behavior.
+- `ActionProvider` exposes effect taxonomy, confirmation, idempotency, cancellation, receipt and compensation semantics.
+- `ComponentProvider` exposes reviewed declarative UI components and accessibility behavior.
+- `MicroAppPackage` contains immutable manifest, signer, dependencies, fixtures, migrations and conformance metadata.
+- `MicroAppInstance` binds a package to entities, grants, durable state and surface placements.
+- `SurfaceContract` describes size, modality, privacy, lifecycle, input and output constraints.
 
-## Normative Position
+## Builder and runtime
 
-1. Model visible objects as stable entities with typed relationships, provenance, authority, schemas, views, actions, and history.
-2. Providers publish typed actions and declarative surfaces; users and agents receive the same semantic operations with different authority and confirmation policy.
-3. Composition and transclusion preserve origin and permission rather than copying opaque app state.
-<a id="operating-model"></a>
+A user may:
 
-## Operating Model
+- describe the desired outcome in text;
+- assemble inputs, queries, transforms, views, triggers and actions visually;
+- edit the declarative manifest directly;
+- accept or modify an agent proposal;
+- preview live or fixture-backed output before installation.
 
-The operating model is contract-first and evidence-driven. A component declares its authority, resources, lifecycle, error model, cancellation and timeout behavior, observability, version, and compatibility promise. Backends are replaceable only when the same conformance suite passes and no forbidden platform type leaks into portable layers.
+The system resolves providers, shows the authority diff, obtains narrow grants and installs a content-addressed version. External effects always use typed actions and receipts.
 
-Implementation proceeds through a reference model or mock, deterministic QEMU evidence where relevant, documentation-first physical hardware, and quality-hardware evidence. Pixel 9 adapters remain quarantined according to [ADR-0004](AOS-ADR-0004.md#decision).
-<a id="requirements"></a>
+## Surface classes
 
-## Requirements
+Standard surface contracts include:
 
-- **R01.** Model visible objects as stable entities with typed relationships, provenance, authority, schemas, views, actions, and history.
-- **R02.** Providers publish typed actions and declarative surfaces; users and agents receive the same semantic operations with different authority and confirmation policy.
-- **R03.** Composition and transclusion preserve origin and permission rather than copying opaque app state.
-- **R04.** Specify normal, partial, denied, timeout, cancellation, restart, upgrade, and permanent-failure behavior.
-- **R05.** Expose structured diagnostics without leaking secrets or vendor-specific implementation details.
-- **R06.** Link material unknowns to a claim and, when testable, an experiment with an owner and gate.
-- **R07.** Update affected documentation and task data when evidence changes the model.
-<a id="failure-and-degradation"></a>
+- AI/chat interactive card;
+- live document/project block;
+- home/lock/ambient widget;
+- notification and action row;
+- table, timeline, map and graph embedding;
+- watch, e-ink, vehicle and external-display views;
+- command palette, CLI and TUI projection;
+- focused full-screen instant mode.
 
-## Failure and Degradation
+A surface may omit detail but cannot invent different semantics. The same instance retains identity, state, provenance and history across surfaces.
 
-Degradation must be explicit rather than accidental. The system reports capability absence, reduced quality, unavailable provider, stale data, or unsafe condition through typed states. It must not silently fall back to broader authority, unrestricted legacy execution, unverified firmware, lossy data migration, or irreversible agent action.
+## Provider and transport integration
 
-Recovery defines what state is retained, reconstructed, re-enrolled, compensated, or intentionally discarded. Unsupported hardware or providers are rejected at binding time where possible.
-<a id="evidence-and-acceptance"></a>
+Providers may route data or actions through local services, remote APIs, Agent Mesh or user-selected gateways. A micro-app states the outcome and policy, not a proprietary route. For example, a person card requests `message.send(recipient, content, deadline, privacy)`; provider policy may select a direct local path, a messaging service or delayed Agent Mesh delivery.
 
-## Evidence and Acceptance
+## Required failure behavior
 
-- Vertical slices across at least three domains.
-- Usability and action-coverage studies.
-- Migration, permission and provenance tests.
-- Evidence records target identity, hardware revision, firmware, source commit, toolchain, configuration, seed, timestamps, artifacts, expected result, actual result, and reviewer.
-- Acceptance requires the referenced tasks to meet their own criteria; prose completion is not implementation completion.
-<a id="implementation-obligations"></a>
+Micro-apps must render explicit states for loading, stale data, partial data, provider unavailable, substituted provider, authority denied, offline, delayed, action pending, action failed, delivered, expired and rollback unavailable.
 
-## Implementation Obligations
+They must not:
 
-| Task | Obligation | Priority | Gate/Milestone | Verification |
-| --- | --- | --- | --- | --- |
-| AOS-PLAT-014 | Specify package, component, and integration manifest | P1 | M3 | validate first-party service, product integration, driver and malicious/invalid packages |
-| AOS-PLAT-050 | Implement package installation, verification, and component registry | P1 | M4 | tampered/signature/API/dependency/migration/power-loss/uninstall tests |
-| AOS-PROD-010 | Define portable action schema and effect taxonomy | P0 | M2 | model ten local/external/system actions and adversarial/missing-provider cases |
-| AOS-PROD-011 | Implement integration and provider registry | P1 | M4 | valid/malicious/expired/revoked providers, package update, API mismatch and uninstall-preservation tests |
-| AOS-PROD-013 | Implement provider selection and routing policy | P1 | M4 | account/recipient/destination/cost/privacy ambiguity, outage and malicious-ranking tests |
-| AOS-PROD-052 | Implement widget and view sandbox contracts | P1 | M8 | malicious widget, overdraw/CPU/network, provider crash/update, accessibility and action-denial tests |
-| AOS-SEC-060 | Implement package signing, SBOM, provenance, and revocation security | P0 | M4 | tamper, dependency substitution, compromised/revoked/expired key, build mismatch and offline-update tests |
-<a id="risks-and-open-questions"></a>
+- silently broaden authority;
+- hide provider identity or data destination;
+- keep the system awake without declared budget;
+- download undeclared executable code;
+- access arbitrary sockets, filesystem paths or processes;
+- claim an external effect completed before receipt evidence exists;
+- disappear when a provider fails if a readable stale or export state remains possible.
 
-## Risks and Open Questions
+## Representative cases
 
-- A universal entity model can become vague or over-normalized.
-- Third-party providers may expose incomplete or misleading actions.
-- Malleability can conflict with consistency, accessibility and support.
-- **Open-question rule:** an unanswered high-impact question becomes a claim/experiment record and cannot be hidden in meeting notes.
-- **Stop rule:** work stops or changes track when legal rights, recovery, debug access, safety, or the required evidence path is unavailable.
-<a id="related-documents"></a>
+- UV index with local skin profile, hourly chart, threshold notification and sunscreen/calendar actions.
+- Project overnight brief combining tasks, commits, messages and blocked decisions.
+- Medication and refill tracker with travel-time-zone handling.
+- CI/release card with evidence, rerun, approval and rollback actions.
+- Person communication card that routes by recipient, urgency, privacy and availability.
+- Agent Mesh inbox with pending, relay-custody, delivered and expired states.
+- Travel disruption card with evidence, alternatives, refund and share actions.
+- Energy, camera, pet-care, procurement and meeting-follow-through micro-apps.
 
-## Related Documents
+## Implementation obligations
 
-- [Product vision](AOS-VSN-001.md#product-thesis)
-- [Portable system architecture](AOS-ARCH-001.md#system-boundary)
-- [Portable device-service contracts](AOS-ARCH-020.md#contract-set)
-- [Hardware portfolio](AOS-HW-001.md#portfolio)
-- [Decision gates](AOS-PLAN-006.md#decision-gates)
-- [Claim register](AOS-RES-003.md#claim-register)
-<a id="planning-reference-anchors"></a>
+| Task | Obligation | Gate | Verification |
+| --- | --- | --- | --- |
+| AOS-PROD-010 | Portable action schema and effect taxonomy | M2 | local, system, external, delayed and irreversible action corpus |
+| AOS-PROD-011 | Provider registry and interoperability | M4 | malicious, revoked, stale, substituted and unavailable providers |
+| AOS-MICROAPP-001 | Manifest, component and `SurfaceContract` schemas | M3 | valid/invalid schema corpus and compatibility tests |
+| AOS-MICROAPP-002 | Text/block/source round-trip | M3 | semantic round-trip with no authority drift |
+| AOS-MICROAPP-003 | Reference multi-surface renderer | M4 | visual and accessibility fixtures across standard surfaces |
+| AOS-MICROAPP-005 | Preview and authority-diff flow | M4 | capability-escalation and destination-disclosure tests |
+| AOS-MICROAPP-006 | Sandbox quotas and receipts | M4 | CPU, memory, network, wake and action-rate denial tests |
+| AOS-MICROAPP-008 | Signing, sharing, update and rollback | M5 | provenance, migration, revocation and recipient authority diff |
+| AOS-MICROAPP-009 | Twenty conformance micro-apps | M5 | reproducible source, fixtures and failure cases |
+| AOS-SEC-060 | Package signing, SBOM and revocation | M4 | tamper, dependency substitution and compromised-key tests |
 
-## Planning Reference Anchors
+## Evidence and acceptance
+
+Acceptance requires:
+
+- round-trip equivalence among text, block and source forms;
+- at least five conformant surface classes for one instance;
+- accessibility tree and multimodal navigation review;
+- provider loss, offline, stale, update, rollback and sharing tests;
+- resource-budget and malicious-manifest tests;
+- inspectable receipts for all effectful actions;
+- independent reproduction of the reference case library.
+
+## Related documents
+
+- [Product Vision](../vision/AOS-VSN-001.md)
+- [Micro-App Builder](PROD-018-text-to-micro-app-builder.md)
+- [Micro-App Runtime](../architecture/ARCH-026-micro-app-runtime.md)
+- [Agent Runtime and Action Safety](../architecture/AOS-ARCH-010.md)
+- [Agent Mesh](../architecture/ARCH-024-agent-mesh-connectivity.md)
+- [Execution Plan](../planning/PLAN-019-mesh-and-microapps.md)
 
 <a id="action-schema"></a>
+## Action schema anchor
 
-### Action Schema
-
-`AOS-PROD-010` — Define portable action schema and effect taxonomy
-
-<a id="conformance"></a>
-
-### Conformance
-
-`AOS-PROD-011` — Implement integration and provider registry; `AOS-PROD-011` — Implement integration and provider registry
-
-<a id="integration-package"></a>
-
-### Integration Package
-
-`AOS-PLAT-014` — Specify package, component, and integration manifest; `AOS-PLAT-050` — Implement package installation, verification, and component registry; `AOS-PROD-011` — Implement integration and provider registry; `AOS-PROD-011` — Implement integration and provider registry; `AOS-SEC-060` — Implement package signing, SBOM, provenance, and revocation security
+Typed action semantics are owned jointly by this document and `AOS-PROD-010`.
 
 <a id="provider-selection"></a>
+## Provider selection anchor
 
-### Provider Selection
-
-`AOS-PROD-013` — Implement provider selection and routing policy
+Provider routing must preserve user intent, authority, privacy, destination, cost and failure semantics.
 
 <a id="widgets"></a>
+## Widgets and micro-apps anchor
 
-### Widgets
-
-`AOS-PROD-052` — Implement widget and view sandbox contracts
+Widgets are surface projections of micro-app instances; they are not the complete product model.

@@ -7,6 +7,8 @@ const cols = [
     heading: 'Product',
     links: [
       { label: 'How it works', href: '/how-it-works' },
+      { label: 'Micro-app builder', href: '/micro-apps' },
+      { label: 'Agent Mesh', href: '/mesh' },
       { label: 'iOS / Android / Agent OS', href: '/compare' },
       { label: 'Roadmap', href: '/roadmap' },
     ],
@@ -40,22 +42,22 @@ const year = new Date().getFullYear();
           <span class="text-sm font-semibold tracking-tight">Agent OS</span>
         </a>
         <p class="mt-4 text-sm leading-relaxed text-muted-foreground">
-          App-last. Local-first. Agent-native. A Fuchsia/Zircon fork with a Rust-first entity-and-agent product layer.
+          App-last. Local-first. Agent-native. Durable entities, generated micro-apps, infrastructure-independent peer connectivity, and explicit capability security.
         </p>
       </div>
       {
-        cols.map((c) => (
+        cols.map((column) => (
           <div>
-            <h3 class="eyebrow mb-3">{c.heading}</h3>
+            <h3 class="eyebrow mb-3">{column.heading}</h3>
             <ul class="space-y-2.5">
-              {c.links.map((l) => (
+              {column.links.map((link) => (
                 <li>
                   <a
-                    href={l.href}
+                    href={link.href}
                     class="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                    rel={l.href.startsWith('http') ? 'noopener' : undefined}
+                    rel={link.href.startsWith('http') ? 'noopener' : undefined}
                   >
-                    {l.label}
+                    {link.label}
                   </a>
                 </li>
               ))}

@@ -1,16 +1,13 @@
-// Central content model for the Agent OS site. Grounded in the engineering bible:
-// AgentOS.md (six pillars, two tracks), AOS-RES-013 (differentiators), AOS-BRIEF.md,
-// and the existing portal copy drafts (landing.js / audiences.js).
-// Name spelling is "Agent OS" everywhere. Positioning sentence is fixed below.
+// Central content model for the Agent OS site.
 
 export const brand = {
   name: 'Agent OS',
   positioning: 'Your work is the interface — not a grid of apps.',
   descriptor: 'App-last. Local-first. Agent-native.',
   lede:
-    'Agent OS treats documents, tasks, projects, people, places and events as durable system objects. Apps become replaceable providers and views. One typed action model, a global semantic history, and capability-secured agents connect the whole system — without trapping you inside application silos.',
+    'Agent OS treats documents, tasks, projects, people, places and events as durable system objects. Apps become replaceable providers and views. Text-to-micro-app composition creates the missing interface, Agent Mesh carries the same objects across direct and off-grid paths, and capability-secured agents connect the whole system without ambient authority.',
   substrate:
-    'A fork of Fuchsia / Zircon — Zircon, DFv2, FIDL, Magma and Starnix consumed as-is — with a Rust-first entity-and-agent product layer written on top.',
+    'A capability-oriented system stack with a Rust-first entity, agent, micro-app and connectivity product layer above explicit platform and hardware contracts.',
 };
 
 export interface Pillar {
@@ -24,37 +21,37 @@ export const pillars: Pillar[] = [
   {
     n: '01',
     title: 'Entity-first, not app-centric',
-    body: 'A typed graph of people, projects, tasks, documents, events and devices — typed edges carry source and confidence. UI is assembled around your current work, not an icon grid.',
+    body: 'A typed graph of people, projects, tasks, documents, events and devices — typed edges carry source and confidence. UI is assembled around current work, not an icon grid.',
     cite: 'AOS-ARCH-009',
   },
   {
     n: '02',
-    title: 'Global history with undo',
-    body: 'Browser history for the whole OS: an append-only semantic event log of navigation, documents, actions and agent activity. Search, replay, and roll back where it is safe.',
-    cite: 'AOS-ARCH-009',
+    title: 'Interfaces are generated and malleable',
+    body: 'Text, Shortcut-style blocks and declarative source produce safe micro-apps that render across AI answers, documents, notifications, widgets, wearables and focused modes.',
+    cite: 'AOS-PROD-018',
   },
   {
     n: '03',
-    title: 'Local-first, CRDT, 100% backup',
-    body: 'Data lives on the device; sync uses off-the-shelf CRDTs; the cloud is transport and backup. A new phone resumes exactly where you left off — including an unsaved document.',
+    title: 'Global history with undo',
+    body: 'An append-only semantic event log records navigation, documents, actions, agents, delivery and external effects. Search, replay, undo and compensate where safe.',
     cite: 'AOS-ARCH-009',
   },
   {
     n: '04',
-    title: 'Agents on a capability model',
-    body: 'Background agents extract entities, dedupe, link and propose actions. Every agent holds only the handles it was granted — no ambient authority. The feature and the security model are one.',
-    cite: 'AOS-ARCH-010',
+    title: 'Local-first and peer-capable',
+    body: 'Data remains authoritative on user-controlled devices. Agent Mesh adds direct, off-grid and delay-tolerant paths without changing entity or action semantics.',
+    cite: 'AOS-ARCH-024',
   },
   {
     n: '05',
-    title: 'Object-capability security',
-    body: 'Authority is an unforgeable object reference carrying explicit rights. Delegation may attenuate but never amplify. No global root; least privilege enforced by absence, not a toggle.',
-    cite: 'AOS-ARCH-004',
+    title: 'Agents on a capability model',
+    body: 'Agents extract, link, propose interfaces and invoke typed actions only through explicit grants, previews, budgets and receipts.',
+    cite: 'AOS-ARCH-010',
   },
   {
     n: '06',
-    title: '100% mirroring, config ↔ GUI',
-    body: 'Anything you can do with a mouse you can do from a config file or a script — Config ↔ CLI/TUI ↔ API ↔ Settings ↔ GUI stay in lock-step. Every menu is editable.',
+    title: 'Config ↔ GUI ↔ API mirroring',
+    body: 'Anything exposed graphically is represented through inspectable schemas and actions so CLI, TUI, scripts, settings, micro-apps and agents stay aligned.',
     cite: 'ARCH-022',
   },
 ];
@@ -68,27 +65,32 @@ export interface Differentiator {
 export const differentiators: Differentiator[] = [
   {
     title: 'A system-wide entity graph, not app silos',
-    body: 'Data ownership moves from the app to a shared, provenance-carrying graph the whole system can query. Neither iOS nor Android has this — their objects live inside the owning app.',
+    body: 'Data ownership moves from the app to a shared, provenance-carrying graph the whole system can query. Views and providers are replaceable.',
     cite: 'AOS-ARCH-009',
   },
   {
-    title: 'A 5-rung agent trust ladder + no unlogged action',
-    body: 'Authority climbs from observation → proposal → reversible execution → confirmed sensitive execution → bounded autonomy. Every action is inspectable after the fact: utterance, interpretation, capabilities used, data touched, receipt.',
+    title: 'Text-to-micro-apps instead of fixed feature gates',
+    body: 'When data and typed actions exist, the user can compose the missing safe interface rather than waiting for a platform vendor to expose one widget shape.',
+    cite: 'AOS-PROD-018',
+  },
+  {
+    title: 'Peer delivery is a system capability',
+    body: 'One signed envelope can move over direct IP, Bluetooth, LoRa, gateways or delayed relays while retaining one identity, receipt and policy model.',
+    cite: 'AOS-ARCH-024',
+  },
+  {
+    title: 'A five-rung agent trust ladder with no unlogged action',
+    body: 'Authority climbs from observation to bounded autonomy. Every effect records interpretation, capabilities, data, destination, cost and result.',
     cite: 'AOS-ARCH-010',
   },
   {
     title: 'Object-capabilities as the base layer',
-    body: 'Not a permission overlay on POSIX. A radio-less mode holds no radio capability, so "no radios" is a fact of the capability graph — absent, not merely disabled.',
-    cite: 'ARCH-022',
-  },
-  {
-    title: 'First-class global history with undo',
-    body: 'Every effectful action lands as a receipt with an undo path; irreversible actions demand explicit confirmation. iOS and Android have only per-app history and per-app undo.',
-    cite: 'AOS-PROD-015',
+    body: 'Authority is absent unless granted. A radio-less mode has no radio capability; a micro-app cannot silently acquire sockets or private health data.',
+    cite: 'AOS-ARCH-004',
   },
   {
     title: 'Offline-completeness as an invariant',
-    body: 'Entities, actions, history and capture all work with zero connectivity. Compute offload is a reversible accelerator, never a dependency: server-down is indistinguishable from offline in correctness — only latency and battery differ.',
+    body: 'Entities, actions, history, micro-apps and capture remain correct with zero connectivity. Remote compute and gateways are optional accelerators or transports.',
     cite: 'AOS-PROD-013',
   },
 ];
@@ -107,7 +109,7 @@ export const audiences: Audience[] = [
     n: '01',
     role: 'Build the OS',
     title: 'Engineers on Agent OS',
-    body: 'The kernel fork, driver framework, layer manifests, the capability model, the demo-brick hardware, and a 157-document engineering bible with evidence gates.',
+    body: 'Kernel and platform work, entity services, micro-app runtime, Agent Mesh, capability security, hardware tracks and an evidence-gated engineering bible.',
     cta: 'How it works',
     href: '/how-it-works',
   },
@@ -115,7 +117,7 @@ export const audiences: Audience[] = [
     n: '02',
     role: 'Build on it',
     title: 'Third-party developers',
-    body: 'The entity/action contract, capability-scoped agents, typed actions with receipts, and how native clients reach services lawfully — the surface you build against.',
+    body: 'Publish typed data, actions, components and transport providers that the system can compose contextually instead of shipping another opaque monolith.',
     cta: 'Read the platform',
     href: '/developers',
   },
@@ -123,7 +125,7 @@ export const audiences: Audience[] = [
     n: '03',
     role: 'Back the thesis',
     title: 'Investors',
-    body: 'The wedge, the two-track strategy that de-risks hardware, the subscription-compute model, honest ceilings, and what evidence exists today versus what is planned.',
+    body: 'A differentiated product model, open ecosystem, staged hardware strategy and explicit evidence gates across software, connectivity and devices.',
     cta: 'See the case',
     href: '/investors',
   },
@@ -131,7 +133,7 @@ export const audiences: Audience[] = [
     n: '04',
     role: 'Use it first',
     title: 'Makers & early users',
-    body: 'What the phone actually does: a voice agent you can inspect, instant single-purpose modes, days of standby, and privacy you can verify — not a slogan.',
+    body: 'Inspectable agents, generated single-purpose interfaces, durable work, direct peer exchange, off-grid communication and privacy you can verify.',
     cta: 'What you get',
     href: '/makers',
   },
@@ -145,24 +147,24 @@ export interface ProofPoint {
 
 export const proofPoints: ProofPoint[] = [
   {
-    stat: '157',
-    label: 'engineering documents',
-    body: 'Architecture, product, research, hardware, legal and planning — cross-linked, versioned, with stable AOS-* identifiers.',
+    stat: 'APP-LAST',
+    label: 'system object model',
+    body: 'Durable work and life entities remain primary while applications become replaceable providers and views.',
   },
   {
-    stat: '327',
-    label: 'planned work items',
-    body: 'A task graph across nine phases with acceptance criteria, dependencies and linked specifications — not a wishlist.',
+    stat: 'ONE',
+    label: 'typed action model',
+    body: 'UI, CLI, scripts, agents and micro-apps invoke the same operations with the same capability and receipt rules.',
   },
   {
-    stat: '12',
-    label: 'cited comparison axes',
-    body: 'Every iOS/Android claim cites a vendor security/developer document; every Agent OS claim cites an internal spec.',
+    stat: 'MESH',
+    label: 'transport-neutral delivery',
+    body: 'Direct, off-grid, gateway and delayed paths share one envelope, identity and policy model.',
   },
   {
-    stat: '2',
-    label: 'de-risking tracks',
-    body: 'The product runs in emulation today; a pre-certified "demo brick" carries the OS on real radios years before a custom device.',
+    stat: 'LOCAL',
+    label: 'authority by default',
+    body: 'User-controlled state remains primary; remote providers receive bounded and inspectable inputs.',
   },
 ];
 
@@ -178,52 +180,51 @@ export interface Track {
 export const tracks: Track[] = [
   {
     id: 'A',
-    name: 'Track A — Product',
-    tagline: 'In emulation now. Blocked by nothing.',
-    body: 'All of the product layer (L6) runs in the emulator, with mock camera / modem / sensors behind the same FIDL contracts as real hardware. Zero hardware blockers.',
+    name: 'Track A — Product and platform',
+    tagline: 'Buildable in simulation before custom hardware.',
+    body: 'Entity services, action providers, history, micro-app runtime, agent safety, Agent Mesh simulation and mock hardware providers can progress independently of a production phone.',
     milestones: [
-      'A1 · Fork + FEMU bootstrap',
-      'A2 · Shell / compositor (Scenic / Flatland)',
-      'A3 · Entity Store + first agents',
-      'A4 · History + local-first + CRDT',
-      'A5 · Integrations + interop',
+      'A1 · Platform bootstrap and isolated components',
+      'A2 · Entity Store, actions and history',
+      'A3 · Micro-app reference runtime',
+      'A4 · Agent Mesh simulator and providers',
+      'A5 · Integrations, conformance and ecosystem',
     ],
-    blocked: 'Nothing.',
+    blocked: 'No production hardware dependency for the reference model.',
   },
   {
     id: 'B',
     name: 'Track B — Hardware',
-    tagline: 'Multi-year. Harder than Asahi.',
-    body: 'Real-device bring-up: board drivers, GPU/Magma, telephony over the modem, camera pipeline. A failed path is grounds for the next; failure of every path is not planned for. Voice/data/SMS is a must-have.',
+    tagline: 'Measured through documented targets and staged accessories.',
+    body: 'Real-device bring-up, graphics, telephony, camera, power, low-power radio accessories and later integrated hardware proceed through explicit evidence gates.',
     milestones: [
-      'B1 · Board bring-up + boot',
-      'B2 · GPU / Magma',
-      'B3 · Display / touch / audio / power',
-      'B4 · Telephony (data → SMS → voice/IMS)',
-      'B5 · Camera pipeline + tuning',
+      'B1 · Documented-board bring-up',
+      'B2 · Display, input, storage and networking',
+      'B3 · Telephony and camera evidence',
+      'B4 · Agent Mesh accessory and fixed relays',
+      'B5 · Future integrated device gate',
     ],
-    blocked: 'Bootloader, SoC docs, modem command set — de-risked by starting on a documented board.',
+    blocked: 'Documentation, boot control, firmware provenance, certification and supply continuity.',
   },
 ];
 
-// Honest "works today vs planned" framing.
 export const statusRows = [
-  { item: 'Fuchsia/Zircon fork decision + ADRs', state: 'decided' },
-  { item: 'Engineering bible (157 docs, evidence-gated)', state: 'today' },
-  { item: 'Task graph (327 items across 9 phases)', state: 'today' },
-  { item: 'Host simulator — Pixel 9 form factor (Rust)', state: 'today' },
-  { item: 'FEMU bootstrap + first isolated process', state: 'next' },
-  { item: 'Entity Store + first agents + history', state: 'planned' },
-  { item: 'Real-device bring-up (Track B)', state: 'planned' },
-  { item: 'Global Account — system-wide identity, payments & data', state: 'designed' },
-  { item: 'Micro-app distribution — no App Store', state: 'designed' },
+  { item: 'Cross-linked Engineering Bible and stable specifications', state: 'today' },
+  { item: 'Task graph and evidence registers', state: 'today' },
+  { item: 'APP-LAST product and capability model', state: 'designed' },
+  { item: 'Text-to-Micro-App builder and runtime', state: 'designed' },
+  { item: 'Agent Mesh, LoRa accessory and DTN programme', state: 'designed' },
+  { item: 'Reference platform and first isolated process', state: 'next' },
+  { item: 'Entity Store, actions, history and first agents', state: 'planned' },
+  { item: 'Real-device and integrated-radio bring-up', state: 'planned' },
 ] as const;
 
+// Kept for components that consume the legacy content export. Header uses data/navigation.ts.
 export const navLinks = [
   { label: 'How it works', href: '/how-it-works' },
+  { label: 'Micro-apps', href: '/micro-apps' },
+  { label: 'Agent Mesh', href: '/mesh' },
   { label: 'Compare', href: '/compare' },
-  { label: 'Developers', href: '/developers' },
-  { label: 'Investors', href: '/investors' },
   { label: 'Roadmap', href: '/roadmap' },
   { label: 'Engineering bible', href: '/engineering' },
 ];

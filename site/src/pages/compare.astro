@@ -10,12 +10,12 @@ import CtaBand from '../components/CtaBand.astro';
 
 <BaseLayout
   title="iOS / Android / Agent OS"
-  description="A research-grade, cited comparison of iOS, Android and Agent OS across twelve dimensions — object model, agent authority, capabilities, global history, offline, privacy and more."
+  description="A cited comparison of iOS, Android and Agent OS across fourteen dimensions, including object model, interface composition, agent authority, peer connectivity, privacy, history and distribution."
 >
   <PageHeader
     eyebrow="Evidence map · AOS-RES-013"
     title="iOS, Android, and Agent OS — on the record."
-    lede="An evidence map, not a marketing comparison. Every iOS/Android cell can be checked against a vendor security or developer document; every Agent OS cell against an internal specification. Where a claim rests on inference from documented behaviour, it says so."
+    lede="An evidence map, not a feature-scoreboard. iOS and Android cells point to vendor security or developer material; Agent OS cells point to canonical target specifications. Inferences are labelled as such."
   />
 
   <section class="section border-b border-border">
@@ -27,37 +27,42 @@ import CtaBand from '../components/CtaBand.astro';
   <section class="section border-b border-border">
     <div class="mx-auto max-w-6xl px-6">
       <SectionHeader
-        eyebrow="The wagers"
-        title="What Agent OS does differently."
-        lede="The incumbents converged on typed action contracts and on-device-first AI — Agent OS adopts those. These are the bets it makes that they can't make without rebuilding their foundations."
+        eyebrow="The structural wagers"
+        title="What Agent OS changes below the feature layer."
+        lede="The incumbents already have typed intents, widgets, on-device AI and nearby sharing. Agent OS makes different units primary: shared entities, user-composed micro-apps, semantic receipts and transport-neutral peer delivery."
       />
-      <div class="mt-12">
-        <DifferentiatorList />
-      </div>
+      <div class="mt-12"><DifferentiatorList /></div>
     </div>
   </section>
 
   <section class="section border-b border-border">
     <div class="mx-auto max-w-6xl px-6">
-      <div class="rounded-xl border border-border bg-card p-6 sm:p-8">
-        <h2 class="text-xl font-semibold tracking-tight">Identity and distribution — designed, not deferred.</h2>
-        <p class="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">
-          The two rows above where the incumbents look mature — first-party identity and developer distribution — are
-          <span class="text-foreground">the two Agent OS rethinks from first principles</span>, not gaps. Identity is a system-wide
-          <a href="/how-it-works#global-account" class="text-signal hover:underline">Global Account</a>
-          — one login, payments and data across web and native, with your data staying local. Distribution has
-          <a href="/how-it-works#micro-apps" class="text-signal hover:underline">no App Store</a>
-          — the system composes third-party micro-apps from what you are doing. Both are specified today.
-        </p>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <article class="rounded-xl border border-border bg-card p-6 sm:p-8">
+          <div class="eyebrow mb-3">Interface composition</div>
+          <h2 class="text-xl font-semibold tracking-tight">A missing interface is not automatically a missing app.</h2>
+          <p class="mt-3 text-sm leading-relaxed text-muted-foreground">
+            The <a href="/micro-apps" class="text-signal hover:underline">text-to-micro-app builder</a> composes declared data, actions, views and policy into one inspectable instance that can render inside AI, documents, notifications, widgets or focused modes.
+          </p>
+        </article>
+        <article class="rounded-xl border border-border bg-card p-6 sm:p-8">
+          <div class="eyebrow mb-3">Peer connectivity</div>
+          <h2 class="text-xl font-semibold tracking-tight">Nearby and off-grid delivery share one system model.</h2>
+          <p class="mt-3 text-sm leading-relaxed text-muted-foreground">
+            <a href="/mesh" class="text-signal hover:underline">Agent Mesh</a> uses one signed envelope and receipt model across direct IP, Wi-Fi, Bluetooth, LoRa, gateways and delayed relays instead of fragmenting identity and status by transport.
+          </p>
+        </article>
       </div>
+
       <div class="mt-10">
         <SpecLinks
-          heading="Primary sources"
+          heading="Primary Agent OS specifications"
           links={[
-            { label: 'AOS-RES-013 · Full comparison matrix', path: 'engineering-bible/docs/research/AOS-RES-013-os-comparison-matrix.md' },
-            { label: 'AOS-ARCH-009 · Entity graph, history & sync', path: 'engineering-bible/docs/architecture/AOS-ARCH-009.md' },
+            { label: 'AOS-ARCH-009 · Entity graph, history, sync & bundles', path: 'engineering-bible/docs/architecture/AOS-ARCH-009.md' },
             { label: 'AOS-ARCH-010 · Agent runtime & action safety', path: 'engineering-bible/docs/architecture/AOS-ARCH-010.md' },
-            { label: 'ARCH-022 · Capability model', path: 'engineering-bible/docs/architecture/ARCH-022-layer-manifest-and-capabilities.md' },
+            { label: 'AOS-PROD-018 · Text-to-Micro-App Builder', path: 'engineering-bible/docs/product/PROD-018-text-to-micro-app-builder.md' },
+            { label: 'AOS-ARCH-024 · Agent Mesh connectivity', path: 'engineering-bible/docs/architecture/ARCH-024-agent-mesh-connectivity.md' },
+            { label: 'AOS-ARCH-026 · Micro-App Runtime', path: 'engineering-bible/docs/architecture/ARCH-026-micro-app-runtime.md' },
           ]}
         />
       </div>
