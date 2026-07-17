@@ -1,31 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "outputDirectory": "portal",
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "rewrites": [
-    { "source": "/roadmap", "destination": "/" },
-    { "source": "/gantt", "destination": "/" },
-    { "source": "/wiki", "destination": "/" },
-    { "source": "/wiki/:path*", "destination": "/" },
-    { "source": "/bible", "destination": "/" },
-    { "source": "/tasks", "destination": "/" },
-    { "source": "/tasks/:path*", "destination": "/" },
-    { "source": "/compare", "destination": "/" },
-    { "source": "/devices", "destination": "/" },
-    { "source": "/landscape", "destination": "/" },
-    { "source": "/procurement", "destination": "/" },
-    { "source": "/claims", "destination": "/" },
-    { "source": "/experiments", "destination": "/" },
-    { "source": "/sources", "destination": "/" },
-    { "source": "/risks", "destination": "/" },
-    { "source": "/decisions", "destination": "/" },
-    { "source": "/glossary", "destination": "/" },
-    { "source": "/contacts", "destination": "/" },
-    { "source": "/api", "destination": "/" },
-    { "source": "/build", "destination": "/" },
-    { "source": "/developers", "destination": "/" },
-    { "source": "/investors", "destination": "/" },
-    { "source": "/users", "destination": "/" }
-  ]
+  "buildCommand": "npm --prefix site ci && npm --prefix site run build && rm -rf .vercel/output && cp -R site/.vercel/output .vercel/output"
 }
