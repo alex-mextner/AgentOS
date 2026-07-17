@@ -65,5 +65,5 @@ The initial product path is a Meshtastic compatibility provider plus an Agent Me
 ## Related documents
 
 - [Agent Mesh architecture](../architecture/ARCH-024-agent-mesh-connectivity.md)
-- [LoRa hardware track](../hardware/HW-018-lora-mesh-hardware.md)
+- [LoRa hardware track](../hardware/HW-021-lora-mesh-hardware.md)
 - [Off-grid experience](../product/PROD-017-off-grid-peer-experience.md)

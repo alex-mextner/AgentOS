@@ -209,7 +209,7 @@ export const tracks: Track[] = [
 ];
 
 export const statusRows = [
-  { item: 'Engineering bible and in-portal document viewer', state: 'today' },
+  { item: 'Cross-linked Engineering Bible and stable specifications', state: 'today' },
   { item: 'Task graph and evidence registers', state: 'today' },
   { item: 'APP-LAST product and capability model', state: 'designed' },
   { item: 'Text-to-Micro-App builder and runtime', state: 'designed' },

@@ -33,7 +33,7 @@ The same micro-app may render as:
 - a full-screen instant mode;
 - a sidebar, table cell, timeline item, map overlay or story;
 - a watch, e-ink, vehicle or external-display view;
-- a shareable card or embedded portal surface;
+- a shareable card or embedded web surface;
 - a CLI/TUI view generated from the same action and schema contracts.
 
 A surface is a view of the micro-app entity. Moving it between surfaces does not create disconnected copies.

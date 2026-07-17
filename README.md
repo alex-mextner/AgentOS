@@ -69,7 +69,7 @@ Portable contracts do not imply generic runtime translation or payload copying. 
 
 ## Current status
 
-The Engineering Bible, portal, task model and flagship programme specifications are live. APP-LAST, the micro-app platform and Agent Mesh are designed target capabilities with owned epics and acceptance gates; they are not claimed as completed implementations.
+The The Engineering Bible, task model and flagship programme specifications are published. APP-LAST, the micro-app platform and Agent Mesh are designed target capabilities with owned epics and acceptance gates; they are not claimed as completed implementations.
 
 ## Documentation validation
 

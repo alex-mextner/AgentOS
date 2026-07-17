@@ -124,7 +124,7 @@ Acceptance requires:
 - [Micro-App Runtime](../architecture/ARCH-026-micro-app-runtime.md)
 - [Agent Runtime and Action Safety](../architecture/AOS-ARCH-010.md)
 - [Agent Mesh](../architecture/ARCH-024-agent-mesh-connectivity.md)
-- [Execution Plan](../planning/PLAN-017-mesh-and-microapps.md)
+- [Execution Plan](../planning/PLAN-019-mesh-and-microapps.md)
 
 <a id="action-schema"></a>
 ## Action schema anchor

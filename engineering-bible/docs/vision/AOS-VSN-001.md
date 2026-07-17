@@ -103,7 +103,7 @@ A capability is described as implemented only when:
 - [Micro-App Runtime](../architecture/ARCH-026-micro-app-runtime.md)
 - [Actions, Integrations, and Widgets](../product/AOS-PROD-003.md)
 - [Text-to-Micro-App Builder](../product/PROD-018-text-to-micro-app-builder.md)
-- [Execution plan](../planning/PLAN-017-mesh-and-microapps.md)
+- [Execution plan](../planning/PLAN-019-mesh-and-microapps.md)
 
 <a id="product-thesis"></a>
 ## Stable product-thesis anchor
