@@ -1,6 +1,6 @@
 # Agent OS Engineering Portal
 
-Canonical repository: https://github.com/alex-mextner/HyperOS
+Canonical repository: https://github.com/alex-mextner/AgentOS
 
 Primary records:
 - /knowledge/BRIEFING.md
