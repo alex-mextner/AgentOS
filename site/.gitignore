@@ -11,3 +11,4 @@ node_modules/
 # logs / os
 *.log
 .DS_Store
+.env*

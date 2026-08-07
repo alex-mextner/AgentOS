@@ -15,3 +15,5 @@
 # Editor
 .idea/
 .vscode/
+.vercel
+.env*
