@@ -1,0 +1,44 @@
+name: Validate site
+
+on:
+  pull_request:
+    paths:
+      - 'site/**'
+      - 'engineering-bible/docs/**'
+      - 'data/**'
+      - '.github/workflows/site-validate.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'engineering-bible/docs/**'
+      - 'data/**'
+      - '.github/workflows/site-validate.yml'
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: site
+
+jobs:
+  build-and-test:
+    name: Type-check, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+      # Production builds with `astro build` (no prebuild), so the committed generated corpus
+      # must already be fresh. `npm run build` above re-ran sync-corpus; fail if that changed
+      # any tracked file — that means someone edited a source doc without regenerating.
+      - name: Generated corpus is in sync
+        run: git diff --exit-code -- src/generated/bible src/data/bible-index.json
