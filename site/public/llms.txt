@@ -1,0 +1,21 @@
+# Agent OS
+
+> Agent OS is a Fuchsia-architecture-inspired mobile OS built for a fully agent-driven interaction model, with a Rust-first product and entity/agent layer on top of a forked Fuchsia stack (Zircon, DFv2, FIDL, Magma, Scenic/Flatland, Starnix taken as-is).
+
+Canonical repository: https://github.com/alex-mextner/AgentOS
+Website: https://agentos-bible.vercel.app
+
+## Docs
+
+- [Brief](https://agentos-bible.vercel.app/bible/id/AOS-BRIEF): One-page product and technical brief.
+- [Index](https://agentos-bible.vercel.app/bible/id/AOS-INDEX): Index of the engineering bible's specifications.
+- [Architecture 001](https://agentos-bible.vercel.app/bible/id/AOS-ARCH-001): Core architecture specification.
+- [Architecture 002](https://agentos-bible.vercel.app/bible/id/AOS-ARCH-002): Architecture specification, part two.
+- [Hardware 001](https://agentos-bible.vercel.app/bible/id/AOS-HW-001): Hardware/device specification.
+- [Planning 002](https://agentos-bible.vercel.app/bible/id/AOS-PLAN-002): Execution planning specification.
+
+## Optional
+
+- [Full engineering bible](https://agentos-bible.vercel.app/engineering): Browseable index of every versioned specification (product, architecture, research, hardware, legal, planning, decisions, governance, glossary, validation, vision).
+
+Android and Linux are restricted to isolated Pixel 9 evidence and bring-up work. The native implementation is Rust-first and built on a fork of the entire Fuchsia tree (Zircon, DFv2, FIDL, Magma, Scenic/Flatland, Starnix taken as-is), with the Rust-first entity/agent product layer on top — not an owned-from-scratch microkernel.
