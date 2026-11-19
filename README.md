@@ -98,3 +98,7 @@ The current repository policy uses Apache-2.0 for original software and automati
 ## Contribution model
 
 Specifications and code change through pull requests. Tasks live in Issues. Claims must link evidence and uncertainty. Large design changes require an ADR or RFC before implementation.
+
+## Private-topology check
+
+CI runs `scripts/check-private-topology.sh` (plus gitleaks) on every pull request to keep private addresses, host names, MAC addresses and e-mails out of tracked files; use placeholders such as `<server-lan-ip>` or `<tailnet-host>` instead. To also catch your own machine names locally, list one regular expression per line in `~/.config/private-topology/denylist.txt` (never committed) and run the script before pushing.

@@ -1,0 +1,3 @@
+# Ignore-file patterns such as *.local / development.local are gitignore globs, not host names.
+**/.gitignore
+.gitignore
